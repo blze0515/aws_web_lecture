@@ -12,3 +12,9 @@
   프로세스가 진행되지 않는 문제점이 있었다.
 <p style="text-align: center;"><img src="images/CGIweb.PNG"></p>
 <p style="text-align: center;"><img src="images/CGIweb문제점.PNG"></p>
+
+2. Servlet
+- 위에 서술한 문제점들을 보완하기 위해 고안된 방식이 Servlet. Servlet은 요청 하나당 프로세스를 생성하지 않고
+  스레드를 하나 씩 생성. 스레드를 통한 병렬 분산처리로 다중 요청에 대한 처리속도를 끌어올렸다. 그리고 Java 소스에서
+  HTML 웹 문서를 만들 수 있도록 구현되어 있어 Web Server 성능을 향상시킴.
+- Servlet에서 HTML 웹 문서를 만드는 작업이 매우 복잡하고 귀찮은 작업이었다.
