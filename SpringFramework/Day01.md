@@ -18,3 +18,34 @@
   스레드를 하나 씩 생성. 스레드를 통한 병렬 분산처리로 다중 요청에 대한 처리속도를 끌어올렸다. 그리고 Java 소스에서
   HTML 웹 문서를 만들 수 있도록 구현되어 있어 Web Server 성능을 향상시킴.
 - Servlet에서 HTML 웹 문서를 만드는 작업이 매우 복잡하고 귀찮은 작업이었다.
+<p style="text-align: center;"><img src="images/Servlet.PNG"></p>
+<p style="text-align: center;"><img src="images/Servlet의쓰레드.PNG"></p>
+
+3. JSP(Java Server Page)
+- Servlet의 소스 코드가 너무 복잡하여 HTML에서 java소스를 사용할 수 있도록 고안된 방식
+- 소스코드를 구현하기 쉽고 개발 기간 단축, 화면단과 비즈니스 로직을 모두 가지고 있다.(Model1 방식의 개발)
+- 비즈니스 로직과 화면단 소스 코드가 한 파일에 존재하여 코드가 어지럽고 더러워지는 단점이 존재한다.
+<p style="text-align: center;"><img src="images/JSP(Model1).PNG"></p>
+
+4. Model2(JSP + Servlet)
+- 현재 제일 많이 사용되는 MVC(Model View Controller)의 시초
+- JSP는 화면단만 담당, PageController(Servlet)은 화면단과 모델을 연결, Model(비즈니스 로직, Java)
+<p style="text-align: center;"><img src="images/Model2MVC.PNG"></p>
+
+5. MVC 패턴
+- Model2 방식에서 좀 진화된 형태의 패턴
+- PageController 하나만 존재하던 Model2방식과 다르게 기능별 Controller로 세분화(Http 프로토콜(규약)을 따르는 
+  HttpServlet을 상속받아 구현)
+- Model부분도 비즈니스 로직을 담당하는 Service, ServiceImpl과 데이터를 담당하는 DAO로 세분화
+<p style="text-align: center;"><img src="images/MVC.PNG"></p>
+<br>
+
+# 2. WEB/WAS
+1. WEB서버: 클라이언트에서 요청이 들어올 때 제일 먼저 요청을 받아주는 서버. 요청을 WAS로 보낼 것인지 WEB 서버에서 처리가
+            가능한 일인지 판단하여 처리함. WEB 서버에는 정적파일(HTML, CSS, jpg, png, JS ....)들이 저장되어 있음.
+            클라이언트가 정적파일을 요청하면 WEB 서버에서 바로 정적파일을 클라이언트로 전달.
+            클라이언트가 컴파일이 필요한 동적파일(JSP, Java...)나 DB연동을 요청할 시에는 이 요청을 WAS(Web Application Server)로 전달. Web 서버는 기본적으로 80포트 사용. 잘 알려진 Web 서버의 종류로는 Apache, IIS, ngix, Webtob...등이 있다.
+
+2. WAS(Web Application Server): 실제로 개발자들이 개발한 소스코드를 동작시키는 서버. 화면단 JSP나 비즈로직인 Java, 
+                                SQL 쿼리까지 모두 WAS에서 실행됨. WAS는 실행될 때 Servlet Container(서블릿의 생명주기를 관리하는 틀) 동작시킴. 대부분의 경우에 WEB-INF폴더의 web.xml을 읽어서 서블릿 컨테이너를 구동한다. WAS 기본적으로 8080포트를 사용. 잘 알려진 WAS로는 tomcat, 
+                                Jeus, Web Logic, Jetty... 등이 있다.
