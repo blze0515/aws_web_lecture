@@ -49,3 +49,39 @@
 2. WAS(Web Application Server): 실제로 개발자들이 개발한 소스코드를 동작시키는 서버. 화면단 JSP나 비즈로직인 Java, 
                                 SQL 쿼리까지 모두 WAS에서 실행됨. WAS는 실행될 때 Servlet Container(서블릿의 생명주기를 관리하는 틀) 동작시킴. 대부분의 경우에 WEB-INF폴더의 web.xml을 읽어서 서블릿 컨테이너를 구동한다. WAS 기본적으로 8080포트를 사용. 잘 알려진 WAS로는 tomcat, 
                                 Jeus, Web Logic, Jetty... 등이 있다.
+<br>
+
+# 3. Spring Framework
+1. Spring Framework란
+- Framework를 직역하면 골격이나 뼈대라는 뜻이다.
+- Spring Framework는 웹 개발을 수월하게 진행할 수 있게 제공되는 골격이나 뼈대
+- Spring Framework 등장 전 프로젝트에서는 여러 명 개발자가 각자의 스타일대로 소스 코드를 작성
+  프로젝트가 끝나고 특정부분 개발자가 빠지게 되면 유지보수의 어려움이 발생
+  각자 스타일이 전부 다르기 때문에 소스 코드를 통합하는 작업도 매우 오래걸리고 어려웠다.
+<p style="text-align: center;"><img src="images/spring등장전.PNG"></p>
+- Spring Framework은 이러한 문제를 해결하기 위해 획일화된 웹 개발 뼈대를 제공한다.
+<p style="text-align: center;"><img src="images/spring의개발.PNG"></p>
+
+2. Spring Framework의 장점
+- 빠른 구현 시간: 제공되는 같은 모양의 틀로 소스 코드를 찍어낼 수 있기 때문에 매우 빠른 구현시간
+- 유지보수의 용이성: 다른 파트를 개발한 개발자와 동일한 틀을 사용했기 때문에 개발 참여한 개발자는 누구든지 유지보수를 할 수 있다.
+- 개발자 능력의 획일화와 인건비 감소: 같은 틀로 개발하기 때문에 능력 차이의 편차가 줄어듬.
+                                    신입이라도 개발에 참여하여 개발을 완료할 수 있다.
+- 라이브러리 관리: pom.xml을 이용한 라이브러리들을 관리하기 때문에 라이브러리 관리가 매우 편하고 용이하다.
+                  Spring Framework 이전에는 개발자가 필요한 라이브러리를 직접 구해서 참조시켜야 했다.
+
+3. Spring Framework의 특징
+- DL(Dependency Lookup): 자동으로 생성된 객체들을 찾음.
+- DI(Dependency Injection): 의존성 주입
+- IOC 또는 IOC컨테이너(Inverse Of Controll: 제어의 역전): 개발자들이 하던 객체생성등을 프레임워크로 위임함
+- AOP(Aspect Oriented Programming: 관점 지향 프로그래밍): 로그찍기 같은 공통관심은 프레임워크 설정으로 처리
+                                                         개발자들은 오직 비즈니스 로직에만 집중
+  function A {
+    비즈니스 로직 A - 횡단관심
+    로그 찍기 - 공통관심
+  }
+
+  function B {
+    비즈니스 로직 B - 횡단관심
+    로그 찍기 - 공통관심
+  }
