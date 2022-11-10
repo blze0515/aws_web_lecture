@@ -71,8 +71,8 @@
                   Spring Framework 이전에는 개발자가 필요한 라이브러리를 직접 구해서 참조시켜야 했다.
 
 3. Spring Framework의 특징
-- DL(Dependency Lookup): 자동으로 생성된 객체들을 찾음.
-- DI(Dependency Injection): 의존성 주입
+- DL(Dependency Lookup): 자동으로 생성된 객체들을 찾음. 클래스간의 의존성이 존재할 때 의존성에 알맞은 객체를 찾아주는 작업
+- DI(Dependency Injection): 의존성 주입. DL에서 찾은 객체를 의존성으로 주입해주는 작업.
 - IOC 또는 IOC컨테이너(Inverse Of Controll: 제어의 역전): 개발자들이 하던 객체생성등을 프레임워크로 위임함
 - AOP(Aspect Oriented Programming: 관점 지향 프로그래밍): 로그찍기 같은 공통관심은 프레임워크 설정으로 처리
                                                          개발자들은 오직 비즈니스 로직에만 집중
@@ -85,3 +85,34 @@
     비즈니스 로직 B - 횡단관심
     로그 찍기 - 공통관심
   }
+
+4. 의존성(dependency)과 결합도, 응집도
+- 의존성(dependency): 한 모듈이 다른 모듈의 결과에 영향을 줄 수 있는 관계
+                      A 클래스에서 B 클래스를 만들어서 사용할 때 A가 B에게 의존되어 있다.
+- 모듈의 독립성을 측정할 때 사용하는 수치가 결합도와 응집도
+- 독립성이 우수할 수록 좋은 모듈로 평가하는 데 독립성이 우수하다는 것은 결합도 낮고 응집도는 높은 모듈
+- 결합도: 의존성과 동일한 개념, 의존성이 많아지면 결합도 높아짐
+- 응집도: 모듈과 관련된 기능이 얼마나 모여있는 지에 대한 판단
+          파일업로드 모듈을 만들 때 단일 파일 업로드 기능만 파일업로드 모듈에 넣고 다중 파일 업로드 기능은 다른 모듈에
+          넣으면 응집도가 낮아짐
+- 결합도를 낮출수 있는 방법은 Interface를 통한 다형성 구현
+  -결합도가 높은 방식
+  LgTV      클래스
+  SamsungTV 클래스
+  main() {
+    SamsungTV 객체
+    LgTV      객체
+  }
+  -다형성을 통한 결합도 낮추기(생성되는 객체의 수를 줄여서 의존성(결합도)를 낮추는 방식)
+  TV 인터페이스
+  LgTV      클래스(TV 상속)
+  SamsungTV 클래스(TV 상속)
+  main() {
+    TV 객체(SamungTV를 주입해서 SamsungTV사용, LgTV를 주입했을 때는 LgTV사용)
+    TV tv;
+    tv = new SamsungTV();
+    엘지티비로 바뀌기 전까지는 삼성티비 기능을 사용
+    tv = new LgTV();
+    엘지티비로 바뀐 후에는 엘지티비의 기능을 사용
+  }
+  - 예제 프로젝트 _002_SpringFramework_Coupling(결합도 높은 방식), _003_SpringFramework_Coupling_Interface(결합도 낮추는 방식)
