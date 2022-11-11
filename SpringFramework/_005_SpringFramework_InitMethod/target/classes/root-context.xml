@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Root Context(프로젝트 별로 파일 이름이 다를 수 있음)
+	: 부모 스프링 컨테이너를 만드는 설정 파일 -->
+	
+	<!-- bean 객체 생성 -->
+	<!-- 컨테이너가 구동되면서 자동으로 생성 -->
+	<!-- 어떤 id로 어떤 객체를 생성할 건지 -->
+	<!-- init-method: 멤버변수 초기화가 필요한 객체들은 초기화 메소드를 만들어서 등록 -->
+	<!-- destroy-method: 객체 삭제되기 전에 해야할 동작들을 메소드로 지정 -->
+	<bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV" 
+	init-method="initMethod" destroy-method="destroyMethod"/>
+	<!-- ctrl + space: 클래스 명 자동 완성 -->
+	<bean id="lTv" class="com.ezen.spring.polymorphism.LgTV"/>
+</beans>
