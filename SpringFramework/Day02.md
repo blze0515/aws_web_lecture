@@ -60,6 +60,8 @@
 - DI는 setter injection(세터함수를 이용한 의존성 주입)과 contructor injection(생성자함수를 이용한 의존성 주입) 
   두 가지 방식을 더 가지고 있다.
 - <b>예제 프로젝트: _006_SpringFramework_DI</b>
+
+2. 생성자 함수를 이용한 DI
 - 생성자 함수를 통한 의존성 주입은 스프링 설정 파일에 constructor-arg 엘리먼트를 이용해서 멤버객체에 들어갈 객체를 
   참조하여 기본 생성자가 아닌 다른 생성자를 호출하므로써 이뤄진다.
 - <b>예제 프로젝트: _007_SpringFramework_DI_Constructor</b>
@@ -79,3 +81,36 @@
     \<constructor-arg index="1" value="100000"\>\</constructor-arg\>
   \</bean\>
 - <b>예제 프로젝트: _007_SpringFramework_DI_Constructor</b>
+- <b>예제 프로젝트: _008_SpringFramework_DI_Constructor_Interface</b>
+
+3. 세터 함수를 이용한 DI
+- 의존성을 주입할 객체에 해당 멤버변수(속성)에 해당하는 세터함수를 미리 작성한다.
+- \<property\> 엘리먼트를 사용하여 해당 세터함수를 호출
+  \<bean\>
+    \<property name="세터함수의 이름" ref or value="멤버변수에 의존성 주입할 값이나 객체"\>\</property\>
+  \</bean\>
+- setSpeaker()라는 세터함수가 존재할 때 세터함수의 이름은 set을 제외한 Speaker가 세터함수의 이름이 되고 
+  첫 번째 단어의 첫 글자는 소문자로 지정돼야 하기때문에 speaker가 최종적인 세터함수의 이름이 됩니다.(카멜케이스 적용)
+  setNameList() -> nameList
+- <b>예제 프로젝트: _009_SpringFramework_DI_Setter</b>
+- p namespace를 사용하여 세터함수를 효율적으로 호출하기
+  \<bean 
+      p:멤버변수명(멤버변수가 객체일 경우)-ref="의존성 주입될 객체" 
+      p:멤버변수명(멤버변수가 일반 데이터타입)="넣어줄 값"
+  \>
+  \</bean\>
+- <b>예제 프로젝트: _009_SpringFramework_DI_Setter</b>
+
+4. 어노테이션을 이용한 의존성 주입
+- context namespace를 추가하여 사용한다.
+- context namespace에는 component-scan이라는 기능이 있다. 속성 값으로 패키지를 지정해서 지정된 패키지에 있는 클래스들
+  안에서 @Component가 선언된 클래스들만 찾아서 자동으로 객체로 만듬
+- @Component는 최상위 어노테이션이다. @Controller, @Service, @Repository 등은 @Component를 상속받아 구현됨.
+  따라서 component-scan 위 나열한 어노테이션들도 함께 걸린다.
+- 스프링 설정 파일
+  \<context:component-scan base-package="컴포넌트 스캔할 패키지명"\>
+- 클래스 선언부 위줄에 어노테이션을 달아준다.
+  @Component
+  public class SamsungTV
+- component-scan으로 생성될 객체에 id를 지정하는 방식은 @Component("id값")
+- <b>예제 프로젝트: _010_SpringFramework_DI_Annotation</b>
