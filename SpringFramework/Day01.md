@@ -115,4 +115,4 @@
     tv = new LgTV();
     엘지티비로 바뀐 후에는 엘지티비의 기능을 사용
   }
-  - 예제 프로젝트 _002_SpringFramework_Coupling(결합도 높은 방식), _003_SpringFramework_Coupling_Interface(결합도 낮추는 방식)
+  - <b>예제 프로젝트 _002_SpringFramework_Coupling(결합도 높은 방식), _003_SpringFramework_Coupling_Interface(결합도 낮추는 방식)</b>
