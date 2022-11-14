@@ -12,7 +12,7 @@
 	
 	<!-- component-scan: 대상 패키지에 있는 클래스들 중 어노테이션(@Component)가 선언된
 	클래스들을 찾아서 자동으로 객체로 만들어줌 -->
-	<context:component-scan base-package="com.ezen.spring.polymorphism"></context:component-scan>
+	<context:component-scan base-package="com.ezen.spring.service"></context:component-scan>
 	
 	<!-- bean 객체 생성 -->
 	<!-- 컨테이너가 구동되면서 자동으로 생성 -->

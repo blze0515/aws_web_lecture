@@ -49,4 +49,10 @@ public class BoardVO {
 	public void setBoardCnt(int boardCnt) {
 		this.boardCnt = boardCnt;
 	}
+	
+	@Override
+	public String toString() {
+		return "BoardVO [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", boardWriter=" + boardWriter + ", boardRegdate=" + boardRegdate + ", boardCnt=" + boardCnt + "]";
+	}
 }

@@ -43,3 +43,10 @@
   - ORM(Object Relation Mapping) 방식은 테이블들간의 연관관계를 객체로 매핑시켜서 사용하는 방식
     대표적인 프레임워크(hibernate)
     테이블과 1대 1로 매핑되는 객체: Entity(테이블간의 관계도 설정)
+
+5. 자바의 메소드 정의
+- 접근제어자(public, private, protected, default) 반환타입(return 타입) 메소드명(매개변수) {
+  메소드 구현
+  반환타입이 void return값이 없다.
+  반환타입이 void 외에 데이터타입이나 클래스로 지정될 경우 return 반환타입과 일치해야된다.
+}
