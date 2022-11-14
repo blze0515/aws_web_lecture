@@ -11,7 +11,7 @@ public class JDBCUtil {
 	public static Connection getConnection() {
 		try {
 			//사용할 DBMS의 Driver 로드
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			//DriverManager 객체를 이용해서 Connection을 가져와서 리턴
 			//getConnection메소드의 매개변수로 DB의 url, username, password를 넘겨준다.
