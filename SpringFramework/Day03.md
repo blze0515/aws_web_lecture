@@ -29,3 +29,16 @@
 3. pom.xml의 라이브러리와 의존성
 - pom.xml의 라이브러리가 변경되면 프로젝트 전체에 영향을 주기 때문에 프로젝트가 라이브러리에 의존되어 있다.
   따라서 pom.xml에 라이브러리를 참조하는 것을 의존성 주입이라고 하고 <dependency> 엘리먼트를 이용해서 설정한다.
+
+4. 영속성(persistence)
+- 영속성이란 어플리케이션이 종료되도 계속 저장되어 있는 데이터의 특성을 뜻함.
+- 영속성을 따라 DB와 어플리케이션을 연동하여 사용한다.
+- 영속성은 JDBC를 통해 구현된다.
+- 영속성을 구현하는 방식 두 가지
+  SQLMapper 방식과 ORM 방식
+  - SQLMapper 방식은 쿼리를 Mapper에 직접 매핑하여 사용하는 방식
+    대표적인 프레임워크(MyBatis, iBatis)
+    테이블과 1대 1로 매핑되는 객체: VO(Value Object)나 DTO(Data Transfer Object)
+  - ORM(Object Relation Mapping) 방식은 테이블들간의 연관관계를 객체로 매핑시켜서 사용하는 방식
+    대표적인 프레임워크(hibernate)
+    테이블과 1대 1로 매핑되는 객체: Entity(테이블간의 관계도 설정)
