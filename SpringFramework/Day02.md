@@ -101,7 +101,7 @@
   \</bean\>
 - <b>예제 프로젝트: _009_SpringFramework_DI_Setter</b>
 
-4. 어노테이션을 이용한 의존성 주입
+4. 어노테이션을 이용한 객체 자동 생성
 - context namespace를 추가하여 사용한다.
 - context namespace에는 component-scan이라는 기능이 있다. 속성 값으로 패키지를 지정해서 지정된 패키지에 있는 클래스들
   안에서 @Component가 선언된 클래스들만 찾아서 자동으로 객체로 만듬
@@ -114,3 +114,27 @@
   public class SamsungTV
 - component-scan으로 생성될 객체에 id를 지정하는 방식은 @Component("id값")
 - <b>예제 프로젝트: _010_SpringFramework_DI_Annotation</b>
+
+5. 어노테이션을 이용한 DL과 DI
+- @Autowired: 선언된 객체와 형태가 같은 객체를 찾음(DL). 같은 형태의 객체를 찾으면 의존성 주입(DI).
+              스프링 컨테이너가 생성한 객체중에서 같은 형태의 객체를 검색함.
+              문제점은 같은 형태의 객체가 2개이상일 때는 에러 발생
+- <b>예제 프로젝트: _010_SpringFramework_DI_Annotation</b>
+- @Qualifier("id"): 지정된 id를 갖고 있는 객체를 검색(DL). 검색된 객체를 의존성 주입(DI).
+                    항상 @Autowired와 함께 사용한다.
+- @Resource(name="id"): @Autowired + @Qualifier. 같은 형태면서 지정된 id를 갖는 객체를 찾는다.(DL)
+                   찾은 객체를 의존성으로 주입(DI)
+- <b>예제 프로젝트: _010_SpringFramework_DI_Annotation</b>
+
+6. 설정 파일과 어노테이션을 함께 사용하여 DL, DI 구현
+- 사용자 정의 클래스(직접 만든 클래스)는 대부분 어노테이션으로 등록하여 사용하고
+  라이브러리등의 클래스들에는 어노테이션을 입력할 수가 없으므로 bean객체로 등록하여 사용한다.
+- <b>예제 프로젝트: _011_SpringFramework_DI_Annotation_Xml</b>
+
+# 4. AOP(Aspect Oriented Programming: 관점 지향 프로그래밍)
+1. AOP
+- DL과 DI(IoC)가 결합도 관련된 기능이라면 AOP는 응집도와 관련된 기능입니다.
+- AOP를 설정하게 되면 모듈이나 컴포넌트에서 필요한 기능만 남길 수가 있어서 응집도가 증가한다.
+- AOP는 모듈이나 컴포넌트 또는 메소드에서 반복적으로 사용해야 하는 기능들을 스프링 설정으로 처리하는 것이다.
+- 공통적으로 실행되는 기능들을 스프링 설정파일에 등록했을 때 실행되는 위치나 시점을 함께 설정할 수 있다.
+<p style="text-align: center;"><img src="images/AOP.PNG"></p>
