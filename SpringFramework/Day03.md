@@ -7,6 +7,7 @@
 - Controller(서블릿): View과 Model 연결해주는 역할.
                       View에서 넘어오는 데이터를 받아서 비즈니스 로직(Model)로 전달
                       비즈니스 로직 처리가 완료된 데이터를 View 넘겨주고 해당 View를 호출
+- <b>예제 프로젝트: _012_SpringFramework_BusinessComponent</b>
 
 2. DB 연동 방식 JDBC/DBCP/JNDI
 - JDBC(Java DataBase Connectivity): 자바에서 제공해주는 DB 연결 표준 API
