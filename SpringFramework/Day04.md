@@ -69,3 +69,14 @@
 - aop:before, aop:after-returning, aop:after-throwing, aop:after -> JoinPoint 객체 사용
 - aop:around -> ProceedingJoinPoint 객체 사용
 - <b>예제 프로젝트: _016_SpringFramework_AOP_JoinPoint</b>
+
+# 5. AOP Annotataion
+- <b>예제 프로젝트: _017_SpringFramework_AOP_Annotation</b>
+
+# 6. JDBC Template
+1. JDBC Template이란
+- GoF의 디자인 패턴중 템플릿 디자인 패턴이 적용된 클래스.
+- 템플릿 패턴은 반복되는 작업을 캡슐화하여 재사용할 수 있는 패턴으로 정의하는 방식
+- DBCP의 DataSource를 의존성으로 주입받아 커넥션 풀 방식으로 사용된다. DB커넥션을 지정한 개수만큼 만들어놓고
+  대여해주고 DB 연결이 끝날때 돌려받는 방식.
+- <b>예제 프로젝트: _018_SpringFramework_JDBCTemplate</b>
