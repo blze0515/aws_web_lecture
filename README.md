@@ -1,6 +1,6 @@
 # 강의 자료 및 소스코드
 
-1. Spring Framework  
+## 1. Spring Framework  
   1) 웹 개발의 역사  
     ① 초창기 웹  
     ② CGI  
