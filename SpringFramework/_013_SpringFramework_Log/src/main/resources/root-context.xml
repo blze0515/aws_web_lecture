@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Root Context(프로젝트 별로 파일 이름이 다를 수 있음)
+	: 부모 스프링 컨테이너를 만드는 설정 파일 -->
+	
+	<!-- component-scan: 대상 패키지에 있는 클래스들 중 어노테이션(@Component)가 선언된
+	클래스들을 찾아서 자동으로 객체로 만들어줌 -->
+	<context:component-scan base-package="com.ezen.spring.service"></context:component-scan>
+	
+	<!-- bean 객체 생성 -->
+	<!-- 컨테이너가 구동되면서 자동으로 생성 -->
+	<!-- 어떤 id로 어떤 객체를 생성할 건지 -->
+	<!-- init-method: 멤버변수 초기화가 필요한 객체들은 초기화 메소드를 만들어서 등록 -->
+	<!-- destroy-method: 객체 삭제되기 전에 해야할 동작들을 메소드로 지정 -->
+	<!-- lazy-init: 객체의 생성 시점 설정. false가 기본값. true 설정 시 객체를 요청할 때 생성 -->
+	<!-- scope: 객체 생성 방식(하나의 객체만 생성할지 여러개 객체를 생성할지) 지정. 기본 값 singleton.
+	            객체를 계속해서 생성하게 되면 메모리 부하가 걸리기 때문에 singleton으로 지정하는 것이 바람직하다. -->
+	<!-- 생성자 변경 시 <constructor-arg ref="매개변수로 가져갈 객체id, 숫자, 스트링 등">
+					 </constructor-arg> -->
+	<!-- 생성자 함수를 이용한 DI
+	<bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV">
+		<constructor-arg index="0" ref="apple"></constructor-arg>
+		<constructor-arg index="1" value="100000"></constructor-arg>
+	</bean> -->
+	
+	<!-- 세터함수를 이용한 DI -->
+	<!-- <bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV">
+		<property name="speaker" ref="apple"></property>
+		<property name="price" value="100000"></property>
+	</bean> -->
+	
+	<!-- p namespace를 이용한 세터함수 호출(DI) -->
+	<!-- <bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV"
+		  p:speaker-ref="apple" p:price="1000000">
+	</bean> -->
+
+	<!-- constructor-arg ref에 객체가 들어갈 경우 미리 생성된 객체를 사용해야됨
+	그래서 SonySpeaker도 bean객체로 등록 -->
+	<!-- <bean id="sony" class="com.ezen.spring.polymorphism.SonySpeaker"/>
+	<bean id="apple" class="com.ezen.spring.polymorphism.AppleSpeaker"/> -->
+	
+	<!-- ctrl + space: 클래스 명 자동 완성 -->
+	<!-- <bean id="lTv" class="com.ezen.spring.polymorphism.LgTV"/> -->
+</beans>
