@@ -53,7 +53,7 @@
 	
 	<!-- AOP 설정 -->
 	<!-- 공통관심인 클래스는 bean객체로 미리 생성해야된다. -->
-	<bean id="log" class="com.ezen.spring.common.AfterReturningAdvice"></bean>
+	<bean id="log" class="com.ezen.spring.common.AroundAdvice"></bean>
 	<bean id="after" class="com.ezen.spring.common.AfterAdvice"></bean>
 	
 	<!-- AOP 동작 설정 -->
@@ -68,7 +68,11 @@
 		<!-- aop:aspect: 포인트컷과 어드바이스가 결합되는 설정 -->
 		<aop:aspect ref="log">
 			<!-- 어드바이스: 공통으로 추가될 기능 코드(printLogging) -->
-			<aop:after-returning method="afterReturningMethod" pointcut-ref="allpointcut"/>
+			<!-- aop:after-returning일 때 returning 속성을 사용하여 리턴값을 바인드변수와 매핑(속성값은 클래스에 설정한 바인드변수명과 일치해야된다.) -->
+			<!-- <aop:after-returning method="afterReturningMethod" pointcut-ref="allpointcut" returning="returnObj"/> -->
+			
+			<!-- aop:after-throwing일 때 바인드 변수 매핑은 throwing 속성을 사용한다. -->
+			<aop:around method="aroundMethod" pointcut-ref="allpointcut"/>
 		</aop:aspect>
 		
 		<!-- <aop:aspect ref="after">

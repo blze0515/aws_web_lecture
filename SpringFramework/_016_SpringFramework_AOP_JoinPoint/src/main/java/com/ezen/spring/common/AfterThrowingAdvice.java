@@ -1,7 +1,11 @@
 package com.ezen.spring.common;
 
+import org.aspectj.lang.JoinPoint;
+
 public class AfterThrowingAdvice {
-	public void afterThrowingMethod() {
-		System.out.println("[예외 처리] 비즈니스 로직 중 예외 발생 시 동작");
+	public void afterThrowingMethod(JoinPoint jp, Exception exceptObj) {
+		String methodName = jp.getSignature().getName();
+		
+		System.out.println("[예외 처리] " + methodName + "() 실행 중 발생한 예외 메시지: " + exceptObj.getMessage());
 	}
 }

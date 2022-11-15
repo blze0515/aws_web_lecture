@@ -27,7 +27,7 @@ public class UserServiceTest {
 		//4. 회원 상세정보 조회
 		//Id 세팅하기 위한 UserVO 객체
 		UserVO infoUser = new UserVO();
-		infoUser.setId("admin");
+		infoUser.setId("ezen");
 		
 		UserVO user = userService.getUser(infoUser);
 		System.out.println(user.toString());
