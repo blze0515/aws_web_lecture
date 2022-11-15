@@ -51,3 +51,21 @@
 4. after: 비즈니스 메소드가 정상적으로 종료되거나 에러가 발생하거나 상관없이 메소드가 끝나면 무조건 동작
 5. around: 비즈니스 메소드 실행 전후에 한 번씩 동작
 - <b>예제 프로젝트: _015_SpringFramework_AOP_Timing</b>
+
+# 4. JoinPoint 인터페이스
+1. JoinPoint의 유용한 메소드 
+- getSignature(): 포인트컷으로 지정되어 실행되고 있는 메소드의 시그니처(이름, 리턴타입, 매개변수)를 
+                  Signature 객체에 담아서 리턴
+- getTarget(): 호출된 비즈니스 메소드를 포함하는 객체를 리턴(insertBoard 호출 시 BoardServiceImpl 객체를 리턴)
+- getArgs(): 호출된 비즈니스 메소드의 매개변수 값들을 Object배열로 리턴
+2. getSignature() 후 Signature 객체로 사용할 수 있는 메소드
+- getName(): 호출된 비즈니스 메소드의 이름을 String 타입으로 리턴
+- toLongString(): 호출된 비즈니스 메소드의 이름, 리턴타입, 매개변수를 패키지경로까지 포함한 String 값 리턴
+- toShortString(): 호출된 비즈니스 메소드의 이름, 리턴타입, 매개변수를 축약된 String 값 리턴
+3. ProceedingJoinPoint 클래스
+- JoinPoint 인터페이스를 상속받아 구현하고 proceed() 메소드를 추가한 클래스
+- 현재 진행중인 포인트컷 메소드를 받아옴
+- proceed() 메소드로 받아온 포인트컷 메소드를 진행시킴
+- aop:before, aop:after-returning, aop:after-throwing, aop:after -> JoinPoint 객체 사용
+- aop:around -> ProceedingJoinPoint 객체 사용
+- <b>예제 프로젝트: _016_SpringFramework_AOP_JoinPoint</b>

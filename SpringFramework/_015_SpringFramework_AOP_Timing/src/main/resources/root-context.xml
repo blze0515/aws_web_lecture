@@ -53,7 +53,8 @@
 	
 	<!-- AOP 설정 -->
 	<!-- 공통관심인 클래스는 bean객체로 미리 생성해야된다. -->
-	<bean id="log" class="com.ezen.spring.common.AfterThrowingAdvice"></bean>
+	<bean id="log" class="com.ezen.spring.common.AroundAdvice"></bean>
+	<bean id="after" class="com.ezen.spring.common.AfterAdvice"></bean>
 	
 	<!-- AOP 동작 설정 -->
 	<!-- <aop:config>: aop 설정의 루트 엘리먼트. 항상 aop:config로 aop 설정을 시작 -->
@@ -67,8 +68,13 @@
 		<!-- aop:aspect: 포인트컷과 어드바이스가 결합되는 설정 -->
 		<aop:aspect ref="log">
 			<!-- 어드바이스: 공통으로 추가될 기능 코드(printLogging) -->
-			<aop:after-throwing method="afterThrowingMethod" pointcut-ref="allpointcut"/>
+			<aop:around method="aroundMethod" pointcut-ref="allpointcut"/>
 		</aop:aspect>
+		
+		<!-- <aop:aspect ref="after">
+			어드바이스: 공통으로 추가될 기능 코드(printLogging)
+			<aop:after method="afterMethod" pointcut-ref="allpointcut"/>
+		</aop:aspect> -->
 	</aop:config>
 	
 	
