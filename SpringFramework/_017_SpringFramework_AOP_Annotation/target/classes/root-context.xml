@@ -17,8 +17,7 @@
 	<context:component-scan base-package="com.ezen.spring"></context:component-scan>
 	
 	<!-- AOP 관련 어노테이션들을 읽어들여 AOP를 구현 -->
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
 	
 	<!-- bean 객체 생성 -->
 	<!-- 컨테이너가 구동되면서 자동으로 생성 -->
