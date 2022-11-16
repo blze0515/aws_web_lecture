@@ -29,3 +29,7 @@
     <delete></delete>
   </mapper>
   DAO에서 쿼리 호출 시 "namespace.select"
+  - <b>예제 프로젝트: _020_SpringFramework_Mybatis</b>
+3. 동적쿼리(Dynamic Query)
+- 조건에 따라 쿼리를 선택하여 실행
+- <if>, <foreach>, <choose><when></when><otherwise></otherwise></choose>

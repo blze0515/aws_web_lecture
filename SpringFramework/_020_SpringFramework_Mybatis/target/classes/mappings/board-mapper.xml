@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="BoardDAO">
+	<!-- 쿼리 작성 영역 -->
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO BOARD
+		VALUES (
+					(SELECT IFNULL(MAX(A.BOARD_NO), 0) + 1 FROM BOARD A),
+					#{boardTitle},
+					#{boardContent},
+					#{boardWriter},
+					now(),
+					0
+			   )
+	</insert>
+	
+	<update id="updateBoard" parameterType="board">
+	UPDATE BOARD
+		SET BOARD_TITLE = #{boardTitle},
+			BOARD_CONTENT = #{boardContent},
+			BOARD_WRITER = #{boardWriter}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+	DELETE
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+	<select id="getBoard" parameterType="board" resultType="board">
+	SELECT *
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<select id="getBoardList" parameterType="board" resultType="board">
+	SELECT *
+		FROM BOARD
+		WHERE 1 = 1
+		<if test="searchKeyword != null and !searchKeyword.equals('')">
+			AND BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Root Context(프로젝트 별로 파일 이름이 다를 수 있음)
+	: 부모 스프링 컨테이너를 만드는 설정 파일 -->
+	
+	<!-- component-scan: 대상 패키지에 있는 클래스들 중 어노테이션(@Component)가 선언된
+	클래스들을 찾아서 자동으로 객체로 만들어줌 -->
+	<context:component-scan base-package="com.ezen.spring"></context:component-scan>
+	
+	<!-- AOP 관련 어노테이션들을 읽어들여 AOP를 구현 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
+	
+	<!-- bean 객체 생성 -->
+	<!-- 컨테이너가 구동되면서 자동으로 생성 -->
+	<!-- 어떤 id로 어떤 객체를 생성할 건지 -->
+	<!-- init-method: 멤버변수 초기화가 필요한 객체들은 초기화 메소드를 만들어서 등록 -->
+	<!-- destroy-method: 객체 삭제되기 전에 해야할 동작들을 메소드로 지정 -->
+	<!-- lazy-init: 객체의 생성 시점 설정. false가 기본값. true 설정 시 객체를 요청할 때 생성 -->
+	<!-- scope: 객체 생성 방식(하나의 객체만 생성할지 여러개 객체를 생성할지) 지정. 기본 값 singleton.
+	            객체를 계속해서 생성하게 되면 메모리 부하가 걸리기 때문에 singleton으로 지정하는 것이 바람직하다. -->
+	<!-- 생성자 변경 시 <constructor-arg ref="매개변수로 가져갈 객체id, 숫자, 스트링 등">
+					 </constructor-arg> -->
+	<!-- 생성자 함수를 이용한 DI
+	<bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV">
+		<constructor-arg index="0" ref="apple"></constructor-arg>
+		<constructor-arg index="1" value="100000"></constructor-arg>
+	</bean> -->
+	
+	<!-- 세터함수를 이용한 DI -->
+	<!-- <bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV">
+		<property name="speaker" ref="apple"></property>
+		<property name="price" value="100000"></property>
+	</bean> -->
+	
+	<!-- p namespace를 이용한 세터함수 호출(DI) -->
+	<!-- <bean id="sTv" class="com.ezen.spring.polymorphism.SamsungTV"
+		  p:speaker-ref="apple" p:price="1000000">
+	</bean> -->
+
+	<!-- constructor-arg ref에 객체가 들어갈 경우 미리 생성된 객체를 사용해야됨
+	그래서 SonySpeaker도 bean객체로 등록 -->
+	<!-- <bean id="sony" class="com.ezen.spring.polymorphism.SonySpeaker"/>
+	<bean id="apple" class="com.ezen.spring.polymorphism.AppleSpeaker"/> -->
+	
+	<!-- ctrl + space: 클래스 명 자동 완성 -->
+	<!-- <bean id="lTv" class="com.ezen.spring.polymorphism.LgTV"/> -->
+	
+	<!-- AOP 설정 -->
+	<!-- 공통관심인 클래스는 bean객체로 미리 생성해야된다. -->
+	<!-- <bean id="log" class="com.ezen.spring.common.AroundAdvice"></bean>
+	<bean id="after" class="com.ezen.spring.common.AfterAdvice"></bean> -->
+	
+	<!-- AOP 동작 설정 -->
+	<!-- <aop:config>: aop 설정의 루트 엘리먼트. 항상 aop:config로 aop 설정을 시작 -->
+	<!-- <aop:config> -->
+		<!-- aop:pointcut: 공통 기능 코드가 실행될 메소드 지정 -->
+		<!-- <aop:pointcut id="allpointcut"
+					expression="execution(* com.ezen.spring.service..*Impl.*(..))"></aop:pointcut>
+		<aop:pointcut id="getpointcut"
+					expression="execution(* com.ezen.spring.service..*Impl.get*(..))"></aop:pointcut> -->
+		
+		<!-- aop:aspect: 포인트컷과 어드바이스가 결합되는 설정 -->
+		<!-- <aop:aspect ref="log">
+			어드바이스: 공통으로 추가될 기능 코드(printLogging)
+			aop:after-returning일 때 returning 속성을 사용하여 리턴값을 바인드변수와 매핑(속성값은 클래스에 설정한 바인드변수명과 일치해야된다.)
+			<aop:after-returning method="afterReturningMethod" pointcut-ref="allpointcut" returning="returnObj"/>
+			
+			aop:after-throwing일 때 바인드 변수 매핑은 throwing 속성을 사용한다.
+			<aop:around method="aroundMethod" pointcut-ref="allpointcut"/>
+		</aop:aspect> -->
+		
+		<!-- <aop:aspect ref="after">
+			어드바이스: 공통으로 추가될 기능 코드(printLogging)
+			<aop:after method="afterMethod" pointcut-ref="allpointcut"/>
+		</aop:aspect> -->
+	<!-- </aop:config> -->
+	
+	<!-- 외부 파일 참조 -->
+	<!-- classpath: ==> java build path의 source탭에 설정되어 있는 classpath 위치 -->
+	<context:property-placeholder location="classpath:config/db.properties"/>
+	
+	<!-- JDBC Template에서 사용할 DataSource 설정 -->
+	<!-- dataSource같은 bean객체는 정해진 id로 생성해야한다. -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	
+	<!-- DB 연결 세션관리 객체(SessionFactory 객체) -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- mybatis 설정 파일 위치 지정 -->
+		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	
+	<!-- Session 하나 씩 꺼내서 사용할 객체(SessionTemplate) -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- 어느 SessionFactory에서 꺼내서 사용할지 지정 -->
+		<constructor-arg ref="sessionFactory"></constructor-arg>
+	</bean>
+	
+	<!-- JDBC Template bean 객체로 등록 -->
+	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean> -->
+	
+	<!-- Transaction 설정(DDL이 끝난 후 자동으로 commit, rollback 호출) -->
+	<!-- TransactionManager 클래스를 bean 객체로 만들어서 Transaction을 관리 -->
+	<bean id="txManager" 
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>	  
+	</bean>
+	
+	<!-- TransactionManager로만은 Transaction이 관리되지 않음 -->
+	<!-- AOP로 어드바이스나 어드바이저 등을 설정해줘야 Transaction이 동작함 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- 어떤 메소드에서 transaction이 동작할지 설정 -->
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- aop로 포인트컷과 어드바이저 설정 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.ezen.spring.service..*(..))" 
+					  id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
+</beans>
