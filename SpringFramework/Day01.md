@@ -111,7 +111,7 @@
     TV 객체(SamungTV를 주입해서 SamsungTV사용, LgTV를 주입했을 때는 LgTV사용)
     TV tv;
     tv = new SamsungTV();
-    엘지티비로 바뀌기 전까지는 삼성티비 기능을 사용
+    엘지티비로 바뀌기 전까지는 삼성티비 기능을 사용ㅎ
     tv = new LgTV();
     엘지티비로 바뀐 후에는 엘지티비의 기능을 사용
   }

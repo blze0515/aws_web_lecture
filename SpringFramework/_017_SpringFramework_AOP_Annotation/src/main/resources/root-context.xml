@@ -84,19 +84,6 @@
 		</aop:aspect> -->
 	<!-- </aop:config> -->
 	
-	<!-- 외부 파일 참조 -->
-	<!-- classpath: ==> java build path의 source탭에 설정되어 있는 classpath 위치 -->
-	<context:property-placeholder location="classpath:config/db.properties"/>
-	
-	<!-- JDBC Template에서 사용할 DataSource 설정 -->
-	<!-- dataSource같은 bean객체는 정해진 id로 생성해야한다. -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driver}"></property>
-		<property name="url" value="${jdbc.url}"></property>
-		<property name="userName" value="${jdbc.username}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-	</bean>
-	
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.ezen.spring.service;
 
+import java.util.List;
+
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -26,16 +28,16 @@ public class BoardServiceTest {
 		boardService.insertBoard(boardVO);
 		
 		//4. 글 목록 조회 테스트
-//		List<BoardVO> boardList = boardService.getBoardList();
-//		for(int i = 0; i < boardList.size(); i++) {
-//			System.out.println(boardList.get(i).toString());
-//		}
+		List<BoardVO> boardList = boardService.getBoardList();
+		for(int i = 0; i < boardList.size(); i++) {
+			System.out.println(boardList.get(i).toString());
+		}
 		
 		//4-1. 글 상세 조회
-		BoardVO board = new BoardVO();
-		board.setBoardNo(2);
-		BoardVO printBoard = boardService.getBoard(board);
-		System.out.println(printBoard.toString());
+//		BoardVO board = new BoardVO();
+//		board.setBoardNo(2);
+//		BoardVO printBoard = boardService.getBoard(board);
+//		System.out.println(printBoard.toString());
 		
 		//5. 스프링 컨테이너 종료
 		applicationContext.close();
