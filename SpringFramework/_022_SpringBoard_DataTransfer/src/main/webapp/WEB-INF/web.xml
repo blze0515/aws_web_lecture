@@ -37,7 +37,7 @@
 		<!-- .do 호출로 설정하는 것은 스프링 프레임워크에 관행
 			 쿠팡에서는 .pang을 사용 -->
 		<!-- 스프링 부트에서는 .do를 뺀 url패턴을 사용 -->
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 	<!-- 자바와 jsp에서 데이터 전송이 일어날 경우에 한글이 깨지는 상황을 

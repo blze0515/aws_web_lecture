@@ -34,14 +34,14 @@
 	</bean>
 	
 	<!-- Mybatis 설정 -->
-	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
-	</bean>
+	</bean> -->
 	
-	<bean class="org.mybatis.spring.SqlSessionTemplate">
+	<!-- <bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sessionFactory"></constructor-arg>
-	</bean>
+	</bean> -->
 	
 	<!-- Transaction 설정 -->
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

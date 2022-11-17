@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDAO {
-	@Autowired
-	private SqlSessionTemplate mybatis;
+//	@Autowired
+//	private SqlSessionTemplate mybatis;
 }
