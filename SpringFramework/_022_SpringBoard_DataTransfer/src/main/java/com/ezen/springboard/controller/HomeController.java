@@ -1,12 +1,12 @@
 package com.ezen.springboard.controller;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,15 +103,35 @@ public class HomeController {
 	//model: 키는 String, 값은 Object로 되어있어서 
 	//		 어떠한 형태의 값이던지 전송가능
 	@GetMapping("/hello.do")
-	public String hello(Model model) {
-		model.addAttribute("hello", "12345");
-		List<Integer> mapList = new ArrayList<Integer>();
+	public String hello(Model model, HttpServletRequest request,
+			HttpSession session) {
+		//1. Model객체 사용
+//		model.addAttribute("hello", "12345");
+//		List<Integer> mapList = new ArrayList<Integer>();
+//		
+//		for(int i = 0; i < 10; i++) {
+//			mapList.add(i);
+//		}
+//		
+//		model.addAttribute("list", mapList);
 		
-		for(int i = 0; i < 10; i++) {
-			mapList.add(i);
-		}
+		//2. HttpServletRequest 객체 사용
+		//   HttpServletRequest와 Model의 영역이 같다.
+//		request.setAttribute("hello", "67890");
+//		
+//		List<Integer> mapList = new ArrayList<Integer>();
+//		
+//		for(int i = 10; i < 20; i++) {
+//			mapList.add(i);
+//		}
+//		
+//		request.setAttribute("list", mapList);
 		
-		model.addAttribute("list", mapList);
+		//3. HttpSession 객체 사용
+		//   HttpSession > HttpServletRequest
+		//   HttpSession은 session 끊길 때까지 유지
+		//   로그인한 유저의 정보를 담아주거나 현재 연결돼있는 세션의 정보를 담아줄 때 사용
+		session.setAttribute("hello", "246810");
 		
 		return "home";
 	}
