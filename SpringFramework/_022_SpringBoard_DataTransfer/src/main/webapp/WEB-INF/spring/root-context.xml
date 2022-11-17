@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="com.ezen.springboard.service"></context:component-scan>
+	
+	<!-- DB연동 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/studydb?serverTimezone=UTC"></property>
+		<property name="username" value="study"></property>
+		<property name="password" value="!ezen1234"></property>
+		
+		<!-- 커넥션풀 설정 -->
+		<!-- 연결 풀이 최초로 생성될 때 가지고 있을 커넥션의 개수. 기본 값은 0 -->
+		<property name="initialSize" value="0"></property>
+		<!-- 동시에 최대로 가질수 있는 커넥션의 개수. 기본값은 8 -->
+		<property name="maxTotal" value="8"></property>
+		<!-- 사용하지 않는 상태로 가질수 있는 최대 커넥션의 개수. 기본 값은 8 -->
+		<property name="maxIdle" value="8"></property>
+		<!-- 사용하지 않는 상태로 가질수 있는 최소 커넥션의 개수. 기본 값은 0 -->
+		<property name="minIdle" value="0"></property>
+		<!-- 커넥션이 모두 사용중일때 다음 사용자가 대기해야하는 최대 시간. 기본 값은 -1.
+		    -1은 무한정 대기를 의미. -->
+		<property name="maxWaitMillis" value="-1"></property>
+	</bean>
+	
+	<!-- Mybatis 설정 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"></constructor-arg>
+	</bean>
+	
+	<!-- Transaction 설정 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="select*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.ezen.springboard.service..*Impl.*(..))" id="txPointcut"/>
+		
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</beans>
