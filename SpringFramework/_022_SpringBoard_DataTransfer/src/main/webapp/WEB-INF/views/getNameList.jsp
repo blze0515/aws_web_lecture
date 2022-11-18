@@ -10,10 +10,12 @@
 <body>
 	<div id="divNameList">
 		<c:forEach var="name" items="${nameList }">
-			firstName: ${name.firstName }<br>
+			<input type="hidden" name="nameNo" id="nameNo" value="${name.nameNo }">
+			<a href="getName.do?nameNo=${name.nameNo }">firstName: ${name.firstName }</a><br>
 			lastName: ${name.lastName }<br>
 			job: ${name.job }<br>
-			age: ${name.age }<br><hr>
+			age: ${name.age }<br>
+			<a href="deleteName.do?nameNo=${name.nameNo }">삭제</a><br><hr>
 		</c:forEach>
 	</div>
 </body>

@@ -8,4 +8,6 @@ public interface HomeService {
 	void insertName(NameVO nameVO);
 	
 	List<NameVO> getNameList();
+	
+	NameVO getName(int nameNo);
 }

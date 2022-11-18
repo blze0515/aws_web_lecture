@@ -22,4 +22,27 @@ public class HomeServiceImpl implements HomeService {
 	public List<NameVO> getNameList() {
 		return homeDAO.getNameList();
 	}
+	
+	@Override
+	public NameVO getName(int nameNo) {
+		return homeDAO.getName(nameNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,11 +1,18 @@
 package com.ezen.springboard.vo;
 
 public class NameVO {
+	private int nameNo;
 	private String firstName;
 	private String lastName;
 	private String job;
 	private int age;
 	
+	public int getNameNo() {
+		return nameNo;
+	}
+	public void setNameNo(int nameNo) {
+		this.nameNo = nameNo;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

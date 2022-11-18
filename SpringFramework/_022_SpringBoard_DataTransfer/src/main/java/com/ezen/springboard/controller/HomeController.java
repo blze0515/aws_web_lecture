@@ -160,8 +160,14 @@ public class HomeController {
 		return "getNameList";
 	}
 	
-	
-	
+	@GetMapping("getName.do")
+	public String getName(@RequestParam("nameNo") int nameNo, Model model) {
+		NameVO name = homeService.getName(nameNo);
+		
+		model.addAttribute("name", name);
+		
+		return "getName";
+	}
 	
 	
 	

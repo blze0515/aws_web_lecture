@@ -20,4 +20,27 @@ public class HomeDAO {
 	public List<NameVO> getNameList() {
 		return mybatis.selectList("HomeDAO.getNameList");
 	}
+	
+	public NameVO getName(int nameNo) {
+		return mybatis.selectOne("HomeDAO.getName", nameNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
