@@ -184,7 +184,16 @@ public class HomeController {
 	}
 	
 	
-	
+	@PostMapping("updateName.do")
+	public String updateName(@RequestParam Map<String, Object> paramMap) {
+		homeService.updateName(paramMap);
+		
+		//redirect:해당주소 => jsp를 찾아가지 않고 해당주소를 다시 호출
+		//redirect vs forward
+		//redirect: WAS단에서 실행돼서 주소창의 url도 변경
+		//forward: client(브라우저)단에서 실행돼서 주소창의 url이 변경되지 않음
+		return "redirect:getNameList.do";
+	}
 	
 	
 	

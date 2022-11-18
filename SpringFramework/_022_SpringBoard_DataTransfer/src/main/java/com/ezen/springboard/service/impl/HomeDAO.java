@@ -1,6 +1,7 @@
 package com.ezen.springboard.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class HomeDAO {
 		mybatis.delete("HomeDAO.deleteName", nameNo);
 	}
 	
-	
+	public void updateName(Map<String, Object> paramMap) {
+		mybatis.update("HomeDAO.updateName", paramMap);
+	}
 	
 	
 	

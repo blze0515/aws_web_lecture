@@ -1,6 +1,7 @@
 package com.ezen.springboard.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,9 @@ public class HomeServiceImpl implements HomeService {
 		homeDAO.deleteName(nameNo);
 	}
 	
-	
+	public void updateName(Map<String, Object> paramMap) {
+		homeDAO.updateName(paramMap);
+	}
 	
 	
 	

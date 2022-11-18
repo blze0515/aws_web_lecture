@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 쿼리문의 결과로 오는 컬럼이름을 카멜케이스로 변경 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+	</settings>
+	
+	<!-- VO객체들 별칭 지정 -->
+	<typeAliases>
+		<typeAlias type="com.ezen.spring.vo.BoardVO" alias="board"></typeAlias>
+		<typeAlias type="com.ezen.spring.vo.UserVO" alias="user"></typeAlias>
+	</typeAliases>
+	
+	<!-- 사용할 SQL 매퍼 위치 지정 -->
+	<mappers>
+		<mapper resource="mappings/board-mapper.xml"></mapper>
+	</mappers>
+</configuration>

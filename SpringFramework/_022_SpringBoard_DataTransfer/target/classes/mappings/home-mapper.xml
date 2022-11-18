@@ -36,7 +36,14 @@
 		WHERE NAME_NO = #{nameNo}
 	</delete>
 	
-	
+	<update id="updateName" parameterType="map">
+		UPDATE T_NAME
+			SET FIRST_NAME = #{firstName},
+				LAST_NAME = #{lastName},
+				JOB = #{job},
+				AGE = #{age}
+			WHERE NAME_NO = #{nameNo}
+	</update>
 	
 	
 	
