@@ -169,7 +169,19 @@ public class HomeController {
 		return "getName";
 	}
 	
-	
+	@GetMapping("deleteName.do")
+	public String deleteName(@RequestParam("nameNo") int nameNo, Model model) {
+		//1. nameNo에 해당되는 사용자 삭제
+		homeService.deleteName(nameNo);		
+		
+		//2. 삭제된 사용자를 제외한 사용자목록 조회
+		List<NameVO> nameList = homeService.getNameList();
+		
+		//3. 재조회된 사용자목록을 화면으로 전달
+		model.addAttribute("nameList", nameList);
+		
+		return "getNameList";
+	}
 	
 	
 	

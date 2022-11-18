@@ -25,7 +25,11 @@ public class HomeDAO {
 		return mybatis.selectOne("HomeDAO.getName", nameNo);
 	}
 	
-	
+	public void deleteName(int nameNo) {
+		//파라미터가 두개 이상 필요할 때는
+		//Map이나 VO 담은 후에 쿼리로 전달
+		mybatis.delete("HomeDAO.deleteName", nameNo);
+	}
 	
 	
 	

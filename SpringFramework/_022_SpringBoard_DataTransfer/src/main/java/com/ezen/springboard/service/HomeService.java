@@ -10,4 +10,6 @@ public interface HomeService {
 	List<NameVO> getNameList();
 	
 	NameVO getName(int nameNo);
+	
+	void deleteName(int nameNo);
 }

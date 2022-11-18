@@ -28,6 +28,13 @@ public class HomeServiceImpl implements HomeService {
 		return homeDAO.getName(nameNo);
 	}
 	
+	@Override
+	public void deleteName(int nameNo) {
+		homeDAO.deleteName(nameNo);
+	}
+	
+	
+	
 	
 	
 	
