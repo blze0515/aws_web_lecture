@@ -5,16 +5,17 @@
 	<title>Home</title>
 </head>
 <body>
-<form action="hello.do" method="get">
+<form action="insertName.do" method="post">
 	<input name="firstName">
 	<input name="lastName">
 	<input name="job">
 	<input name="age">
-	<button>get</button>
+	<button>db저장</button>
 </form>
 <p>${hello }</p>
 <c:forEach var="num" items="${list }" varStatus="status">
 	<p>${num}, ${status.index }, ${status.count }</p>
 </c:forEach>
+<a href="getNameList.do">이름목록으로 이동</a>
 </body>
 </html>

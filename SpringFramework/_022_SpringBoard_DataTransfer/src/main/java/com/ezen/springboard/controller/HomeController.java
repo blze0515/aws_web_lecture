@@ -2,6 +2,7 @@ package com.ezen.springboard.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ezen.springboard.service.HomeService;
 import com.ezen.springboard.vo.NameVO;
 
 /**
@@ -25,6 +28,8 @@ import com.ezen.springboard.vo.NameVO;
  */
 @Controller
 public class HomeController {
+	@Autowired
+	private HomeService homeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -135,6 +140,29 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	@PostMapping("insertName.do")
+	public String insertName(NameVO nameVO) {
+		homeService.insertName(nameVO);
+		
+		return "home";
+	}
+	
+	@GetMapping("getNameList.do")
+	public String getNameList(Model model) {
+		//model에 담아서 화면으로 넘겨줄 데이터 가져오기
+		//FIRST_NAME -> firstName (맵으로 사용할 경우)
+		List<NameVO> nameList = homeService.getNameList();
+		
+		//가져온 데이터를 model 객체에 담아서 화면에 전달
+		model.addAttribute("nameList", nameList);
+		
+		return "getNameList";
+	}
+	
+	
+	
+	
 	
 	
 	

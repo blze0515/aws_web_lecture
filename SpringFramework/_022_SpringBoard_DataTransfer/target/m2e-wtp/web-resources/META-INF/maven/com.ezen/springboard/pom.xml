@@ -74,16 +74,22 @@
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis-spring</artifactId>
 		    <version>2.0.7</version>
-		</dependency>		
-		
-		<!-- https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-core -->
-		<dependency>
-		    <groupId>org.apache.ibatis</groupId>
-		    <artifactId>ibatis-core</artifactId>
-		    <version>3.0</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/cglib/cglib -->
+		<!-- 웹에서 AOP 동작하게 해주는 라이브러리 -->
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>3.3.0</version>
+		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-pool2</artifactId>
+		    <version>2.11.1</version>
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
