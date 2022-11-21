@@ -42,7 +42,7 @@
 <body>
 	<jsp:include page="${pageContext.request.contextPath }/header.jsp"></jsp:include>
 	<div class="form-wrapper">
-		<form id="joinForm" action="" method="post">
+		<form id="joinForm" action="/user/join.do" method="post">
 			<h3>회원가입</h3>
 			<div class="label-wrapper">
 				<label for="userId">아이디</label>
@@ -77,5 +77,72 @@
 		</form>
 	</div>
 	<jsp:include page="${pageContext.request.contextPath }/footer.jsp"></jsp:include>
+	
+	<script>
+		$(function() {
+			$("#btnIdCheck").on("click", function() {
+				/* $.ajax({
+					url: '/user/test.do',
+					type: 'post',
+					data: $("#joinForm").serialize(),
+					success: function(obj) {
+						//json문자열로 온다.
+						console.log(obj);
+						
+						//json문자열을 json으로 변환
+						var jsonObj = JSON.parse(obj);
+						console.log(jsonObj.firstName);
+						console.log(jsonObj.lastName);
+						console.log(jsonObj.user);
+						console.log(jsonObj.user.userId);
+						console.log(jsonObj.user.userPw);
+						
+						//동적 태그를 만들어서 가져온 데이터를 표출(getBoardList에서 진행)
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				}); */
+				
+				$.ajax({
+					url: "/user/idCheck.do",
+					type: "post",
+					data: $("#joinForm").serialize(),
+					success: function(obj) {
+						console.log(obj);
+						
+						if(obj == 'duplicatedId') {
+							alert("중복된 아이디입니다.");
+							$("#userId").focus();
+						} else {
+							alert("사용가능한 아이디입니다.");
+							$("#btnIdCheck").attr("disabled", true);
+						}
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				})
+			});
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
 </body>
 </html>

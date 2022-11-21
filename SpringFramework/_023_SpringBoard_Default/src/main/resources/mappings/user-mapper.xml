@@ -5,5 +5,9 @@
 	
 <mapper namespace="UserDAO">
 	<!-- 쿼리 작성 영역 -->
-	
+	<select id="idCheck" parameterType="string" resultType="int">
+		SELECT COUNT(USER_ID)
+			FROM T_USER
+			WHERE USER_ID = #{userId}
+	</select>
 </mapper>

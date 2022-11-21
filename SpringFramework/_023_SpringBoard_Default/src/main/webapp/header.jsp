@@ -37,7 +37,7 @@
 		font-size: 0.9rem;
 	}
 </style>
-<!-- <script src="js/jquery-3.6.0.min.js"></script> -->
+<script src="${pageContext.request.contextPath }/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<header style="display: flex; justify-content: space-between; align-items: center; background: skyblue;">
@@ -45,7 +45,7 @@
 		<!-- /를 붙이면 무조건 루트주소 뒤에 붙는다. -->
 		<!-- localhost:8090/user/login.do -->
 		<!-- localhost:8090/hello.do -->
-			<a href="/index.jsp"></a>
+			<a href="/index.jsp">홈</a>
 		</h1>
 		<nav>
 			<ul class="main-nav">
