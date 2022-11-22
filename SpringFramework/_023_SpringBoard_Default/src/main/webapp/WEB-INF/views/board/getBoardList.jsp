@@ -12,11 +12,11 @@
 		<h3>게시글 목록</h3>
 		<table border="1" style="width: 700px; border-collapse: collapse;">
 			<tr>
-				<th style="backgrond: orange; width: 100px;">번호</th>
-				<th style="backgrond: orange; width: 200px;">제목</th>
-				<th style="backgrond: orange; width: 150px;">작성자</th>
-				<th style="backgrond: orange; width: 150px;">등록일</th>
-				<th style="backgrond: orange; width: 100px;">조회수</th> 
+				<th style="backgrond: skyblue; width: 100px;">번호</th>
+				<th style="backgrond: skyblue; width: 200px;">제목</th>
+				<th style="backgrond: skyblue; width: 150px;">작성자</th>
+				<th style="backgrond: skyblue; width: 150px;">등록일</th>
+				<th style="backgrond: skyblue; width: 100px;">조회수</th> 
 			</tr>
 			<tr>
 				<td>1</td>

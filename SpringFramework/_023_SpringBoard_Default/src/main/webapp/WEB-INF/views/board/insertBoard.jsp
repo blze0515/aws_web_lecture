@@ -10,10 +10,10 @@
 	<jsp:include page="${pageContext.request.contextPath }/header.jsp"></jsp:include>
 	<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 		<h3>새 글 등록</h3>
-		<form>
+		<form action="/board/insertBoard.do" method="post">
 			<table border="1" style="border-collapse: collapse">
 				<tr>
-					<td style="background: orange; width: 70px;">
+					<td style="background: skyblue; width: 70px;">
 						제목
 					</td>
 					<td style="text-align: left;">
@@ -21,7 +21,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background: orange;">
+					<td style="background: skyblue;">
 						작성자
 					</td>
 					<td style="text-align: left;">
@@ -29,7 +29,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background: orange; width: 70px;">
+					<td style="background: skyblue; width: 70px;">
 						내용
 					</td>
 					<td style="text-align: left;">

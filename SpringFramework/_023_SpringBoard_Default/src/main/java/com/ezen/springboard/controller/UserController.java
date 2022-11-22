@@ -104,6 +104,15 @@ public class UserController {
 		return returnStr;
 	}
 	
+//	@RequestMapping("login.do")
+//	public String login(UserVO userVO) {
+//		//화면으로 이동
+//		if(userVO.getUserId() == null)
+//			return "user/login";
+//		
+//		//로직처리
+//	}
+	
 	//로그인 화면으로 이동
 	@GetMapping("/login.do")
 	public String loginView() {
@@ -136,7 +145,12 @@ public class UserController {
 		}
 	}
 	
-	
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:/index.jsp";
+	}
 	
 	
 	

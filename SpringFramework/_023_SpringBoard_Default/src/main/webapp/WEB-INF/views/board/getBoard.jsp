@@ -13,7 +13,7 @@
 		<form>
 			<table border="1" style="border-collapse: collapse;">
 				<tr>
-					<td style="background: orange; width: 70px">
+					<td style="background: skyblue; width: 70px">
 						제목
 					</td>
 					<td style="text-align: left">
@@ -21,7 +21,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background: orange;">
+					<td style="background: skyblue;">
 						작성자
 					</td>
 					<td style="text-align: left">
@@ -29,7 +29,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background: orange;">
+					<td style="background: skyblue;">
 						내용
 					</td>
 					<td style="text-align: left">
@@ -37,7 +37,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background: orange;">
+					<td style="background: skyblue;">
 						작성일
 					</td>
 					<td style="text-align: left">
@@ -45,7 +45,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background: orange;">
+					<td style="background: skyblue;">
 						조회수
 					</td>
 					<td style="text-align: left">
