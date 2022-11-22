@@ -40,6 +40,7 @@
 	
 	<div class="form-wrapper">
 		<form id="loginForm">
+			<input type="hidden" id="joinMsg" value="${joinMsg }">
 			<h3>로그인</h3>
 			<div class="label-wrapper">
 				<label for="userId">아이디</label>
@@ -56,5 +57,14 @@
 	</div>
 	
 	<jsp:include page="${pageContext.request.contextPath }/footer.jsp"></jsp:include>
+	
+	<script>
+		$(function() {
+			//회원가입 성공 시 메시지 출력
+			if($("#joinMsg").val() != "" && $("#joinMsg").val() != null) {
+				alert($("#joinMsg").val());
+			}
+		});
+	</script>
 </body>
 </html>

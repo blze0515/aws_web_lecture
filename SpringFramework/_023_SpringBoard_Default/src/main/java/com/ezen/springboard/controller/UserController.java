@@ -1,10 +1,8 @@
 package com.ezen.springboard.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ezen.springboard.service.user.UserService;
 import com.ezen.springboard.vo.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("/user")
@@ -29,9 +26,18 @@ public class UserController {
 	}
 	
 	//post방식은 해당 로직 처리
-	@PostMapping("/join.do")
-	public void join(UserVO userVO) {
+	//회원가입 진행
+	@PostMapping(value="/join.do", produces="application/text; charset=UTF-8")
+	public String join(UserVO userVO, Model model) {
+		int joinResult = userService.join(userVO);
 		
+		if(joinResult == 0) {
+			model.addAttribute("joinMsg", "회원가입에 실패하셨습니다. 관리자에게 문의해주세요.");
+			return "user/join";
+		}
+		
+		model.addAttribute("joinMsg", "회원가입에 성공했습니다. 로그인해주세요.");
+		return "user/login";
 	}
 	
 	/*
@@ -63,7 +69,7 @@ public class UserController {
 	 * return json; }
 	 */
 	
-	@GetMapping("/idCheck.do")
+	@PostMapping("/idCheck.do")
 	@ResponseBody
 	public String idCheck(UserVO userVO) throws JsonProcessingException {
 //		ObjectMapper mapper = new ObjectMapper();
@@ -95,7 +101,6 @@ public class UserController {
 		
 		return returnStr;
 	}
-	
 	
 	
 	

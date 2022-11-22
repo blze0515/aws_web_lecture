@@ -10,4 +10,24 @@
 			FROM T_USER
 			WHERE USER_ID = #{userId}
 	</select>
+	
+	<insert id="join" parameterType="user">
+	<![CDATA[
+		INSERT INTO T_USER(
+			USER_ID,
+			USER_PW,
+			USER_NM,
+			USER_MAIL,
+			USER_TEL,
+			USER_REGDATE
+		) VALUES (
+			#{userId},
+			#{userPw},
+			#{userNm},
+			#{userMail},
+			#{userTel},
+			NOW()
+		)
+	]]>
+	</insert>
 </mapper>
