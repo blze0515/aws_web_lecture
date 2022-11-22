@@ -1,5 +1,7 @@
 package com.ezen.springboard.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,9 +104,37 @@ public class UserController {
 		return returnStr;
 	}
 	
+	//로그인 화면으로 이동
+	@GetMapping("/login.do")
+	public String loginView() {
+		return "user/login";
+	}
 	
-	
-	
+	//로그인 처리
+	@PostMapping("/login.do")
+	@ResponseBody
+	//HttpSession: 현재 WAS에 접속한 유저의 세션정보를 담고있는 객체
+	//			   세션에서 사용할 데이터를 담아줄 수 있다.
+	public String login(UserVO userVO, HttpSession session) {
+		//1. 아이디 체크
+		int idCheck = userService.idCheck(userVO.getUserId());
+		
+		if(idCheck < 1) {
+			return "idFail";
+		} else {
+			UserVO loginUser = userService.login(userVO);
+			
+			//2. 비밀번호 체크
+			if(loginUser == null) {
+				return "pwFail";
+			}
+			
+			//3. 로그인 성공
+			//세션에 로그인한 유저의 정보를 담아서 관리
+			session.setAttribute("loginUser", loginUser);
+			return "loginSuccess";
+		}
+	}
 	
 	
 	

@@ -7,4 +7,6 @@ public interface UserService {
 	int idCheck(String userId);
 	//회원가입
 	int join(UserVO userVO);
+	//로그인
+	UserVO login(UserVO userVO);
 }

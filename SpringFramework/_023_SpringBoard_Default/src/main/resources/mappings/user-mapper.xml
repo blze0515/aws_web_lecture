@@ -30,4 +30,35 @@
 		)
 	]]>
 	</insert>
+	
+	<select id="login" parameterType="user" resultType="user">
+	<![CDATA[
+		SELECT USER_ID
+			 , USER_NM
+			 , USER_MAIL
+			 , USER_TEL
+			 , USER_ROLE
+			FROM T_USER
+			WHERE USER_ID = #{userId}
+			  AND USER_PW = #{userPw}
+	]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
