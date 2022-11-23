@@ -1,23 +1,19 @@
 package com.ezen.springboard.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.springboard.service.board.BoardService;
 import com.ezen.springboard.vo.BoardVO;
 import com.ezen.springboard.vo.UserVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("/board")
@@ -40,27 +36,31 @@ public class BoardController {
 //		boardService.login();
 //	}
 	//게시글 목록 화면으로 이동
-	@GetMapping("/getBoardList.do")
-	public String getBoardListView() {
+	@RequestMapping("/getBoardList.do")
+	public String getBoardList(Model model) {
+		List<BoardVO> boardList = boardService.getBoardList();
+		
+		model.addAttribute("boardList", boardList);
+		
 		return "board/getBoardList";
 	}
 	
-	//게시글 목록 가져오는 로직처리
-	@PostMapping(value="/getBoardList.do", produces="application/text; charset=UTF-8")
-	@ResponseBody
-	public String getBoardList() throws JsonProcessingException{
-		ObjectMapper mapper = new ObjectMapper();
-		
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
-		List<BoardVO> boardList = boardService.getBoardList();
-		
-		returnMap.put("boardList", boardList);
-		
-		String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(returnMap);
-		
-		return jsonStr;
-	}
+	//게시글 목록 가져오는 로직처리(Ajax)
+//	@PostMapping(value="/getBoardList.do", produces="application/text; charset=UTF-8")
+//	@ResponseBody
+//	public String getBoardList() throws JsonProcessingException{
+//		ObjectMapper mapper = new ObjectMapper();
+//		
+//		Map<String, Object> returnMap = new HashMap<String, Object>();
+//		
+//		List<BoardVO> boardList = boardService.getBoardList();
+//		
+//		returnMap.put("boardList", boardList);
+//		
+//		String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(returnMap);
+//		
+//		return jsonStr;
+//	}
 	
 	//게시글 등록 화면으로 이동
 	@GetMapping("/insertBoard.do")
