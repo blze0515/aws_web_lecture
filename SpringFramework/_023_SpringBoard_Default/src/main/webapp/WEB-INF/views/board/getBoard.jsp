@@ -11,7 +11,8 @@
 	<jsp:include page="${pageContext.request.contextPath }/header.jsp"></jsp:include>
 	<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 		<h3>게시글 상세</h3>
-		<form>
+		<form action="/board/updateBoard.do" method="post">
+			<input type="hidden" name="boardNo" id="boardNo" value="${board.boardNo }">
 			<table border="1" style="border-collapse: collapse;">
 				<tr>
 					<td style="background: skyblue; width: 70px">
@@ -26,7 +27,7 @@
 						작성자
 					</td>
 					<td style="text-align: left">
-						<input type="text" name="boardWriter" id="boardWriter" value="${board.boardWriter }">
+						<input type="text" name="boardWriter" id="boardWriter" value="${board.boardWriter }" readonly>
 					</td>
 				</tr>
 				<tr>
@@ -62,9 +63,45 @@
 		</form>
 		<hr/>
 		<a href="/board/insertBoard.do">글 등록</a>
-		<a href="#">글 삭제</a>
+		<a href="/board/deleteBoard.do?boardNo=${board.boardNo }" id="deleteBtn">글 삭제</a>
 		<a href="/board/getBoardList.do">글 목록</a>
 	</div>
 	<jsp:include page="${pageContext.request.contextPath }/footer.jsp"></jsp:include>
+	
+	<script>
+		$(function() {
+			//세션, 리퀘스트 스코프에 담겨진 데이터를 빼오는 방식
+			const loginUserId = '${loginUser.userId}';
+			const boardWriter = '${board.boardWriter}';
+			
+			//게시글 작성자와 로그인 유저가 다르면 게시글 수정 못하게 설정
+			if(loginUserId !== boardWriter) {
+				$("#btnWrap").hide();
+				$("#deleteBtn").hide();
+				$("#boardTitle").attr("readonly", true);
+				$("#boardContent").attr("readonly", true);
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		});
+	</script>
 </body>
 </html>

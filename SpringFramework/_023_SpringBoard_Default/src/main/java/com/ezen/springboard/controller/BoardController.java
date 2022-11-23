@@ -88,9 +88,6 @@ public class BoardController {
 	//게시글 상세 조회
 	@RequestMapping("/getBoard.do")
 	public String getBoard(@RequestParam("boardNo") int boardNo, Model model) {
-		//조회수 증가
-		boardService.updateBoardCnt(boardNo);
-		
 		BoardVO board = boardService.getBoard(boardNo);
 		
 		model.addAttribute("board", board);
@@ -98,7 +95,14 @@ public class BoardController {
 		return "board/getBoard";
 	}
 	
-	
+	//조회수 증가
+	@RequestMapping("/updateBoardCnt.do")
+	public String updateBoardCnt(@RequestParam("boardNo") int boardNo) {
+		//조회수 증가
+		boardService.updateBoardCnt(boardNo);
+		
+		return "redirect:/board/getBoard.do?boardNo=" + boardNo;
+	}
 	
 	
 	

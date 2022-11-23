@@ -24,7 +24,7 @@
 				<tr>
 					<td>${board.boardNo }</td>
 					<td>
-						<a href="/board/getBoard.do?boardNo=${board.boardNo }">${board.boardTitle }</a>
+						<a href="/board/updateBoardCnt.do?boardNo=${board.boardNo }">${board.boardTitle }</a>
 					</td>
 					<td>${board.boardWriter }</td>
 					<td>
