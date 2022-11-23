@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezen.springboard.service.board.BoardService;
 import com.ezen.springboard.vo.BoardVO;
@@ -84,7 +85,18 @@ public class BoardController {
 		return "redirect:/board/getBoardList.do";
 	}
 	
-	
+	//게시글 상세 조회
+	@RequestMapping("/getBoard.do")
+	public String getBoard(@RequestParam("boardNo") int boardNo, Model model) {
+		//조회수 증가
+		boardService.updateBoardCnt(boardNo);
+		
+		BoardVO board = boardService.getBoard(boardNo);
+		
+		model.addAttribute("board", board);
+		
+		return "board/getBoard";
+	}
 	
 	
 	

@@ -31,9 +31,9 @@
 		WHERE BOARD_NO = #{boardNo}
 	</delete>
 	
-	<select id="getBoard" parameterType="board" resultType="board">
+	<select id="getBoard" parameterType="int" resultType="board">
 	SELECT *
-		FROM BOARD
+		FROM T_BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
@@ -41,4 +41,29 @@
 	SELECT *
 		FROM T_BOARD
 	</select>
+	
+	<update id="updateBoardCnt" parameterType="int">
+		UPDATE T_BOARD
+			SET BOARD_CNT = BOARD_CNT + 1
+			WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

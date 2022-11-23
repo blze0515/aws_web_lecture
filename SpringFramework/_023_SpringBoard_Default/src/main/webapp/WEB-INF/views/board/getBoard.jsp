@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
 						제목
 					</td>
 					<td style="text-align: left">
-						<input type="text" name="boardTitle" id="boardTitle" value="제목1">
+						<input type="text" name="boardTitle" id="boardTitle" value="${board.boardTitle }">
 					</td>
 				</tr>
 				<tr>
@@ -25,7 +26,7 @@
 						작성자
 					</td>
 					<td style="text-align: left">
-						<input type="text" name="boardWriter" id="boardWriter" value="작성자1">
+						<input type="text" name="boardWriter" id="boardWriter" value="${board.boardWriter }">
 					</td>
 				</tr>
 				<tr>
@@ -33,7 +34,7 @@
 						내용
 					</td>
 					<td style="text-align: left">
-						<textarea name="boardContent" id="boardContent" cols="40" rows="10">내용1</textarea>
+						<textarea name="boardContent" id="boardContent" cols="40" rows="10">${board.boardContent }</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -41,7 +42,7 @@
 						작성일
 					</td>
 					<td style="text-align: left">
-						2022.07.13
+						<fmt:formatDate value="${board.boardRegdate }" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>
@@ -49,7 +50,7 @@
 						조회수
 					</td>
 					<td style="text-align: left">
-						1
+						${board.boardCnt }
 					</td>
 				</tr>
 				<tr id="btnWrap">

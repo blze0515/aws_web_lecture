@@ -23,6 +23,18 @@ public class BoardDAO {
 	
 	
 	
+	public BoardVO getBoard(int boardNo) {
+		return mybatis.selectOne("BoardDAO.getBoard", boardNo);
+	}
+	
+	public void updateBoardCnt(int boardNo) {
+		mybatis.update("BoardDAO.updateBoardCnt", boardNo);
+	}
+	
+	
+	
+	
+	
 	
 	
 	
