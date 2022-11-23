@@ -25,7 +25,7 @@
 						작성자
 					</td>
 					<td style="text-align: left;">
-						<input type="text" name="boardWriter">
+						<input type="text" name="boardWriter" value="${loginUser.userId }" readonly>
 					</td>
 				</tr>
 				<tr>

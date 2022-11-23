@@ -6,9 +6,9 @@
 <mapper namespace="BoardDAO">
 	<!-- 쿼리 작성 영역 -->
 	<insert id="insertBoard" parameterType="board">
-		INSERT INTO BOARD
+		INSERT INTO T_BOARD
 		VALUES (
-					(SELECT IFNULL(MAX(A.BOARD_NO), 0) + 1 FROM BOARD A),
+					(SELECT IFNULL(MAX(A.BOARD_NO), 0) + 1 FROM T_BOARD A),
 					#{boardTitle},
 					#{boardContent},
 					#{boardWriter},
@@ -37,12 +37,8 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
-	<select id="getBoardList" parameterType="board" resultType="board">
+	<select id="getBoardList" resultType="board">
 	SELECT *
-		FROM BOARD
-		WHERE 1 = 1
-		<if test="searchKeyword != null and !searchKeyword.equals('')">
-			AND BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
+		FROM T_BOARD
 	</select>
 </mapper>
