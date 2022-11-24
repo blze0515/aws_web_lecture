@@ -1,6 +1,7 @@
 package com.ezen.springboard.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -38,8 +39,8 @@ public class BoardController {
 //	}
 	//게시글 목록 화면으로 이동
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(Model model) {
-		List<BoardVO> boardList = boardService.getBoardList();
+	public String getBoardList(Model model, @RequestParam Map<String, String> paramMap) {
+		List<BoardVO> boardList = boardService.getBoardList(paramMap);
 		
 		model.addAttribute("boardList", boardList);
 		

@@ -23,9 +23,31 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
-	<select id="getBoardList" resultType="board">
-	SELECT *
-		FROM T_BOARD
+	<select id="getBoardList" parameterType="map" resultType="board">
+	<![CDATA[
+		SELECT *
+			FROM T_BOARD
+	]]>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<if test="searchCondition == 'all'">
+				WHERE 1 = 0
+				   OR BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+				   OR BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+				   OR BOARD_WRITER LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test="searchCondition != 'all'">
+				WHERE 1 = 1
+					<if test="searchCondition == 'title'">
+						AND BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+					</if>
+					<if test="searchCondition == 'content'">
+						AND BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+					</if>
+					<if test="searchCondition == 'writer'">
+						AND BOARD_WRITER LIKE CONCAT('%', #{searchKeyword}, '%')
+					</if>
+				</if>
+			</if>
 	</select>
 	
 	<update id="updateBoardCnt" parameterType="int">

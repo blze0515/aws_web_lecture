@@ -1,6 +1,7 @@
 package com.ezen.springboard.service.board;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ezen.springboard.vo.BoardVO;
 
@@ -9,7 +10,7 @@ public interface BoardService {
 	void insertBoard(BoardVO boardVO);
 	
 	//게시글 목록 조회
-	List<BoardVO> getBoardList();
+	List<BoardVO> getBoardList(Map<String, String> paramMap);
 	
 	//게시글 상세 조회
 	BoardVO getBoard(int boardNo);

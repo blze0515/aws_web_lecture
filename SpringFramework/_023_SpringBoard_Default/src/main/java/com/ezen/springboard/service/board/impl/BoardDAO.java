@@ -1,6 +1,7 @@
 package com.ezen.springboard.service.board.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class BoardDAO {
 		mybatis.insert("BoardDAO.insertBoard", boardVO);
 	}
 	
-	public List<BoardVO> getBoardList() {
-		return mybatis.selectList("BoardDAO.getBoardList");
+	public List<BoardVO> getBoardList(Map<String, String> paramMap) {
+		return mybatis.selectList("BoardDAO.getBoardList", paramMap);
 	}
 	
 	
