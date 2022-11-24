@@ -17,8 +17,11 @@ public interface BoardService {
 	//조회수 증가
 	void updateBoardCnt(int boardNo);
 	
+	//게시글 수정
+	void updateBoard(BoardVO boardVO);
 	
-	
+	//게시글 삭제
+	void deleteBoard(int boardNo);
 	
 	
 	

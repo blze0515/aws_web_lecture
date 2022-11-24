@@ -104,6 +104,31 @@ public class BoardController {
 		return "redirect:/board/getBoard.do?boardNo=" + boardNo;
 	}
 	
+	//게시글 수정
+	@PostMapping("/updateBoard.do")
+	public String updateBoard(BoardVO boardVO) {
+		boardService.updateBoard(boardVO);
+		
+		return "redirect:/board/getBoard.do?boardNo=" + boardVO.getBoardNo();
+	}
+	
+	//게시글 삭제
+	@RequestMapping("/deleteBoard.do")
+	public String deleteBoard(@RequestParam("boardNo") int boardNo) {
+		boardService.deleteBoard(boardNo);
+		
+		return "redirect:/board/getBoardList.do";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

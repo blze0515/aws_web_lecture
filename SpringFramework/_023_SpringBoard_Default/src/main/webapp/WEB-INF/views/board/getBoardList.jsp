@@ -12,6 +12,23 @@
 	<jsp:include page="${pageContext.request.contextPath }/header.jsp"></jsp:include>
 	<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 		<h3>게시글 목록</h3>
+		<form id="searchForm" action="/board/getBoardList.do" method="post">
+			<table border="1" style="width: 700px; border-collapse: collapse;">
+				<tr>
+					<td align="right">
+						<select name="searchCondition">
+							<option value="all">전체</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+							<option value="writer">작성자</option>
+						</select>
+						<input type="text" name="searchKeyword">
+						<button type="submit" id="btnSearch">검색</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
 		<table id="boardTable" border="1" style="width: 700px; border-collapse: collapse;">
 			<tr>
 				<th style="backgrond: skyblue; width: 100px;">번호</th>

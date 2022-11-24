@@ -31,9 +31,13 @@ public class BoardDAO {
 		mybatis.update("BoardDAO.updateBoardCnt", boardNo);
 	}
 	
+	public void updateBoard(BoardVO boardVO) {
+		mybatis.update("BoardDAO.updateBoard", boardVO);
+	}
 	
-	
-	
+	public void deleteBoard(int boardNo) {
+		mybatis.delete("BoardDAO.deleteBoard", boardNo);
+	}
 	
 	
 	

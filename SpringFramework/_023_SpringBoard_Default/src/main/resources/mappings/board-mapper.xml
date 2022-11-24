@@ -17,20 +17,6 @@
 			   )
 	</insert>
 	
-	<update id="updateBoard" parameterType="board">
-	UPDATE BOARD
-		SET BOARD_TITLE = #{boardTitle},
-			BOARD_CONTENT = #{boardContent},
-			BOARD_WRITER = #{boardWriter}
-		WHERE BOARD_NO = #{boardNo}
-	</update>
-	
-	<delete id="deleteBoard" parameterType="int">
-	DELETE
-		FROM BOARD
-		WHERE BOARD_NO = #{boardNo}
-	</delete>
-	
 	<select id="getBoard" parameterType="int" resultType="board">
 	SELECT *
 		FROM T_BOARD
@@ -48,9 +34,17 @@
 			WHERE BOARD_NO = #{boardNo}
 	</update>
 	
+	<update id="updateBoard" parameterType="board">
+		UPDATE T_BOARD
+			SET BOARD_TITLE = #{boardTitle}
+			  , BOARD_CONTENT = #{boardContent}
+			WHERE BOARD_NO = #{boardNo}
+	</update>
 	
-	
-	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM T_BOARD
+			WHERE BOARD_NO = #{boardNo}
+	</delete>
 	
 	
 	
