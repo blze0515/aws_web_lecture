@@ -17,12 +17,28 @@
 				<tr>
 					<td align="right">
 						<select name="searchCondition">
-							<option value="all">전체</option>
-							<option value="title">제목</option>
-							<option value="content">내용</option>
-							<option value="writer">작성자</option>
+							<option value="all"
+								<c:if test="${searchCondition eq 'all' || searchCondition eq '' || searchCondition eq null}">
+									selected="selected"
+								</c:if>
+							>전체</option>
+							<option value="title"
+								<c:if test="${searchCondition eq 'title' }">
+									selected="selected"
+								</c:if>
+							>제목</option>
+							<option value="content"
+								<c:if test="${searchCondition eq 'content' }">
+									selected="selected"
+								</c:if>
+							>내용</option>
+							<option value="writer"
+								<c:if test="${searchCondition eq 'writer' }">
+									selected="selected"
+								</c:if>
+							>작성자</option>
 						</select>
-						<input type="text" name="searchKeyword">
+						<input type="text" name="searchKeyword" value="${searchKeyword }">
 						<button type="submit" id="btnSearch">검색</button>
 					</td>
 				</tr>

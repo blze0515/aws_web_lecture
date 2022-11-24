@@ -44,6 +44,12 @@ public class BoardController {
 		
 		model.addAttribute("boardList", boardList);
 		
+		if(paramMap.get("searchCondition") != null && !paramMap.get("searchCondition").equals(""))
+			model.addAttribute("searchCondition", paramMap.get("searchCondition"));
+		
+		if(paramMap.get("searchKeyword") != null && !paramMap.get("searchKeyword").equals(""))
+			model.addAttribute("searchKeyword", paramMap.get("searchKeyword"));
+		
 		return "board/getBoardList";
 	}
 	
