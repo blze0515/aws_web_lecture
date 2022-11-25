@@ -16,8 +16,9 @@ public class BoardDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
-	public void insertBoard(BoardVO boardVO) {
+	public int insertBoard(BoardVO boardVO) {
 		mybatis.insert("BoardDAO.insertBoard", boardVO);
+		return boardVO.getBoardNo();
 	}
 	
 	public List<BoardVO> getBoardList(Map<String, String> paramMap, Criteria cri) {

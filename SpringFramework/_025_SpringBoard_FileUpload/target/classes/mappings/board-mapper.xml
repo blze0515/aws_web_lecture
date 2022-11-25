@@ -6,9 +6,12 @@
 <mapper namespace="BoardDAO">
 	<!-- 쿼리 작성 영역 -->
 	<insert id="insertBoard" parameterType="board">
+		<selectKey resultType="int" keyProperty="boardNo" order="BEFORE">
+			SELECT IFNULL(MAX(BOARD_NO), 0) + 1 FROM T_BOARD
+		</selectKey>
 		INSERT INTO T_BOARD
 		VALUES (
-					(SELECT IFNULL(MAX(A.BOARD_NO), 0) + 1 FROM T_BOARD A),
+					#{boardNo},
 					#{boardTitle},
 					#{boardContent},
 					#{boardWriter},

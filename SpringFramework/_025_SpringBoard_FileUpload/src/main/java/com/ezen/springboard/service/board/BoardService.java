@@ -8,7 +8,7 @@ import com.ezen.springboard.vo.Criteria;
 
 public interface BoardService {
 	//게시글 등록
-	void insertBoard(BoardVO boardVO);
+	int insertBoard(BoardVO boardVO);
 	
 	//게시글 목록 조회
 	List<BoardVO> getBoardList(Map<String, String> paramMap, Criteria cri);

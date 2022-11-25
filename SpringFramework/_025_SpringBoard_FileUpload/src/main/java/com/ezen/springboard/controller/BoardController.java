@@ -1,8 +1,11 @@
 package com.ezen.springboard.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen.springboard.service.board.BoardService;
+import com.ezen.springboard.vo.BoardFileVO;
 import com.ezen.springboard.vo.BoardVO;
 import com.ezen.springboard.vo.Criteria;
 import com.ezen.springboard.vo.PageVO;
@@ -93,8 +98,29 @@ public class BoardController {
 	
 	//게시글 등록
 	@PostMapping("/insertBoard.do")
-	public String insertBoard(BoardVO boardVO) {
-		boardService.insertBoard(boardVO);
+	public String insertBoard(BoardVO boardVO, MultipartFile[] uploadFiles,
+			HttpServletRequest request) {
+		//첨부파일에 boardNo를 매핑하기 위해서
+		//insert후 boardNo(insert된 게시글의 boardNo)를 리턴하여 사용한다.
+		int boardNo = boardService.insertBoard(boardVO);
+		
+		//파일업로드 기능 구현
+		if(uploadFiles.length > 0) {
+			List<BoardFileVO> fileList = new ArrayList<BoardFileVO>();
+			
+			//업로드 폴더 지정
+			//request.getSession().getServletContext().getRealPath("/"): WAS의 루트패스
+			//workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\_025_SpringBoard_FileUpload
+			String attachPath = request.getSession().getServletContext().getRealPath("/") 
+					+ "/upload/";
+			
+			File directory = new File(attachPath);
+			
+			//해당 폴더가 존재하지 않으면 폴더 생성
+			if(!directory.exists()) {
+				directory.mkdir();
+			}
+		}
 		
 		//등록 후 게시글 목록으로 이동
 		return "redirect:/board/getBoardList.do";

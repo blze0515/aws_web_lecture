@@ -38,8 +38,8 @@
 		font-size: 0.9rem;
 	}
 </style>
-<link rel='icon' href='${pageContext.request.contextPath }/favicon.ico'>
 <script src="${pageContext.request.contextPath }/js/jquery-3.6.1.min.js"></script>
+<link rel="icon" href="${pageContext.request.contextPath }/favicon.ico">
 </head>
 <body>
 	<header style="display: flex; justify-content: space-between; align-items: center; background: skyblue;">
