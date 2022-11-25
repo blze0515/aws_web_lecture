@@ -31,8 +31,8 @@ public class PageVO {
 		}
 		
 		//버튼표출 여부 판단
-		this.prev = this.startPage > 1;
-					//realEnd < this.endPage => cir.getPageNum() < this.endPage 
+		this.prev = cri.getPageNum() > 1;
+					//realEnd < this.endPage => cri.getPageNum() < this.endPage 
 		this.next = cri.getPageNum() < this.endPage;
 	}
 
