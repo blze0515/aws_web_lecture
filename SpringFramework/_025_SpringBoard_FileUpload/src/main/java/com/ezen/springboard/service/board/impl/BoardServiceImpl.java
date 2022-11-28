@@ -57,7 +57,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoardFileList(boardNo);
 	}
 	
-	
+	@Override
+	public BoardFileVO getBoardFile(BoardFileVO boardFileVO) {
+		return boardDAO.getBoardFile(boardFileVO);
+	}
 	
 	
 	

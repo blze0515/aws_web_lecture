@@ -65,9 +65,9 @@
 							<input type="file" id="btnAtt" name="uploadFiles" multiple="multiple">
 							<input type="file" id="changedFiles" name="changedFiles"
 							style="display: none;" multiple="multiple">
+							<p style="color: red; font-size: 0.9rem;">파일을 변경하려면 사진을 파일을 다운로드하려면 파일명을 클릭하세요.</p>
 							<div id="attZone">
-								<c:forEach items="${boardFileList }" var="boardFile"
-								varStatus="status">
+								<c:forEach items="${boardFileList }" var="boardFile" varStatus="status">
 									<div style="display: inline-block; position: relative; 
 									width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;">
 										<input type="hidden" id="boardFileNo${status.index }" name="boardFileNo${status.index }" 
@@ -95,7 +95,8 @@
 										style="width: 30px; height: 30px; position: absolute; right: 0px; bottom: 0px; 
 										z-index: 999; background-color: rgba(255, 255, 255, 0.1); color: #f00;"
 										onclick="fnImgDel(event)">
-										<p id="fileNm${boardFile.boardFileNo }" style="display: inline-block; font-size: 8px;">
+										<p id="fileNm${boardFile.boardFileNo }" style="display: inline-block; font-size: 8px;
+										cursor: pointer;" onclick="fnFileDown(${boardFile.boardNo}, ${boardFile.boardFileNo})">
 											${boardFile.boardOriginFileNm }
 										</p>
 									</div>
@@ -350,7 +351,10 @@
 			$(div).remove();
 		}
 		
-		
+		function fnFileDown(boardNo, boardFileNo) {
+			window.location = "/board/fileDown.do?boardNo=" 
+					+ boardNo + "&boardFileNo=" + boardFileNo;
+		}
 		
 		
 		

@@ -166,7 +166,12 @@
 			  AND BOARD_FILE_NO = #{boardFileNo}
 	</delete>
 	
-	
+	<select id="getBoardFile" parameterType="boardFile" resultType="boardFile">
+		SELECT *
+			FROM T_BOARD_FILE
+			WHERE BOARD_NO = #{boardNo}
+			  AND BOARD_FILE_NO = #{boardFileNo}
+	</select>
 	
 	
 	

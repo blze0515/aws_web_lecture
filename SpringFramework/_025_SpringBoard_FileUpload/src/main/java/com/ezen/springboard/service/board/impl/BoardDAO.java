@@ -83,7 +83,9 @@ public class BoardDAO {
 		return mybatis.selectList("BoardDAO.getBoardFileList", boardNo);
 	}
 	
-	
+	public BoardFileVO getBoardFile(BoardFileVO boardFileVO) {
+		return mybatis.selectOne("BoardDAO.getBoardFile", boardFileVO);
+	}
 	
 	
 	

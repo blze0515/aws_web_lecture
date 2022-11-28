@@ -33,7 +33,8 @@ public interface BoardService {
 	//첨부파일 리스트 조회
 	List<BoardFileVO> getBoardFileList(int boardNo);
 	
-	
+	//게시글 파일정보 한 건 조회
+	BoardFileVO getBoardFile(BoardFileVO boardFileVO);
 	
 	
 	
