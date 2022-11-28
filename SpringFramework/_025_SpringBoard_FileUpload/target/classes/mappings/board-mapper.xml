@@ -97,6 +97,70 @@
 			</if>
 	</select>
 	
+	<insert id="insertBoardFile" parameterType="boardFile">
+		INSERT INTO T_BOARD_FILE(
+			BOARD_NO,
+			BOARD_FILE_NO,
+			BOARD_FILE_NM,
+			BOARD_ORIGIN_FILE_NM,
+			BOARD_FILE_PATH,
+			BOARD_FILE_CATE
+		) VALUES (
+			#{boardNo},
+			(
+				SELECT IFNULL(MAX(A.BOARD_FILE_NO), 0) + 1
+					FROM T_BOARD_FILE A
+					WHERE A.BOARD_NO = #{boardNo}
+			),
+			#{boardFileNm},
+			#{boardOriginFileNm},
+			#{boardFilePath},
+			#{boardFileCate}
+		) 
+	</insert>
+	
+	<insert id="insertBoardFileList" parameterType="list">
+		INSERT INTO T_BOARD_FILE(
+			BOARD_NO,
+			BOARD_FILE_NO,
+			BOARD_FILE_NM,
+			BOARD_ORIGIN_FILE_NM,
+			BOARD_FILE_PATH,
+			BOARD_FILE_CATE
+		) VALUES
+		<foreach collection="list" item="file" separator=",">
+		(
+			#{file.boardNo},
+			(
+				SELECT IFNULL(MAX(A.BOARD_FILE_NO), 0) + 1
+					FROM T_BOARD_FILE A
+					WHERE A.BOARD_NO = #{file.boardNo}
+			),
+			#{file.boardFileNm},
+			#{file.boardOriginFileNm},
+			#{file.boardFilePath},
+			#{file.boardFileCate}
+		)
+		</foreach> 
+	</insert>
+	
+	<select id="getBoardFileList" parameterType="int" resultType="boardFile">
+		SELECT *
+			FROM T_BOARD_FILE
+			WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

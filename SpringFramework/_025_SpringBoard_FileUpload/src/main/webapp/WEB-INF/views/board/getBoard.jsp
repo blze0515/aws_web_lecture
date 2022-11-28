@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,6 +53,39 @@
 					</td>
 					<td style="text-align: left">
 						${board.boardCnt }
+					</td>
+				</tr>
+				<tr>
+					<td style="background: skyblue; width: 70px;">
+						파일첨부
+					</td>
+					<td style="text-align: left;">
+						<div id="image_preview">
+							<div id="attZone">
+								<c:forEach items="${boardFileList }" var="boardFile"
+								varStatus="status">
+									<div style="display: inline-block; position: relative; 
+									width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;">
+										<c:choose>
+											<c:when test="${boardFile.boardFileCate eq 'img' }">
+												<img id="img${boardFile.boardFileNo }" src="/upload/${boardFile.boardFileNm }"
+												style="width: 100%; height: 100%; z-index: none;" class="fileImg">
+											</c:when>
+											<c:otherwise>
+												<img id="img${boardFile.boardFileNo }" src="/images/defaultFileImg.png"
+												style="width: 100%; height: 100%; z-index: none;" class="fileImg">
+											</c:otherwise>					
+										</c:choose>
+										<input type="button" class="btnDel" value="x" delFile="${boardFile.boardFileNo }"
+										style="width: 30px; height: 30px; position: absolute; right: 0px; bottom: 0px; 
+										z-index: 999; background-color: rgba(255, 255, 255, 0.1); color: #f00;">
+										<p id="fileNm${boardFile.boardFileNo }" style="display: inline-block; font-size: 8px;">
+											${boardFile.boardOriginFileNm }
+										</p>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
 					</td>
 				</tr>
 				<tr id="btnWrap">
