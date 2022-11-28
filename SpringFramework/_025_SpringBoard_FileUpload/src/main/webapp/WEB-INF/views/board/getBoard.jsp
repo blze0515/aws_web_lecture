@@ -14,6 +14,7 @@
 		<h3>게시글 상세</h3>
 		<form id="updateForm" action="/board/updateBoard.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="boardNo" id="boardNo" value="${board.boardNo }">
+			<input type="hidden" name="originFiles" id="originFiles">
 			<table border="1" style="border-collapse: collapse;">
 				<tr>
 					<td style="background: skyblue; width: 70px">
@@ -92,7 +93,8 @@
 										</c:choose>
 										<input type="button" class="btnDel" value="x" delFile="${boardFile.boardFileNo }"
 										style="width: 30px; height: 30px; position: absolute; right: 0px; bottom: 0px; 
-										z-index: 999; background-color: rgba(255, 255, 255, 0.1); color: #f00;">
+										z-index: 999; background-color: rgba(255, 255, 255, 0.1); color: #f00;"
+										onclick="fnImgDel(event)">
 										<p id="fileNm${boardFile.boardFileNo }" style="display: inline-block; font-size: 8px;">
 											${boardFile.boardOriginFileNm }
 										</p>
@@ -154,11 +156,27 @@
 				dt = new DataTransfer();
 				
 				for(f in uploadFiles) {
-					let file = uploadFile[f];
+					let file = uploadFiles[f];
 					dt.items.add(file);
 				}
 				
 				$("#btnAtt")[0].files = dt.files;
+				
+				//changedFiles배열에 담겨있는 파일들을 input 옮겨담기
+				//위에서 사용한 DataTransfer객체 비워주기
+				dt.clearData();
+				
+				for(f in changedFiles) {
+					let file = changedFiles[f];
+					dt.items.add(file);
+				}
+				
+				$("#changedFiles")[0].files = dt.files;
+				
+				//변경된 파일정보와 삭제된 파일정보를 담고있는 배열 전송
+				//배열 형태로 전송 시 백단(Java)에서 처리불가
+				//JSON String 형태로 변환하여 전송한다.
+				$("#originFiles").val(JSON.stringify(originFiles));
 			});
 			
 			for(let i = 0; i < $("#boardFileCnt").val(); i++) {
@@ -166,6 +184,7 @@
 					boardNo: $("#boardNo").val(),
 					boardFileNo: $("#boardFileNo" + i).val(),
 					boardFileNm: $("#boardFileNm" + i).val(),
+					//업로드 파일 경로가 각각 다를때는 boardFilePath 속성도 추가
 					//파일 상태값(수정되거나 삭제된 파일은 변경)
 					boardFileStatus: "N"
 				};
@@ -311,6 +330,24 @@
 					originFiles[i].newFileNm = fileArr[0].name;
 				}
 			}
+		}
+		
+		//x버튼 클릭시 동작하는 메소드
+		function fnImgDel(e) {
+			//클릭된 태그 가져오기
+			let ele = e.srcElement;
+			//delFile속성 값 가져오기(boardFileNo)
+			let delFile = ele.getAttribute("delFile");	
+			
+			for(let i = 0; i < originFiles.length; i++) {
+				if(delFile == originFiles[i].boardFileNo) {
+					originFiles[i].boardFileStatus = "D";
+				}
+			}
+			
+			//부모 요소인 div 삭제
+			let div = ele.parentNode;
+			$(div).remove();
 		}
 		
 		

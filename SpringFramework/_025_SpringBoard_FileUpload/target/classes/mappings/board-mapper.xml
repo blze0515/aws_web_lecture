@@ -150,7 +150,21 @@
 			WHERE BOARD_NO = #{boardNo}
 	</select>
 	
+	<update id="updateBoardFile" parameterType="boardFile">
+		UPDATE T_BOARD_FILE
+			SET BOARD_FILE_NM = #{boardFileNm},
+				BOARD_ORIGIN_FILE_NM = #{boardOriginFileNm},
+				BOARD_FILE_PATH = #{boardFilePath},
+				BOARD_FILE_CATE = #{boardFileCate}
+			WHERE BOARD_NO = #{boardNo}
+			  AND BOARD_FILE_NO = #{boardFileNo}
+	</update>
 	
+	<delete id="deleteBoardFile" parameterType="boardFile">
+		DELETE FROM T_BOARD_FILE
+			WHERE BOARD_NO = #{boardNo}
+			  AND BOARD_FILE_NO = #{boardFileNo}
+	</delete>
 	
 	
 	

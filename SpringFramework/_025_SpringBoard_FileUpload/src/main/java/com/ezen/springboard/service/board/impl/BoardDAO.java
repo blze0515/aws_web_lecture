@@ -55,8 +55,20 @@ public class BoardDAO {
 		mybatis.update("BoardDAO.updateBoardCnt", boardNo);
 	}
 	
-	public void updateBoard(BoardVO boardVO) {
+	public void updateBoard(BoardVO boardVO, List<BoardFileVO> uFileList) {
 		mybatis.update("BoardDAO.updateBoard", boardVO);
+		
+		if(uFileList.size() > 0) {
+			for(int i = 0; i < uFileList.size(); i++) {
+				if(uFileList.get(i).getBoardFileStatus().equals("U")) {
+					mybatis.update("BoardDAO.updateBoardFile", uFileList.get(i));
+				} else if(uFileList.get(i).getBoardFileStatus().equals("D")) {
+					mybatis.delete("BoardDAO.deleteBoardFile", uFileList.get(i));
+				} else if(uFileList.get(i).getBoardFileStatus().equals("I")) {
+					mybatis.insert("BoardDAO.insertBoardFile", uFileList.get(i));
+				}
+			}
+		}
 	}
 	
 	public void deleteBoard(int boardNo) {

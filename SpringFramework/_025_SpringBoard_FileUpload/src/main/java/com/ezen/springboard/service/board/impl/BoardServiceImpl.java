@@ -38,8 +38,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public void updateBoard(BoardVO boardVO) {
-		boardDAO.updateBoard(boardVO);
+	public void updateBoard(BoardVO boardVO,  List<BoardFileVO> uFileList) {
+		boardDAO.updateBoard(boardVO, uFileList);
 	}
 	
 	@Override

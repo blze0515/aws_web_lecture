@@ -83,6 +83,7 @@
 			$("#btnAtt").on("change", function(e) {
 				//input type=file에 추가된 파일들을 변수로 받아옴
 				const files = e.target.files;
+
 				//변수로 받아온 파일들을 배열 형태로 변환
 				const fileArr = Array.prototype.slice.call(files);
 				

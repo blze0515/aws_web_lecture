@@ -20,6 +20,8 @@ public class BoardFileVO {
 	//미리보기 기능을 만들 때 이미지는 그 파일자체를 보여주고
 	//이미지가 아닌 파일들은 문서모양의 아이콘을 띄우려고 만든 컬럼
 	private String boardFileCate;
+	private String boardFileStatus;
+	private String newFileNm;
 	
 	public int getBoardNo() {
 		return boardNo;
@@ -63,11 +65,24 @@ public class BoardFileVO {
 	public void setBoardFileCate(String boardFileCate) {
 		this.boardFileCate = boardFileCate;
 	}
+	public String getBoardFileStatus() {
+		return boardFileStatus;
+	}
+	public void setBoardFileStatus(String boardFileStatus) {
+		this.boardFileStatus = boardFileStatus;
+	}
+	public String getNewFileNm() {
+		return newFileNm;
+	}
+	public void setNewFileNm(String newFileNm) {
+		this.newFileNm = newFileNm;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardFileVO [boardNo=" + boardNo + ", boardFileNo=" + boardFileNo + ", boardFileNm=" + boardFileNm
 				+ ", boardOriginFileNm=" + boardOriginFileNm + ", boardFilePath=" + boardFilePath
-				+ ", boardFileRegdate=" + boardFileRegdate + ", boardFileCate=" + boardFileCate + "]";
+				+ ", boardFileRegdate=" + boardFileRegdate + ", boardFileCate=" + boardFileCate + ", boardFileStatus="
+				+ boardFileStatus + ", newFileNm=" + newFileNm + "]";
 	}
 }

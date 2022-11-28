@@ -21,7 +21,7 @@ public interface BoardService {
 	void updateBoardCnt(int boardNo);
 	
 	//게시글 수정
-	void updateBoard(BoardVO boardVO);
+	void updateBoard(BoardVO boardVO, List<BoardFileVO> uFileList);
 	
 	//게시글 삭제
 	void deleteBoard(int boardNo);
