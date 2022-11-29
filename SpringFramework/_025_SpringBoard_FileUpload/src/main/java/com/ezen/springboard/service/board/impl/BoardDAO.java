@@ -43,11 +43,12 @@ public class BoardDAO {
 		pMap.put("cri", cri);
 		
 		return mybatis.selectList("BoardDAO.getBoardList", pMap);
-	}
-	
-	
+	}	
 	
 	public BoardVO getBoard(int boardNo) {
+		Map<String, Object> testMap = mybatis.selectOne("BoardDAO.getBoardMap", boardNo);
+		System.out.println(testMap.toString());
+		
 		return mybatis.selectOne("BoardDAO.getBoard", boardNo);
 	}
 	

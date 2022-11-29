@@ -26,6 +26,12 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
+	<select id="getBoardMap" parameterType="int" resultType="camelHashMap">
+	SELECT *
+		FROM T_BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
 	<select id="getBoardList" parameterType="map" resultType="board">
 	<![CDATA[
 		SELECT *
