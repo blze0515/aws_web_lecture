@@ -135,7 +135,24 @@ public class BoardController {
 		return "redirect:/board/getBoardList.do";
 	}
 	
-	
+//	insertreser(reservationlist<reservationVO>, list<passengerVo>) {
+//		List<Integer> passengerList = boardservice.insertPasenger(passengerVolist);
+//		
+//		
+//		seatvo.setseatid(reservationlist.get(0).getseatId());
+//		seatvo.setfid(reservationlist.get(0).getfId());
+//		
+//		List<String> seatNoList = boardservice.get(seatvo, 인원수);
+//		
+//		for(int i = 0; i < reservationlist.size(); i++) {
+//			reservationlist.get(i).setPassengerId(passengerList.get(i));
+//			reservationlist.get(i).setSeatNo(seatNoList.get(i));
+//		}
+//		
+//		
+//		
+//		boardService.insertReservation(reservationlist);
+//	}
 	
 	
 	

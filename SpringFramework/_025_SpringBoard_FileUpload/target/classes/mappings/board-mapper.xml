@@ -135,6 +135,7 @@
 			BOARD_FILE_CATE
 		) VALUES
 		<foreach collection="list" item="file" separator=",">
+		<!-- [PassengerVO{gender: '남성', firstName: 고, lastName: 기천, phone: 111111111, birthDate: 1234-02-28}, PassengerVO{}, PassengerVO{}] -->
 		(
 			#{file.boardNo},
 			(

@@ -287,7 +287,14 @@ public class BoardController {
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
 	}
 	
-	
+//	List<Integer> insertPassenger(List<passengerVO> list) {
+//		mybatis.ins("id", list);
+//		
+//		int listSize = list.size();
+//		
+//		return intList = mybatis.sel("id", )
+//		
+//	}
 	
 	
 	

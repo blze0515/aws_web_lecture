@@ -16,5 +16,12 @@
 	</div>
 	
 	<jsp:include page="./footer.jsp"></jsp:include>
+	
+	
+	<script>
+		$(function() {
+			window.location.href = "/main/main.do"
+		});
+	</script>
 </body>
 </html>
