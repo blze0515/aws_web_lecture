@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="BoardDAO">
+	<!-- 쿼리 작성 영역 -->
+	<insert id="insertBoard" parameterType="board">
+		<selectKey resultType="int" keyProperty="boardNo" order="BEFORE">
+			SELECT IFNULL(MAX(BOARD_NO), 0) + 1 FROM T_BOARD
+		</selectKey>
+		INSERT INTO T_BOARD
+		VALUES (
+					#{boardNo},
+					#{boardTitle},
+					#{boardContent},
+					#{boardWriter},
+					now(),
+					0
+			   )
+	</insert>
+	
+	<select id="getBoard" parameterType="int" resultType="board">
+	SELECT *
+		FROM T_BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<select id="getBoardMap" parameterType="int" resultType="camelHashMap">
+	SELECT *
+		FROM T_BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<select id="getBoardList" parameterType="map" resultType="board">
+	<![CDATA[
+		SELECT *
+			FROM T_BOARD
+	]]>
+			<if test="boardSearch.searchKeyword != null and boardSearch.searchKeyword != ''">
+				<if test="boardSearch.searchCondition == 'all'">
+				WHERE 1 = 0
+				   OR BOARD_TITLE LIKE CONCAT('%', #{boardSearch.searchKeyword}, '%')
+				   OR BOARD_CONTENT LIKE CONCAT('%', #{boardSearch.searchKeyword}, '%')
+				   OR BOARD_WRITER LIKE CONCAT('%', #{boardSearch.searchKeyword}, '%')
+				</if>
+				<if test="boardSearch.searchCondition != 'all'">
+				WHERE 1 = 1
+					<if test="boardSearch.searchCondition == 'title'">
+						AND BOARD_TITLE LIKE CONCAT('%', #{boardSearch.searchKeyword}, '%')
+					</if>
+					<if test="boardSearch.searchCondition == 'content'">
+						AND BOARD_CONTENT LIKE CONCAT('%', #{boardSearch.searchKeyword}, '%')
+					</if>
+					<if test="boardSearch.searchCondition == 'writer'">
+						AND BOARD_WRITER LIKE CONCAT('%', #{boardSearch.searchKeyword}, '%')
+					</if>
+				</if>
+			</if>
+			LIMIT #{cri.amount} OFFSET #{cri.startNum}
+	</select>
+	
+	<update id="updateBoardCnt" parameterType="int">
+		UPDATE T_BOARD
+			SET BOARD_CNT = BOARD_CNT + 1
+			WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<update id="updateBoard" parameterType="board">
+		UPDATE T_BOARD
+			SET BOARD_TITLE = #{boardTitle}
+			  , BOARD_CONTENT = #{boardContent}
+			WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM T_BOARD
+			WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+	<select id="getBoardTotalCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+			FROM T_BOARD
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<if test="searchCondition == 'all'">
+				WHERE 1 = 0
+				   OR BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+				   OR BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+				   OR BOARD_WRITER LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test="searchCondition != 'all'">
+				WHERE 1 = 1
+					<if test="searchCondition == 'title'">
+						AND BOARD_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+					</if>
+					<if test="searchCondition == 'content'">
+						AND BOARD_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+					</if>
+					<if test="searchCondition == 'writer'">
+						AND BOARD_WRITER LIKE CONCAT('%', #{searchKeyword}, '%')
+					</if>
+				</if>
+			</if>
+	</select>
+	
+	<insert id="insertBoardFile" parameterType="boardFile">
+		INSERT INTO T_BOARD_FILE(
+			BOARD_NO,
+			BOARD_FILE_NO,
+			BOARD_FILE_NM,
+			BOARD_ORIGIN_FILE_NM,
+			BOARD_FILE_PATH,
+			BOARD_FILE_CATE
+		) VALUES (
+			#{boardNo},
+			(
+				SELECT IFNULL(MAX(A.BOARD_FILE_NO), 0) + 1
+					FROM T_BOARD_FILE A
+					WHERE A.BOARD_NO = #{boardNo}
+			),
+			#{boardFileNm},
+			#{boardOriginFileNm},
+			#{boardFilePath},
+			#{boardFileCate}
+		) 
+	</insert>
+	
+	<insert id="insertBoardFileList" parameterType="list">
+		INSERT INTO T_BOARD_FILE(
+			BOARD_NO,
+			BOARD_FILE_NO,
+			BOARD_FILE_NM,
+			BOARD_ORIGIN_FILE_NM,
+			BOARD_FILE_PATH,
+			BOARD_FILE_CATE
+		) VALUES
+		<foreach collection="list" item="file" separator=",">
+		<!-- [PassengerVO{gender: '남성', firstName: 고, lastName: 기천, phone: 111111111, birthDate: 1234-02-28}, PassengerVO{}, PassengerVO{}] -->
+		(
+			#{file.boardNo},
+			(
+				SELECT IFNULL(MAX(A.BOARD_FILE_NO), 0) + 1
+					FROM T_BOARD_FILE A
+					WHERE A.BOARD_NO = #{file.boardNo}
+			),
+			#{file.boardFileNm},
+			#{file.boardOriginFileNm},
+			#{file.boardFilePath},
+			#{file.boardFileCate}
+		)
+		</foreach> 
+	</insert>
+	
+	<select id="getBoardFileList" parameterType="int" resultType="boardFile">
+		SELECT *
+			FROM T_BOARD_FILE
+			WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<update id="updateBoardFile" parameterType="boardFile">
+		UPDATE T_BOARD_FILE
+			SET BOARD_FILE_NM = #{boardFileNm},
+				BOARD_ORIGIN_FILE_NM = #{boardOriginFileNm},
+				BOARD_FILE_PATH = #{boardFilePath},
+				BOARD_FILE_CATE = #{boardFileCate}
+			WHERE BOARD_NO = #{boardNo}
+			  AND BOARD_FILE_NO = #{boardFileNo}
+	</update>
+	
+	<delete id="deleteBoardFile" parameterType="boardFile">
+		DELETE FROM T_BOARD_FILE
+			WHERE BOARD_NO = #{boardNo}
+			  AND BOARD_FILE_NO = #{boardFileNo}
+	</delete>
+	
+	<select id="getBoardFile" parameterType="boardFile" resultType="boardFile">
+		SELECT *
+			FROM T_BOARD_FILE
+			WHERE BOARD_NO = #{boardNo}
+			  AND BOARD_FILE_NO = #{boardFileNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
