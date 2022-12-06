@@ -1,0 +1,44 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.ezen'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	//thymeleaf 템플릿 엔진 사용하기 위한 jar(라이브러리) 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//web 개발에 필요한 jar(라이브러리) 의존성 => spring-web, spring-web-mvc 등의 jar 포함
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//VO, DTO, Entity 클래스를 정의할 때 도와주는 프레임워크
+	compileOnly 'org.projectlombok:lombok'
+	//소스파일, 설정파일 등을 수정하면 자동으로 서버 재부팅
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	//@Configuration에 필요한 추가 설정 제공(@ConfigurationProperties, @PropertySource)
+	//외부 설정파일들을 읽어와서 사용할 수 있는 어노테이션을 제공
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Thymeleaf 레이아웃을 잡아주는 라이브러리
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

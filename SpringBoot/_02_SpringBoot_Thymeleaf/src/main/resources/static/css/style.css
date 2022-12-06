@@ -1,0 +1,44 @@
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: skyblue;
+}
+
+header {
+	display: flex; 
+	justify-content: space-between; 
+	align-items: center; 
+	background: skyblue;
+}
+
+ul, li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color: blue;
+}
+
+.main-div li a {
+	font-size: 1.125rem;
+}
+
+.user-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.user-nav li {
+	margin-left: 10px;
+}
+
+.user-nav li a {
+	font-size: 0.9rem;
+}
