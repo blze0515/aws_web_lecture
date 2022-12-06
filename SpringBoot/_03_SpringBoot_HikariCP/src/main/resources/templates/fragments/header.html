@@ -8,22 +8,22 @@
 			<!-- /를 붙이면 무조건 루트주소 뒤에 붙는다. -->
 			<!-- localhost:8090/user/login.do -->
 			<!-- localhost:8090/hello.do -->
-				<a href="#">홈</a>
+				<a th:href="@{/}">홈</a>
 			</h1>
 			<nav>
 				<ul class="main-nav">
 					<li>
-						<a href="#">게시글 목록</a>
+						<a th:href="@{/board/getBoardList.html}">게시글 목록</a>
 					</li>			
 				</ul>
 			</nav>
 			<nav>
 				<ul class="user-nav">
 					<li>
-						<a href="#">로그인</a>
+						<a th:href="@{/user/login.html}">로그인</a>
 					</li>
 					<li>
-						<a href="#">회원가입</a>
+						<a th:href="@{/user/join.html}">회원가입</a>
 					</li>
 					<!--<c:choose>
 						<c:when test="${loginUser eq null}">
