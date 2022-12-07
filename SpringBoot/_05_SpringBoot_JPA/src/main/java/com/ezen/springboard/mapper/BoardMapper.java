@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.data.repository.query.Param;
 
 import com.ezen.springboard.entity.BoardTest;
 
@@ -44,6 +45,11 @@ public interface BoardMapper {
 			+ "WHERE BOARD_NO = #{boardNo}")	
 	void deleteBoard(int boardNo);
 	
+	@Select("SELECT * FROM T_BOARD_FILE_TEST "
+			+ "WHERE BOARD_NO=#{boardNo} "
+			+ "AND BOARD_FILE_NO=#{boardFileNo}")
+	int getMaxFileNo(@Param("boardNo") int boardNo,
+					@Param("boardFileNo") int boardFileNo);
 	
 	
 	

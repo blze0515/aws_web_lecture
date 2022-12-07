@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ezen.springboard.entity.BoardFileTest;
 import com.ezen.springboard.entity.BoardTest;
 import com.ezen.springboard.service.board.BoardService;
 
@@ -92,7 +90,11 @@ public class ApiController {
 		boardService.deleteBoard(boardNo);
 	}	
 	
-	
+	@PostMapping("/boardFile")
+	//기본적으로 화면으로 리턴되는 값이나 화면에서 받아오는 데이터들은 DTO를 생성해서 사용하는 게 좋다.
+	public void insertBoardFile(BoardFileTest boardFileTest) {
+		boardService.insertBoardFile(boardFileTest);
+	}
 	
 	
 	

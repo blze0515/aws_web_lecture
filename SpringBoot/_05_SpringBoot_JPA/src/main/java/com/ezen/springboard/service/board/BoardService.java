@@ -2,6 +2,7 @@ package com.ezen.springboard.service.board;
 
 import java.util.List;
 
+import com.ezen.springboard.entity.BoardFileTest;
 import com.ezen.springboard.entity.BoardTest;
 
 public interface BoardService {
@@ -14,4 +15,6 @@ public interface BoardService {
 	void updateBoard(BoardTest boardTest);
 	
 	void deleteBoard(int boardNo);
+	
+	void insertBoardFile(BoardFileTest boardFileTest);
 }
