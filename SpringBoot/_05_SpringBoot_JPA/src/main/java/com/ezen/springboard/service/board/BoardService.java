@@ -8,7 +8,7 @@ import com.ezen.springboard.entity.BoardTest;
 public interface BoardService {
 	BoardTest getBoard(int boardNo);
 	
-	List<BoardTest> getBoardList();
+	List<BoardTest> getBoardList(BoardTest boardTest);
 	
 	void insertBoard(BoardTest boardTest);
 	

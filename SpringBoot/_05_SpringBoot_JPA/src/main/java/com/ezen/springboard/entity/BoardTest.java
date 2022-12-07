@@ -65,7 +65,11 @@ public class BoardTest {
 	@Transient
 	private String boardFileStatus;
 	
+	@Transient
+	private String searchCondition;
 	
+	@Transient
+	private String searchKeyword;
 	
 	
 	

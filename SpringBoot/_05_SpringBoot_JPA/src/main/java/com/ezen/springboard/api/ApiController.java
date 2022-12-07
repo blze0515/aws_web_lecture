@@ -38,8 +38,8 @@ public class ApiController {
 	}
 	
 	@GetMapping("/boardList")
-	public List<BoardTest> getBoardList() {
-		return boardService.getBoardList();
+	public List<BoardTest> getBoardList(BoardTest boardTest) {
+		return boardService.getBoardList(boardTest);
 	}
 	
 	@GetMapping("/testApi2")
@@ -47,7 +47,7 @@ public class ApiController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		returnMap.put("getBoard", boardService.getBoard(boardNo));
-		returnMap.put("getBoardList", boardService.getBoardList());
+		//returnMap.put("getBoardList", boardService.getBoardList());
 		
 		return returnMap;
 	}

@@ -30,9 +30,22 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardTest> getBoardList() {
+	public List<BoardTest> getBoardList(BoardTest boardTest) {
 		// TODO Auto-generated method stub
-		return boardMapper.getBoardList();
+		//return boardMapper.getBoardList();
+		if(boardTest.getSearchCondition().equals("ALL")) {
+			return boardTestRepository.findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining
+					(boardTest.getSearchKeyword(), 
+					 boardTest.getSearchKeyword(), 
+					 boardTest.getSearchKeyword());
+		} else if(boardTest.getSearchCondition().equals("TITLE")) {
+			return boardTestRepository.findByBoardTitleContaining(boardTest.getSearchKeyword());
+		} else if(boardTest.getSearchCondition().equals("CONTENT")) {
+			return boardTestRepository.findByBoardContentContaining(boardTest.getSearchKeyword());
+		} else {
+			return boardTestRepository.findByBoardWriterContaining(boardTest.getSearchKeyword());
+		}
+		
 	}
 
 	@Override
