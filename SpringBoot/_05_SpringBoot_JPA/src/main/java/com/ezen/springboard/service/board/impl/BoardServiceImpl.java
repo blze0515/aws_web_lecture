@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezen.springboard.dto.BoardDTO;
+import com.ezen.springboard.entity.BoardTest;
 import com.ezen.springboard.mapper.BoardMapper;
 import com.ezen.springboard.service.board.BoardService;
 
@@ -15,25 +15,25 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 
 	@Override
-	public BoardDTO getBoard(int boardNo) {
+	public BoardTest getBoard(int boardNo) {
 		return boardMapper.getBoard(boardNo);
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList() {
+	public List<BoardTest> getBoardList() {
 		// TODO Auto-generated method stub
 		return boardMapper.getBoardList();
 	}
 
 	@Override
-	public void insertBoard(BoardDTO boardDTO) {
-		boardMapper.insertBoard(boardDTO);		
+	public void insertBoard(BoardTest boardTest) {
+		boardMapper.insertBoard(boardTest);		
 	}
 
 	@Override
-	public void updateBoard(BoardDTO boardDTO) {
+	public void updateBoard(BoardTest boardTest) {
 		// TODO Auto-generated method stub
-		boardMapper.updateBoard(boardDTO);
+		boardMapper.updateBoard(boardTest);
 	}
 
 	@Override

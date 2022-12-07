@@ -8,15 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.ezen.springboard.dto.BoardDTO;
+import com.ezen.springboard.entity.BoardTest;
 
 @Mapper
 public interface BoardMapper {
 	@Select("SELECT * FROM T_BOARD WHERE BOARD_NO = #{boardNo}")
-	BoardDTO getBoard(int boardNo);
+	BoardTest getBoard(int boardNo);
 	
 	@Select("SELECT * FROM T_BOARD")
-	List<BoardDTO> getBoardList();
+	List<BoardTest> getBoardList();
 	
 	@Insert("INSERT INTO T_BOARD ("
 			+ "BOARD_NO,"
@@ -32,13 +32,13 @@ public interface BoardMapper {
 			+ "#{boardWriter},"
 			+ "NOW(),"
 			+ "0)")
-	void insertBoard(BoardDTO boardDTO);
+	void insertBoard(BoardTest boardTest);
 	
 	@Update("UPDATE T_BOARD "
 			+ "SET BOARD_TITLE = #{boardTitle},"
 			+ "	   BOARD_CONTENT= #{boardContent}"
 			+ "WHERE BOARD_NO = #{boardNo}")	
-	void updateBoard(BoardDTO boardDTO);
+	void updateBoard(BoardTest boardTest);
 	
 	@Delete("DELETE FROM T_BOARD "
 			+ "WHERE BOARD_NO = #{boardNo}")	

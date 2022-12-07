@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ezen.springboard.dto.BoardDTO;
-import com.ezen.springboard.dto.ResponseDTO;
+import com.ezen.springboard.entity.BoardTest;
 import com.ezen.springboard.service.board.BoardService;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -36,12 +35,12 @@ public class ApiController {
 	}
 	
 	@GetMapping("/board")
-	public BoardDTO getBoard(int boardNo) {
+	public BoardTest getBoard(int boardNo) {
 		return boardService.getBoard(boardNo);
 	}
 	
 	@GetMapping("/boardList")
-	public List<BoardDTO> getBoardList() {
+	public List<BoardTest> getBoardList() {
 		return boardService.getBoardList();
 	}
 	
@@ -59,39 +58,39 @@ public class ApiController {
 	//POST: 등록
 	//PUT: 수정
 	//DELETE: 삭제
-	@GetMapping("/restFulApi")
-	public ResponseEntity<?> restFulApi(int boardNo, HttpServletResponse response) {
-		ResponseDTO<BoardDTO> responseDTO = new ResponseDTO<BoardDTO>();
-		
-		try {
-			responseDTO.setItems(boardService.getBoardList());
-			responseDTO.setItem(boardService.getBoard(boardNo));
-			responseDTO.setStatusCode(response.getStatus());
-			
-			//요청 상태가 ok(200)일 때는 데이터를 리턴
-			return ResponseEntity.ok().body(responseDTO);
-		} catch(Exception e) {
-			responseDTO.setErrorMessage(e.getMessage());
-			responseDTO.setStatusCode(response.getStatus());
-			
-			return ResponseEntity.badRequest().body(responseDTO);
-		}
-	}
+//	@GetMapping("/restFulApi")
+//	public ResponseEntity<?> restFulApi(int boardNo, HttpServletResponse response) {
+//		ResponseDTO<BoardTest> responseDTO = new ResponseDTO<BoardTest>();
+//		
+//		try {
+//			responseDTO.setItems(boardService.getBoardList());
+//			responseDTO.setItem(boardService.getBoard(boardNo));
+//			responseDTO.setStatusCode(response.getStatus());
+//			
+//			//요청 상태가 ok(200)일 때는 데이터를 리턴
+//			return ResponseEntity.ok().body(responseDTO);
+//		} catch(Exception e) {
+//			responseDTO.setErrorMessage(e.getMessage());
+//			responseDTO.setStatusCode(response.getStatus());
+//			
+//			return ResponseEntity.badRequest().body(responseDTO);
+//		}
+//	}
 	
 	@PostMapping("/board")
-	public void insertBoard(BoardDTO boardDTO) {
-		boardService.insertBoard(boardDTO);
+	public void insertBoard(BoardTest boardTest) {
+		boardService.insertBoard(boardTest);
 	}
 	
 	@PutMapping("/board")
-	public void updateBoard(BoardDTO boardDTO) {
-		boardService.updateBoard(boardDTO);
+	public void updateBoard(BoardTest boardTest) {
+		boardService.updateBoard(boardTest);
 	}
 	
 	@DeleteMapping("/board")
 	public void deleteBoard(int boardNo) {
 		boardService.deleteBoard(boardNo);
-	}
+	}	
 	
 	
 	
