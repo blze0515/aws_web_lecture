@@ -78,10 +78,41 @@
 
               BoardFileTestId => private int boardFileNo;
                                  private BoardTestId boardTest; 
-                                 
+
 
               BoardTestId => private int boardNo;
                              private String boardTitle;
+
+# 2. Url 파라미터
+1. Url 파라미터는 주소/전달할 파라미터
+2. 유동적인 값을 넣는 형태의 파라미터 전달방식
+3. Mapping("/주소/{받아올 인자값(boardNo)}")
+   public void 메소드명(@PathVariable int 받아올 인자값(boardNo))
+4. th:href="@{/board/board/{boardNo:변수명}} (변수명에 어떤 값이 들어가는지:boardNo=${board.boardNo})"
+5. 한개의 파라미터만 전송할 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

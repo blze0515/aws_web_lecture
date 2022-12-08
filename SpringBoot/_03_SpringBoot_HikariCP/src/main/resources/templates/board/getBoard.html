@@ -16,7 +16,7 @@
 			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<h3>게시글 상세</h3>
 				<form id="updateForm" action="" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="boardNo" id="boardNo" value="">
+					<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
 					<input type="hidden" name="originFiles" id="originFiles">
 					<table border="1" style="border-collapse: collapse;">
 						<tr>
@@ -24,7 +24,7 @@
 								제목
 							</td>
 							<td style="text-align: left">
-								<input type="text" name="boardTitle" id="boardTitle" value="">
+								<input type="text" name="boardTitle" id="boardTitle" th:value="${getBoard.boardTitle}">
 							</td>
 						</tr>
 						<tr>
@@ -32,7 +32,7 @@
 								작성자
 							</td>
 							<td style="text-align: left">
-								<input type="text" name="boardWriter" id="boardWriter" value="" readonly>
+								<input type="text" name="boardWriter" id="boardWriter" th:value="${getBoard.boardWriter}" readonly>
 							</td>
 						</tr>
 						<tr>
@@ -40,22 +40,21 @@
 								내용
 							</td>
 							<td style="text-align: left">
-								<textarea name="boardContent" id="boardContent" cols="40" rows="10"></textarea>
+								<textarea name="boardContent" id="boardContent" cols="40" rows="10" th:text="${getBoard.boardContent}"></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td style="background: skyblue;">
 								작성일
 							</td>
-							<td style="text-align: left">
-								<fmt:formatDate value="${board.boardRegdate }" pattern="yyyy-MM-dd"/>
+							<td style="text-align: left" th:text="${#temporals.format(getBoard.boardRegdate, 'yyyy-MM-dd')}">
 							</td>
 						</tr>
 						<tr>
 							<td style="background: skyblue;">
 								조회수
 							</td>
-							<td style="text-align: left">
+							<td style="text-align: left" th:text="${getBoard.boardCnt}">
 								
 							</td>
 						</tr>
