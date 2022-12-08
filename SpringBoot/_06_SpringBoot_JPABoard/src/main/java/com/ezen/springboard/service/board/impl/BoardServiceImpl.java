@@ -61,10 +61,14 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void updateBoard(Board board) {
+	public Board updateBoard(Board board) {
 		// TODO Auto-generated method stub
 		//boardMapper.updateBoard(board);
 		boardRepository.save(board);
+		boardRepository.flush();
+		
+		System.out.println(board.toString());
+		return board;
 	}
 
 	@Override

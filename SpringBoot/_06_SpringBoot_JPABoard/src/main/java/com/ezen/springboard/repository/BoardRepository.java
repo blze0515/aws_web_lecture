@@ -34,8 +34,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 	//	OR BOARD_CONTENT LIKE '%searchKeyword2%'
 	//	OR BOARD_WRITER LIKE '%searchKeyword3%'
 	List<Board> findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining(String searchKeyword1, String searchKeyword2, String searchKeyword3);
-	
-	
+
 	
 	
 	

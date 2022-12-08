@@ -7,32 +7,6 @@
 	<!-- head 영역 시작 -->
 	<!-- 개별적으로 사용할 css, js 링크 걸기 위해 남겨둠 -->
 	<head>
-		<th:block layout:fragment="script">
-			<script th:inline="javascript">
-			$(function() {
-				$("#btnUpdate").on('click', function() {
-					$.ajax({
-						url: '/board/board',
-						type: 'put',
-						data: $("#updateForm").serialize(),
-						success: function(obj) {
-							console.log(obj);
-							alert("수정되었습니다.");
-							$("#boardNo").val(obj.item.boardNo);
-							$("#boardTitle").val(obj.item.boardTitle);
-							$("#boardContent").text(obj.item.boardContent);
-							$("#boardWriter").val(obj.item.boardWriter);
-							$("#boardRegdate").text(obj.item.boardRegdate);
-							$("#boardCnt").text(obj.item.boardCnt);
-						},
-						error: function(e) {
-							console.log(e);
-						}
-					});
-				});
-			});
-			</script>
-		</th:block>
 		<!--<script>
 			$.ajax({
 				url: API주소,
@@ -50,7 +24,8 @@
 		<div layout:fragment="content">
 			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<h3>게시글 상세</h3>
-				<form id="updateForm" enctype="multipart/form-data">
+				<form id="updateForm" action="/board/board" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="_method" value="put">
 					<input type="hidden" name="boardNo" id="boardNo" th:value="${getBoard.boardNo}">
 					<input type="hidden" name="originFiles" id="originFiles">
 					<table border="1" style="border-collapse: collapse;">
@@ -137,7 +112,7 @@
 						</tr>
 						<tr id="btnWrap">
 							<td colspan="2" align="center">
-								<button type="button" id="btnUpdate">수정</button>
+								<button type="submit" id="btnUpdate">수정</button>
 							</td>
 						</tr>
 					</table>
