@@ -91,8 +91,18 @@
 4. th:href="@{/board/board/{boardNo:변수명}} (변수명에 어떤 값이 들어가는지:boardNo=${board.boardNo})"
 5. 한개의 파라미터만 전송할 수 있다.
 
-
-
+# 3. SpringBoot와 SpringFramework
+1. 화면단
+- Framework: JSP, Boot:html
+- Framework Template: jstl, Boot Template: thymeleaf
+- Framework Controller: @Controller(return String), Boot Controller: @RestController(return ModelAndView, return ResponseEntity) ==> @ResponseBody + @Controller
+- Service, ServiceImpl: 완전 동일
+- DB접근 객체: Framework: DAO, Boot: Mapper Interface, Repository Interface(둘 다 혼용 가능)
+- SQL Mapper: 동일
+- html과 thymeleaf를 사용하기 때문에 API로는 구현이 힘들다
+  html페이지로 이동하려면 controller를 거쳐야하기 때문
+- 굳이 API를 개발하여 사용하려면 GetMapping은 화면으로만 이동
+  화면 이동후 Ajax로 API를 호출해서 데이터만 받아가는 형식으로 진행한다.
 
 
 

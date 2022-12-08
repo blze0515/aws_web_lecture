@@ -2,6 +2,7 @@ package com.ezen.springboard.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +37,9 @@ public class Board {
 	private int boardNo;
 	private String boardTitle;
 	private String boardContent;
+	@Column(updatable = false)
 	private String boardWriter;
+	@Column(updatable = false)
 	private LocalDateTime boardRegdate = LocalDateTime.now();
 	private int boardCnt = 0;
 	@Transient

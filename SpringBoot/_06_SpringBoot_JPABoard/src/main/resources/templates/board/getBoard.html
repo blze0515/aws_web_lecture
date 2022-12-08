@@ -7,7 +7,16 @@
 	<!-- head 영역 시작 -->
 	<!-- 개별적으로 사용할 css, js 링크 걸기 위해 남겨둠 -->
 	<head>
-		
+		<!--<script>
+			$.ajax({
+				url: API주소,
+				type: 'post'
+				data: {boardNo : $("#boardNo").val()}
+				success: function(obj) {
+					$("#boardTitle").val(obj.item.boardTitle);
+				}
+			})
+		</script>-->
 	</head>
 	<!-- head 영역 끝 -->
 	
@@ -15,7 +24,8 @@
 		<div layout:fragment="content">
 			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<h3>게시글 상세</h3>
-				<form id="updateForm" action="" method="post" enctype="multipart/form-data">
+				<form id="updateForm" action="/board/board" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="_method" value="put">
 					<input type="hidden" name="boardNo" id="boardNo" th:value="${getBoard.boardNo}">
 					<input type="hidden" name="originFiles" id="originFiles">
 					<table border="1" style="border-collapse: collapse;">

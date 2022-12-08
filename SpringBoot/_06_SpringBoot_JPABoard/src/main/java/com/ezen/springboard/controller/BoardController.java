@@ -1,12 +1,15 @@
 package com.ezen.springboard.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,12 +75,24 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("board/getBoard.html");
 		mv.addObject("getBoard", boardDTO);
-
+		//mv.addObject("boardNo", boardNo);
 		
 		return mv;
 	}
 	
-	
+	@PutMapping("/board")
+	public void updateBoard(BoardDTO boardDTO, 
+			HttpServletResponse response) throws IOException {
+		Board board = Board.builder()
+						   .boardNo(boardDTO.getBoardNo())
+						   .boardTitle(boardDTO.getBoardTitle())
+						   .boardContent(boardDTO.getBoardContent())
+						   .build();
+		
+		boardService.updateBoard(board);
+		
+		response.sendRedirect("/board/board/" + boardDTO.getBoardNo());
+	}
 	
 	
 	
