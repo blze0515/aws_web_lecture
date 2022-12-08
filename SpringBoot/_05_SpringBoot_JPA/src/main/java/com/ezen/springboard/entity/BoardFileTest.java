@@ -30,6 +30,7 @@ public class BoardFileTest {
 	@JoinColumn(name="BOARD_NO")
 	private BoardTest boardTest;
 	//private int boardNo;
+	//private int boardNo;
 	
 	@Id
 	private int boardFileNo;
