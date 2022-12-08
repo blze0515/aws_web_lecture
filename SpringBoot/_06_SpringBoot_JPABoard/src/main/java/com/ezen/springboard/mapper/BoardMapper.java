@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.data.repository.query.Param;
 
-import com.ezen.springboard.entity.BoardTest;
+import com.ezen.springboard.entity.Board;
 
 @Mapper
 public interface BoardMapper {
 	@Select("SELECT * FROM T_BOARD WHERE BOARD_NO = #{boardNo}")
-	BoardTest getBoard(int boardNo);
+	Board getBoard(int boardNo);
 	
 	@Select("SELECT * FROM T_BOARD")
-	List<BoardTest> getBoardList();
+	List<Board> getBoardList();
 	
 	@Insert("INSERT INTO T_BOARD ("
 			+ "BOARD_NO,"
@@ -33,13 +33,13 @@ public interface BoardMapper {
 			+ "#{boardWriter},"
 			+ "NOW(),"
 			+ "0)")
-	void insertBoard(BoardTest boardTest);
+	void insertBoard(Board board);
 	
 	@Update("UPDATE T_BOARD "
 			+ "SET BOARD_TITLE = #{boardTitle},"
 			+ "	   BOARD_CONTENT= #{boardContent}"
 			+ "WHERE BOARD_NO = #{boardNo}")	
-	void updateBoard(BoardTest boardTest);
+	void updateBoard(Board board);
 	
 	@Delete("DELETE FROM T_BOARD "
 			+ "WHERE BOARD_NO = #{boardNo}")	

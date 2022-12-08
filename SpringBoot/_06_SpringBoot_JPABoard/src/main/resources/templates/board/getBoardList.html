@@ -15,7 +15,7 @@
 		<div layout:fragment="content">
 			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<h3>게시글 목록</h3>
-				<form id="searchForm" action="" method="post">
+				<form id="searchForm" action="/board/boardList" method="get">
 					<input type="hidden" name="pageNum" value="">
 					<input type="hidden" name="amount" value="">
 					<table border="1" style="width: 700px; border-collapse: collapse;">
@@ -42,16 +42,16 @@
 						<th style="background: skyblue; width: 150px;">등록일</th>
 						<th style="background: skyblue; width: 100px;">조회수</th> 
 					</tr>
-						<tr>
-							<td></td>
+						<tr th:each="board : ${getBoardList}">
+							<td th:text=${board.boardNo}></td>
 							<td>
-								<a href="#"></a>
+								<a th:text="${board.boardTitle}"
+								   th:href="@{/board/board}">
+								</a>
 							</td>
-							<td></td>
-							<td>
-								
-							</td>
-							<td></td>
+							<td th:text="${board.boardWriter}"></td>
+							<td th:text="${#temporals.format(board.boardRegdate, 'yyyy-MM-dd')}"></td>
+							<td th:text="${board.boardCnt}"></td>
 						</tr>
 				</table>
 				<br/>

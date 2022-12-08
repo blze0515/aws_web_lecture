@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezen.springboard.entity.BoardFileTest;
-import com.ezen.springboard.entity.BoardTest;
+import com.ezen.springboard.entity.BoardFile;
+import com.ezen.springboard.entity.Board;
 import com.ezen.springboard.mapper.BoardMapper;
-import com.ezen.springboard.repository.BoardFileTestRepository;
-import com.ezen.springboard.repository.BoardTestRepository;
+import com.ezen.springboard.repository.BoardFileRepository;
+import com.ezen.springboard.repository.BoardRepository;
 import com.ezen.springboard.service.board.BoardService;
 
 @Service
@@ -18,69 +18,75 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 	
 	@Autowired
-	private BoardTestRepository boardTestRepository;
+	private BoardRepository boardRepository;
 	
 	@Autowired
-	private BoardFileTestRepository boardFileTestRepository;
+	private BoardFileRepository boardFileRepository;
 
 	@Override
-	public BoardTest getBoard(int boardNo) {
+	public Board getBoard(int boardNo) {
 		//return boardMapper.getBoard(boardNo);
-		return boardTestRepository.findById(boardNo).get();
+		return boardRepository.findById(boardNo).get();
 	}
 
 	@Override
-	public List<BoardTest> getBoardList(BoardTest boardTest) {
+	public List<Board> getBoardList(Board board) {
 		// TODO Auto-generated method stub
 		//return boardMapper.getBoardList();
-		if(boardTest.getSearchCondition().equals("ALL")) {
-			return boardTestRepository.findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining
-					(boardTest.getSearchKeyword(), 
-					 boardTest.getSearchKeyword(), 
-					 boardTest.getSearchKeyword());
-		} else if(boardTest.getSearchCondition().equals("TITLE")) {
-			return boardTestRepository.findByBoardTitleContaining(boardTest.getSearchKeyword());
-		} else if(boardTest.getSearchCondition().equals("CONTENT")) {
-			return boardTestRepository.findByBoardContentContaining(boardTest.getSearchKeyword());
+		if(board.getSearchKeyword() != null && !board.getSearchKeyword().equals("")) {
+			if(board.getSearchCondition().equals("ALL")) {
+				return boardRepository.findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining
+						(board.getSearchKeyword(), 
+						 board.getSearchKeyword(), 
+						 board.getSearchKeyword());
+			} else if(board.getSearchCondition().equals("TITLE")) {
+				return boardRepository.findByBoardTitleContaining(board.getSearchKeyword());
+			} else if(board.getSearchCondition().equals("CONTENT")) {
+				return boardRepository.findByBoardContentContaining(board.getSearchKeyword());
+			} else if(board.getSearchCondition().equals("WRITER")){
+				return boardRepository.findByBoardWriterContaining(board.getSearchKeyword());
+			} else {
+				return boardRepository.findAll();
+			}
 		} else {
-			return boardTestRepository.findByBoardWriterContaining(boardTest.getSearchKeyword());
+			return boardRepository.findAll();
 		}
 		
 	}
 
 	@Override
-	public void insertBoard(BoardTest boardTest) {
-		//boardMapper.insertBoard(boardTest);
-		boardTestRepository.save(boardTest);
+	public void insertBoard(Board board) {
+		//boardMapper.insertBoard(board);
+		boardRepository.save(board);
 	}
 
 	@Override
-	public void updateBoard(BoardTest boardTest) {
+	public void updateBoard(Board board) {
 		// TODO Auto-generated method stub
-		//boardMapper.updateBoard(boardTest);
-		boardTestRepository.save(boardTest);
+		//boardMapper.updateBoard(board);
+		boardRepository.save(board);
 	}
 
 	@Override
 	public void deleteBoard(int boardNo) {
 		// TODO Auto-generated method stub
 		//boardMapper.deleteBoard(boardNo);
-		boardTestRepository.deleteById(boardNo);
+		boardRepository.deleteById(boardNo);
 	}
 
 	@Override
-	public void insertBoardFile(BoardFileTest boardFileTest) {
+	public void insertBoardFile(BoardFile boardFile) {
 		// TODO Auto-generated method stub
 		//boardNo 지정
-		BoardTest boardTest = new BoardTest();
-		boardTest.setBoardNo(1);
-		boardFileTest.setBoardTest(boardTest);
+		Board board = new Board();
+		board.setBoardNo(1);
+		boardFile.setBoard(board);
 		
 		//boardFileNo 지정
-		int boardFileNo = boardFileTestRepository.getMaxFileNo(boardTest.getBoardNo());
-		boardFileTest.setBoardFileNo(boardFileNo);
+		int boardFileNo = boardFileRepository.getMaxFileNo(board.getBoardNo());
+		boardFile.setBoardFileNo(boardFileNo);
 		
-		boardFileTestRepository.save(boardFileTest);
+		boardFileRepository.save(boardFile);
 	}
 	
 	
