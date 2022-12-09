@@ -22,8 +22,29 @@
 							$("#boardTitle").val(obj.item.boardTitle);
 							$("#boardContent").text(obj.item.boardContent);
 							$("#boardWriter").val(obj.item.boardWriter);
-							$("#boardRegdate").text(obj.item.boardRegdate);
-							$("#boardCnt").text(obj.item.boardCnt);
+							$("#boardRegdateText").text(obj.item.boardRegdate == null ?
+														'' :
+														obj.item.boardRegdate.substring(0, 10));
+							$("#boardCntText").text(obj.item.boardCnt);
+							$("#boardRegdate").val(obj.item.boardRegdate);
+							$("#boardCnt").val(obj.item.boardCnt);
+						},
+						error: function(e) {
+							console.log(e);
+						}
+					});
+				});
+				
+				$("#deleteBtn").on('click', function(e) {
+					e.preventDefault();
+					
+					$.ajax({
+						url: '/board/board',
+						type: 'delete',
+						data: {boardNo: $("#boardNo").val()},
+						success: function() {
+							alert("삭제되었습니다.");
+							window.location.href="/board/boardList";
 						},
 						error: function(e) {
 							console.log(e);
@@ -52,6 +73,8 @@
 				<h3>게시글 상세</h3>
 				<form id="updateForm" enctype="multipart/form-data">
 					<input type="hidden" name="boardNo" id="boardNo" th:value="${getBoard.boardNo}">
+					<input type="hidden" name="boardRegdate" id="boardRegdate" th:value="${getBoard.boardRegdate}">
+					<input type="hidden" name="boardCnt" id="boardCnt" th:value="${getBoard.boardCnt}">
 					<input type="hidden" name="originFiles" id="originFiles">
 					<table border="1" style="border-collapse: collapse;">
 						<tr>
@@ -82,14 +105,14 @@
 							<td style="background: skyblue;">
 								작성일
 							</td>
-							<td style="text-align: left" th:text="${#temporals.format(getBoard.boardRegdate, 'yyyy-MM-dd')}">
+							<td style="text-align: left" id="boardRegdateText" th:text="${getBoard.boardRegdate eq null ? '' : #strings.substring(getBoard.boardRegdate, 0, 10)}">
 							</td>
 						</tr>
 						<tr>
 							<td style="background: skyblue;">
 								조회수
 							</td>
-							<td style="text-align: left" th:text="${getBoard.boardCnt}">
+							<td style="text-align: left" id="boardCntText" th:text="${getBoard.boardCnt}">
 								
 							</td>
 						</tr>
@@ -143,7 +166,7 @@
 					</table>
 				</form>
 				<hr/>
-				<a href="#">글 등록</a>
+				<a href="/board/insertBoard">글 등록</a>
 				<a href="#" id="deleteBtn">글 삭제</a>
 				<a href="#">글 목록</a>
 			</div>

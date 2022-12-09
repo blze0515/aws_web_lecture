@@ -15,7 +15,7 @@
 		<div layout:fragment="content">
 			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<h3>새 글 등록</h3>
-				<form id="insertForm" action="" method="post" enctype="multipart/form-data">
+				<form id="insertForm" action="/board/board" method="post" enctype="multipart/form-data">
 					<table border="1" style="border-collapse: collapse">
 						<tr>
 							<td style="background: skyblue; width: 70px;">
@@ -30,7 +30,7 @@
 								작성자
 							</td>
 							<td style="text-align: left;">
-								<input type="text" name="boardWriter" value="" readonly>
+								<input type="text" name="boardWriter" value="">
 							</td>
 						</tr>
 						<tr>
