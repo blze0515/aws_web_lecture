@@ -19,30 +19,23 @@
 			</nav>
 			<nav>
 				<ul class="user-nav">
-					<li>
-						<a th:href="@{/user/login}">로그인</a>
-					</li>
-					<li>
-						<a th:href="@{/user/join}">회원가입</a>
-					</li>
-					<!--<c:choose>
-						<c:when test="${loginUser eq null}">
-							<li>
-								<a href="#">로그인</a>
-							</li>
-							<li>
-								<a href="#">회원가입</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="#">${loginUser.userId }</a>
-							</li>
-							<li>
-								<a href="#">로그아웃</a>
-							</li>
-						</c:otherwise>
-					</c:choose>-->
+					<div th:if="${session.loginUser eq null}" th:remove="tag">
+						<li>
+							<a th:href="@{/user/login}">로그인</a>
+						</li>
+						<li>
+							<a th:href="@{/user/join}">회원가입</a>
+						</li>
+					</div>
+					
+					<div th:if="${session.loginUser ne null}" th:remove="tag">
+						<li>
+							<a th:href="@{/mypage/mypage}" th:text="${session.loginUser.userId}"></a>
+						</li>
+						<li>
+							<a th:href="@{/user/logout}">로그아웃</a>
+						</li>
+					</div>
 				</ul>	
 			</nav>
 		</header>

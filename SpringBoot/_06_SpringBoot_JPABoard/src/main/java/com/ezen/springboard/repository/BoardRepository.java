@@ -2,10 +2,17 @@ package com.ezen.springboard.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.ezen.springboard.entity.Board;
 
+@Transactional //@Modifying이 일어난 메소드가 실행된 후 바로 트랜잭션이 일어날 수 있도록
+			   //Repository 자체를 @Transactional로 선언
 public interface BoardRepository extends JpaRepository<Board, Integer> {
 	//JPA 규칙 메소드
 	//find, read, query, count, get
@@ -35,7 +42,9 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 	//	OR BOARD_WRITER LIKE '%searchKeyword3%'
 	List<Board> findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining(String searchKeyword1, String searchKeyword2, String searchKeyword3);
 
-	
+	@Modifying //데이터의 변경이 일어나는 @Query을 사용할 때는 @Modifying을 붙여준다.
+	@Query(value="UPDATE T_BOARD SET BOARD_CNT = BOARD_CNT + 1 WHERE BOARD_NO = :boardNo", nativeQuery=true)
+	void updateBoardCnt(@Param("boardNo") int boardNo);
 	
 	
 	

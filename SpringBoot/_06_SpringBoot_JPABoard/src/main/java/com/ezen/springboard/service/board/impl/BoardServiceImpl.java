@@ -2,11 +2,13 @@ package com.ezen.springboard.service.board.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ezen.springboard.entity.BoardFile;
 import com.ezen.springboard.entity.Board;
+import com.ezen.springboard.entity.BoardFile;
 import com.ezen.springboard.mapper.BoardMapper;
 import com.ezen.springboard.repository.BoardFileRepository;
 import com.ezen.springboard.repository.BoardRepository;
@@ -91,6 +93,12 @@ public class BoardServiceImpl implements BoardService {
 		boardFile.setBoardFileNo(boardFileNo);
 		
 		boardFileRepository.save(boardFile);
+	}
+
+	@Override
+	public void updateBoardCnt(int boardNo) {
+		// TODO Auto-generated method stub
+		boardRepository.updateBoardCnt(boardNo);
 	}
 	
 	

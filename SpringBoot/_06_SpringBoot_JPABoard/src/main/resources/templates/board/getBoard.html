@@ -10,6 +10,22 @@
 		<th:block layout:fragment="script">
 			<script th:inline="javascript">
 			$(function() {
+				const loginUser = /*[[${session.loginUser}]]*/;
+				let loginUserId = "";
+				
+				if(loginUser != null) {
+					loginUserId = loginUser.userId;
+				}
+				
+				const boardWriter = /*[[${getBoard.boardWriter}]]*/;
+				
+				if(loginUserId != boardWriter) {
+					$("#btnWrap").hide();
+					$("#deleteBtn").hide();
+					$("#boardTitle").attr("readonly", true);
+					$("#boardContent").attr("readonly", true);
+				}
+				
 				$("#btnUpdate").on('click', function() {
 					$.ajax({
 						url: '/board/board',

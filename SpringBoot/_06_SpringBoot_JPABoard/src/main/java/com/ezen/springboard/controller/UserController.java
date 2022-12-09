@@ -1,9 +1,10 @@
 package com.ezen.springboard.controller;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("join")
+	@GetMapping("/join")
 	public ModelAndView joinView() {
 		ModelAndView mv = new ModelAndView();
 		
@@ -104,7 +105,49 @@ public class UserController {
 		}
 	}
 	
-	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(UserDTO userDTO, HttpSession session) {
+		ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
+		Map<String, String> returnMap = new HashMap<String, String>();
+		
+		try {
+			User user = User.builder()
+							.userId(userDTO.getUserId())
+							.userPw(userDTO.getUserPw())
+							.build();
+			
+			User checkedUser = userService.idCheck(user);
+			
+			if(checkedUser == null) {
+				returnMap.put("msg", "idFail");
+			} else {
+				//User loginUser = userService.login(user);
+				
+				if(!checkedUser.getUserPw().equals(userDTO.getUserPw())) {
+					returnMap.put("msg", "pwFail");
+				} else {
+					UserDTO loginUser = UserDTO.builder()
+										       .userId(checkedUser.getUserId())
+										       .userNm(checkedUser.getUserNm())
+										       .userMail(checkedUser.getUserMail())
+										       .userTel(checkedUser.getUserTel())
+										       .userRegDate(checkedUser.getUserRegdate().toString())
+										       .userRole(checkedUser.getUserRole())
+										       .build();
+					
+					session.setAttribute("loginUser", loginUser);
+					returnMap.put("msg", "loginSuccess");
+				}
+			}
+			
+			responseDTO.setItem(returnMap);
+			
+			return ResponseEntity.ok().body(responseDTO);
+		} catch(Exception e) {
+			responseDTO.setErrorMessage(e.getMessage());
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
+	}
 	
 	
 	
