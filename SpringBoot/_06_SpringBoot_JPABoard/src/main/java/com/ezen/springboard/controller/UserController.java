@@ -1,6 +1,7 @@
 package com.ezen.springboard.controller;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +37,13 @@ public class UserController {
 		ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
 		Map<String, String> returnMap = new HashMap<String, String>();
 		try {
+			//User user = new User();
+			//user.setUserId(userDTO.getUserId());
+			//user.setUserPw(userDTO.getUserPw());
+			//user.setUserNm(userDTO.getUserNm());
+			//user.setUserMail(userDTO.getUserMail());
+			//user.setUserId(userDTO.getUserId());
+			
 			User user = User.builder()
 							.userId(userDTO.getUserId())
 							.userPw(userDTO.getUserPw())
@@ -69,7 +77,32 @@ public class UserController {
 		return mv;
 	}
 	
-	
+	@PostMapping("/idCheck")
+	public ResponseEntity<?> idCheck(UserDTO userDTO) {
+		ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
+		Map<String, String> returnMap = new HashMap<String, String>();
+		
+		try {
+			User user = User.builder()
+							.userId(userDTO.getUserId())
+							.build();
+			
+			User checkedUser = userService.idCheck(user);
+			
+			if(checkedUser != null) {
+				returnMap.put("msg", "duplicatedId");
+			} else {
+				returnMap.put("msg", "idOk");
+			}
+			
+			responseDTO.setItem(returnMap);
+			
+			return ResponseEntity.ok().body(responseDTO);
+		} catch(Exception e) {
+			responseDTO.setErrorMessage(e.getMessage());
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
+	}
 	
 	
 	
