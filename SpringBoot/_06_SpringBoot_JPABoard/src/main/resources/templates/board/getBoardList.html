@@ -46,7 +46,7 @@
 							<td th:text=${board.boardNo}></td>
 							<td>
 								<a th:text="${board.boardTitle}"
-								   th:href="@{/board/board/{boardNo} (boardNo=${board.boardNo})}">
+								   th:href="@{/board/updateBoardCnt/{boardNo} (boardNo=${board.boardNo})}">
 								</a>
 							</td>
 							<td th:text="${board.boardWriter}"></td>

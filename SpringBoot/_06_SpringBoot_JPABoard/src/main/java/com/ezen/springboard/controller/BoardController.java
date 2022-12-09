@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.springboard.dto.BoardDTO;
 import com.ezen.springboard.dto.ResponseDTO;
+import com.ezen.springboard.dto.UserDTO;
 import com.ezen.springboard.entity.Board;
 import com.ezen.springboard.service.board.BoardService;
 
@@ -67,8 +69,17 @@ public class BoardController {
 		return mv;
 	}
 	
+	@GetMapping("/updateBoardCnt/{boardNo}")
+	public void updateBoardCnt(@PathVariable int boardNo,
+			HttpServletResponse response) throws IOException {
+		boardService.updateBoardCnt(boardNo);
+		
+		response.sendRedirect("/board/board/" + boardNo);
+	}
+	
 	@GetMapping("/board/{boardNo}")
 	public ModelAndView getBoard(@PathVariable int boardNo) {
+		System.out.println(boardNo);
 		Board board = boardService.getBoard(boardNo);
 		
 		System.out.println(board.toString());
@@ -143,10 +154,16 @@ public class BoardController {
 	}
 	
 	@GetMapping("/insertBoard")
-	public ModelAndView insertBoardView() {
+	public ModelAndView insertBoardView(HttpSession session) throws IOException {
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("board/insertBoard.html");
+		if(loginUser == null) {
+			mv.setViewName("user/login.html");
+		} else {		
+			mv.setViewName("board/insertBoard.html");
+		}
 		return mv;
 	}
 	
