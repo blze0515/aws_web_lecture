@@ -18,4 +18,14 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(user);
 	}
 
+	@Override
+	public User idCheck(User user) {
+		// TODO Auto-generated method stub
+		if(!userRepository.findById(user.getUserId()).isEmpty()) {
+			return userRepository.findById(user.getUserId()).get();
+		} else {
+			return null;
+		}
+	}
+
 }
