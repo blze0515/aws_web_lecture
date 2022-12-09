@@ -50,7 +50,7 @@
 								</a>
 							</td>
 							<td th:text="${board.boardWriter}"></td>
-							<td th:text="${#temporals.format(board.boardRegdate, 'yyyy-MM-dd')}"></td>
+							<td th:text="${board.boardRegdate eq null ? '' : #strings.substring(board.boardRegdate, 0, 10)}"></td>
 							<td th:text="${board.boardCnt}"></td>
 						</tr>
 				</table>
@@ -74,7 +74,7 @@
 					</ul>
 				</div>
 				<br/>
-				<a href="#">새 글 등록</a>
+				<a href="/board/insertBoard">새 글 등록</a>
 			</div>
 		</div>
 	</body>

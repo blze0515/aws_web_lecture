@@ -1,6 +1,7 @@
 package com.ezen.springboard.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,7 +51,10 @@ public class BoardController {
 										   .boardTitle(boardList.get(i).getBoardTitle())
 										   .boardContent(boardList.get(i).getBoardContent())
 										   .boardWriter(boardList.get(i).getBoardWriter())
-										   .boardRegdate(boardList.get(i).getBoardRegdate())
+										   .boardRegdate(
+												   boardList.get(i).getBoardRegdate() == null ?
+												   null :
+												   boardList.get(i).getBoardRegdate().toString())
 										   .boardCnt(boardList.get(i).getBoardCnt())
 										   .build();
 			getBoardList.add(returnBoard);
@@ -71,7 +78,9 @@ public class BoardController {
 									.boardTitle(board.getBoardTitle())
 									.boardContent(board.getBoardContent())
 									.boardWriter(board.getBoardWriter())
-									.boardRegdate(board.getBoardRegdate())
+									.boardRegdate(board.getBoardRegdate() == null ?
+											   	null :
+											   	board.getBoardRegdate().toString())
 									.boardCnt(board.getBoardCnt())
 									.build();
 		
@@ -94,6 +103,12 @@ public class BoardController {
 							   .boardTitle(boardDTO.getBoardTitle())
 							   .boardContent(boardDTO.getBoardContent())
 							   .boardWriter(boardDTO.getBoardWriter())
+							   .boardRegdate(
+									   boardDTO.getBoardRegdate() == null ||
+									   boardDTO.getBoardRegdate().equals("") ?
+									   null :
+									   LocalDateTime.parse(boardDTO.getBoardRegdate()))
+							   .boardCnt(boardDTO.getBoardCnt())
 							   .build();
 			
 			boardService.updateBoard(board);
@@ -105,7 +120,9 @@ public class BoardController {
 										   .boardTitle(board.getBoardTitle())
 										   .boardContent(board.getBoardContent())
 										   .boardWriter(board.getBoardWriter())
-										   .boardRegdate(board.getBoardRegdate())
+										   .boardRegdate(board.getBoardRegdate() == null ?
+												   		null :
+													   	board.getBoardRegdate().toString())
 										   .boardCnt(board.getBoardCnt())
 										   .build();
 			
@@ -119,6 +136,47 @@ public class BoardController {
 		}
 		//response.sendRedirect("/board/board/" + boardDTO.getBoardNo());
 	}
+	
+	@DeleteMapping("/board")
+	public void deleteBoard(@RequestParam("boardNo") int boardNo) {
+		boardService.deleteBoard(boardNo);
+	}
+	
+	@GetMapping("/insertBoard")
+	public ModelAndView insertBoardView() {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("board/insertBoard.html");
+		return mv;
+	}
+	
+	@PostMapping("/board")
+	public void insertBoard(BoardDTO boardDTO, 
+			HttpServletResponse response) throws IOException {
+		Board board = Board.builder()
+						   .boardTitle(boardDTO.getBoardTitle())
+						   .boardContent(boardDTO.getBoardContent())
+						   .boardWriter(boardDTO.getBoardWriter())
+						   .boardRegdate(LocalDateTime.now())
+						   .build();
+		
+		boardService.insertBoard(board);
+		
+		response.sendRedirect("/board/boardList");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -7,14 +7,41 @@
 	<!-- head 영역 시작 -->
 	<!-- 개별적으로 사용할 css, js 링크 걸기 위해 남겨둠 -->
 	<head>
-	
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+				$(function() {
+					$("#joinForm").on("submit", function(e) {
+						e.preventDefault();
+						
+						$.ajax({
+							url: '/user/join',
+							type: 'post',
+							data: $("#joinForm").serialize(),
+							success: function(obj) {
+								console.log(obj);
+								if(obj.item.joinMsg == 'joinSuccess') {
+									alert("회원가입을 축하드립니다.");
+									window.location.href="/user/login";
+								} else {
+									alert("회원가입에 실패했습니다. 관리자에게 문의하세요.");
+									return;
+								}
+							},
+							error: function(e) {
+								console.log(e);
+							}
+						})
+					});
+				});
+			</script>
+		</th:block>
 	</head>
 	<!-- head 영역 끝 -->
 	
 	<body>
 		<div layout:fragment="content">
 			<div class="form-wrapper">
-				<form id="joinForm" action="/user/join.do" method="post">
+				<form id="joinForm" action="/user/join" method="post">
 					<input type="hidden" id="joinMsg" value="">
 					<h3>회원가입</h3>
 					<div class="label-wrapper">

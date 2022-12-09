@@ -11,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -45,6 +46,8 @@ public class Board {
 	//@Column(updatable = false)
 	private String boardWriter;
 	//@Column(updatable = false)
+	//@Column
+	//@ColumnDefault("'ROLE_USER'")
 	private LocalDateTime boardRegdate = LocalDateTime.now();
 	private int boardCnt = 0;
 	@Transient
