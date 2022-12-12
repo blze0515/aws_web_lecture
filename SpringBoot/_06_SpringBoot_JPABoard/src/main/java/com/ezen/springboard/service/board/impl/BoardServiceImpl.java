@@ -57,9 +57,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void insertBoard(Board board) {
+	public void insertBoard(Board board, List<BoardFile> uploadFileList) {
 		//boardMapper.insertBoard(board);
 		boardRepository.save(board);
+		boardRepository.flush();
+		
+		for(BoardFile boardFile : uploadFileList) {
+			boardFile.setBoard(board);
+			
+			int boardFileNo = boardFileRepository.getMaxFileNo(board.getBoardNo());
+			boardFile.setBoardFileNo(boardFileNo);
+			
+			boardFileRepository.save(boardFile);
+		}
 	}
 
 	@Override
@@ -78,21 +88,6 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		//boardMapper.deleteBoard(boardNo);
 		boardRepository.deleteById(boardNo);
-	}
-
-	@Override
-	public void insertBoardFile(BoardFile boardFile) {
-		// TODO Auto-generated method stub
-		//boardNo 지정
-		Board board = new Board();
-		board.setBoardNo(1);
-		boardFile.setBoard(board);
-		
-		//boardFileNo 지정
-		int boardFileNo = boardFileRepository.getMaxFileNo(board.getBoardNo());
-		boardFile.setBoardFileNo(boardFileNo);
-		
-		boardFileRepository.save(boardFile);
 	}
 
 	@Override

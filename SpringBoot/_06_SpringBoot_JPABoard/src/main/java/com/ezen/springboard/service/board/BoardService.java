@@ -10,13 +10,11 @@ public interface BoardService {
 	
 	List<Board> getBoardList(Board board);
 	
-	void insertBoard(Board board);
+	void insertBoard(Board board, List<BoardFile> uploadFileList);
 	
 	Board updateBoard(Board board);
 	
 	void deleteBoard(int boardNo);
-	
-	void insertBoardFile(BoardFile boardFile);
 	
 	void updateBoardCnt(int boardNo);
 }
