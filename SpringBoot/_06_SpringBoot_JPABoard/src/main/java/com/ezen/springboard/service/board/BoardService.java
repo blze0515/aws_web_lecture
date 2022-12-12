@@ -12,7 +12,7 @@ public interface BoardService {
 	
 	void insertBoard(Board board, List<BoardFile> uploadFileList);
 	
-	Board updateBoard(Board board);
+	Board updateBoard(Board board, List<BoardFile> uFileList);
 	
 	void deleteBoard(int boardNo);
 	

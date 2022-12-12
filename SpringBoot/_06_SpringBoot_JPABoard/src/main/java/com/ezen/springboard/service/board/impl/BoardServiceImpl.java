@@ -73,13 +73,32 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board updateBoard(Board board) {
+	public Board updateBoard(Board board, List<BoardFile> uFileList) {
 		// TODO Auto-generated method stub
 		//boardMapper.updateBoard(board);
 		boardRepository.save(board);
+		
+		if(uFileList.size() > 0) {
+			for(int i = 0; i < uFileList.size(); i++) {
+				if(uFileList.get(i).getBoardFileStatus().equals("U")) {
+					boardFileRepository.save(uFileList.get(i));
+				} else if(uFileList.get(i).getBoardFileStatus().equals("D")) {
+					boardFileRepository.delete(uFileList.get(i));
+				} else if(uFileList.get(i).getBoardFileStatus().equals("I")) {
+					//추가한 파일들은 boardNo은 가지고 있지만 boardFileNo가 없는 상태라
+					//boardFileNo를 추가
+					int boardFileNo = boardFileRepository.getMaxFileNo(
+							uFileList.get(i).getBoard().getBoardNo());
+					
+					uFileList.get(i).setBoardFileNo(boardFileNo);
+					
+					boardFileRepository.save(uFileList.get(i));
+				}
+			}
+		}
+		
 		boardRepository.flush();
 		
-		System.out.println(board.toString());
 		return board;
 	}
 
