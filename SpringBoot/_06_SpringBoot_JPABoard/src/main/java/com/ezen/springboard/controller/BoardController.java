@@ -1,10 +1,12 @@
 package com.ezen.springboard.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -19,12 +21,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.springboard.common.FileUtils;
 import com.ezen.springboard.dto.BoardDTO;
 import com.ezen.springboard.dto.ResponseDTO;
 import com.ezen.springboard.dto.UserDTO;
 import com.ezen.springboard.entity.Board;
+import com.ezen.springboard.entity.BoardFile;
 import com.ezen.springboard.service.board.BoardService;
 
 @RestController
@@ -167,9 +172,10 @@ public class BoardController {
 		return mv;
 	}
 	
+	//insertBoard
 	@PostMapping("/board")
-	public void insertBoard(BoardDTO boardDTO, 
-			HttpServletResponse response) throws IOException {
+	public void insertBoard(BoardDTO boardDTO, MultipartFile[] uploadFiles, 
+			HttpServletResponse response, HttpServletRequest request) throws IOException {
 		Board board = Board.builder()
 						   .boardTitle(boardDTO.getBoardTitle())
 						   .boardContent(boardDTO.getBoardContent())
@@ -177,7 +183,37 @@ public class BoardController {
 						   .boardRegdate(LocalDateTime.now())
 						   .build();
 		
-		boardService.insertBoard(board);
+		//DB에 입력될 파일 정보 리스트
+		List<BoardFile> uploadFileList = new ArrayList<BoardFile>();
+		
+		if(uploadFiles.length > 0) {
+			String attachPath = request.getSession().getServletContext().getRealPath("/")
+					+ "/upload/";
+			
+			System.out.println("attachPath====================" + attachPath);
+			
+			File directory = new File(attachPath);
+			
+			if(!directory.exists()) {
+				directory.mkdir();
+			}
+			
+			//multipartFile 형식의 데이터를 DB 테이블에 맞는 구조로 변경
+			for(int i = 0; i < uploadFiles.length; i++) {
+				MultipartFile file = uploadFiles[i];
+				
+				if(!file.getOriginalFilename().equals("") &&
+					file.getOriginalFilename() != null) {
+					BoardFile boardFile = new BoardFile();
+					
+					boardFile = FileUtils.parseFileInfo(file, attachPath);
+					
+					uploadFileList.add(boardFile);
+				}
+			}
+		}
+		
+		boardService.insertBoard(board, uploadFileList);
 		
 		response.sendRedirect("/board/boardList");
 	}
