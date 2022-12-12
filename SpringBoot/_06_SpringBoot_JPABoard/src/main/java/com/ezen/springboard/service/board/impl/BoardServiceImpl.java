@@ -95,6 +95,15 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		boardRepository.updateBoardCnt(boardNo);
 	}
+
+	@Override
+	public List<BoardFile> getBoardFileList(int boardNo) {
+		Board board = Board.builder()
+						   .boardNo(boardNo)
+						   .build();
+		
+		return boardFileRepository.findByBoard(board);
+	}
 	
 	
 	

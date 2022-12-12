@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.springboard.common.FileUtils;
 import com.ezen.springboard.dto.BoardDTO;
+import com.ezen.springboard.dto.BoardFileDTO;
 import com.ezen.springboard.dto.ResponseDTO;
 import com.ezen.springboard.dto.UserDTO;
 import com.ezen.springboard.entity.Board;
@@ -84,10 +85,7 @@ public class BoardController {
 	
 	@GetMapping("/board/{boardNo}")
 	public ModelAndView getBoard(@PathVariable int boardNo) {
-		System.out.println(boardNo);
 		Board board = boardService.getBoard(boardNo);
-		
-		System.out.println(board.toString());
 		
 		BoardDTO boardDTO = BoardDTO.builder()
 									.boardNo(board.getBoardNo())
@@ -100,9 +98,28 @@ public class BoardController {
 									.boardCnt(board.getBoardCnt())
 									.build();
 		
+		List<BoardFile> boardFileList = boardService.getBoardFileList(boardNo);
+		
+		List<BoardFileDTO> boardFileDTOList = new ArrayList<BoardFileDTO>();
+		
+		for(BoardFile boardFile : boardFileList) {
+			BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+													.boardNo(boardNo)
+													.boardFileNo(boardFile.getBoardFileNo())
+													.boardFileNm(boardFile.getBoardFileNm())
+													.boardOriginFileNm(boardFile.getBoardOriginFileNm())
+													.boardFilePath(boardFile.getBoardFilePath())
+													.boardFileRegdate(boardFile.getBoardFileRegdate().toString())
+													.boardFileCate(boardFile.getBoardFileCate())
+													.build();
+			
+			boardFileDTOList.add(boardFileDTO);
+		}
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("board/getBoard.html");
 		mv.addObject("getBoard", boardDTO);
+		mv.addObject("boardFileList", boardFileDTOList);
 		//mv.addObject("boardNo", boardNo);
 		
 		return mv;
@@ -207,7 +224,7 @@ public class BoardController {
 					BoardFile boardFile = new BoardFile();
 					
 					boardFile = FileUtils.parseFileInfo(file, attachPath);
-					
+					System.out.println(boardFile.getBoardOriginFileNm());
 					uploadFileList.add(boardFile);
 				}
 			}
