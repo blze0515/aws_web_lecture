@@ -1,0 +1,121 @@
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: skyblue;
+}
+
+header {
+	display: flex; 
+	justify-content: space-between; 
+	align-items: center; 
+	background: skyblue;
+}
+
+ul, li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color: blue;
+}
+
+.main-div li a {
+	font-size: 1.125rem;
+}
+
+.user-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.user-nav li {
+	margin-left: 10px;
+}
+
+.user-nav li a {
+	font-size: 0.9rem;
+}
+
+.form-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#joinForm {
+	width: 250px;
+	text-align: center;
+}
+
+#joinForm .label-wrapper {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#joinForm input {
+	width: 100%;
+}
+
+#joinForm div {
+	display: flex;
+	align-items: center;
+}
+	
+#btnIdCheck {
+	width: 50px;
+}
+
+#loginForm {
+	width: 250px;
+	text-align: center;
+}
+
+#loginForm .label-wrapper {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#loginForm input {
+	width: 100%;
+}
+
+#loginForm div {
+	display: flex;
+	align-items: center;
+}
+
+.pagination {
+	list-style: none;
+	width: 100%;
+	display: inline-block;
+}
+
+.pagination_button {
+	float: left;
+	margin-left: 5px;
+}
+
+#attZone {
+	width: 660px;
+	min-height: 150px;
+	padding: 10px;
+	border: 1px dotted #00f;
+}
+
+#attZone:empty:before {
+	content: attr(data-placeholder);
+	color: #999;
+	font-size: 0.9em;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<body>
+		<header th:fragment="header">
+			<h1>
+			<!-- /를 붙이면 무조건 루트주소 뒤에 붙는다. -->
+			<!-- localhost:8090/user/login.do -->
+			<!-- localhost:8090/hello.do -->
+				<a th:href="@{/}">홈</a>
+			</h1>
+			<nav>
+				<ul class="main-nav">
+					<li>
+						<a th:href="@{/board/boardList}">게시글 목록</a>
+					</li>			
+				</ul>
+			</nav>
+			<nav>
+				<ul class="user-nav">
+					<div th:if="${session.loginUser eq null}" th:remove="tag">
+						<li>
+							<a th:href="@{/user/login}">로그인</a>
+						</li>
+						<li>
+							<a th:href="@{/user/join}">회원가입</a>
+						</li>
+					</div>
+					
+					<div th:if="${session.loginUser ne null}" th:remove="tag">
+						<li>
+							<a th:href="@{/mypage/mypage}" th:text="${session.loginUser.userId}"></a>
+						</li>
+						<li>
+							<a th:href="@{/user/logout}">로그아웃</a>
+						</li>
+					</div>
+				</ul>	
+			</nav>
+		</header>
+	</body>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</html>

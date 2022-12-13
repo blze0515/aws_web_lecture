@@ -11,7 +11,7 @@
 - 권한: 특정 리소스에 대한 접근 제한, 스프링 시큐리티 사용 시 모든 리소스는 접근 제한이 걸려있다. 인가 과정을 통해서
 해당 리소스에 대한 권한을 가지고 있는 지 검사하고 권한이 있으면 해당 리소스를 사용할 수 있게 권한이 없으면 해당 리소스에
 접근 못 하도록 설정
-3. Spring Security의 로그인 인증 과정
+3. Spring Security의 로그인 인증 과정(Form 기반의 로그인)
   1) 사용자가 로그인 정보를 입력하고 인증 요청을 보낸다.
   2) AuthenticationFilter(구현체: UsernamePasswordAuthenticationFilter)가 사용자가 보낸 인증 요청을 인터셉한다.
      사용자가 입력한 아이디와 비밀번호에 대한 유효성 검사를 진행(null값이 들어왔는지). 유효성 검사가 끝난 후에는 
@@ -31,3 +31,24 @@
 <p style="text-align: center;"><img src="images/Security 인증 처리 과정.PNG"></p>
 
 4. Spring Security의 Filter들
+  1) SecurityContextPersistenceFilter: SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 필터
+  2) LogoutFilter: 설정된 로그아웃 URL로 오는 요청을 감시하며, 요청이 왔을 때 해당 유저의 로그아웃 처리.
+  3) AuthenticationFilter: 설정된 로그인 URL로 오는 요청을 감시하며, 요청이 왔을 때 해당 유저의 인증처리
+                           AuthenticationManager에게 인증용 객체(UsernamePasswordAuthenticationToken)을 넘겨준다.
+                           인증 성공 시 SecurityContext에 Authentication객체를 등록 후 AuthenticationSuccessHandler
+                           호출.
+                           인증 실패 시 AuthenticationFailureHandler 호출.
+  4) DefatulLoginPageGeneratingFilter: 인증을 위한 로그인폼 페이지 URL을 감시. 요청이 왔을 때 로그인폼 페이지를 리턴.
+  5) AnonymousAuthenticationFilter: 사용자 정보가 인증되지 않았을 때 익명 사용자 정보로 인증토큰을 만들어주는 필터.
+                                    username => anynomous
+  6) ExcptionTranslationFilter: 보호된 요청을 처리하는 과정에서 발생하는 예외에 대한 처리를 해주거나 전달해주는 역할.
+  7) FilterSecurityInterceptor: AccessDicisionManager로 권한부여 처리를 위임하므로써 접근 제어 결정을 쉽게 해준다.
+
+5. Authentication Interface
+- 인증 완료 후 SecurityContext에 등록되어 사용될 인증 완료 객체
+- Prinicipal, Serializable을 상속받음.
+- Collection<? extends GrantedAuthority> getAuthorities(); //Authentication에 등록된 사용자의 권한 목록
+  Object getCredentials(); //주로 비밀번호 정보
+  Object getDetails(); //사용자 상세 정보
+  Ojbect getPrincipal(); //주로 아이디
+  boolean isAuthenticated(); //인증 여부

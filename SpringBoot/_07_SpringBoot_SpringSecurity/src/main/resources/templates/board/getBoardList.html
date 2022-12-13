@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+	  
+	<!-- head 영역 시작 -->
+	<!-- 개별적으로 사용할 css, js 링크 걸기 위해 남겨둠 -->
+	<head>
+		<th:block layout:fragment="script">
+			<script th:inline="javascript">
+				$(function() {
+					$("#btnSearch").on("click", function() {
+						$("input[name='page']").val(0);
+						$("#searchForm").submit();
+					});
+				});
+			</script>
+		</th:block>
+	</head>
+	<!-- head 영역 끝 -->
+	
+	<body>
+		<div layout:fragment="content">
+			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+				<h3>게시글 목록</h3>
+				<form id="searchForm" action="/board/boardList" method="get">
+					<input type="hidden" name="page" value="">
+					<table border="1" style="width: 700px; border-collapse: collapse;">
+						<tr>
+							<td align="right">
+								<select name="searchCondition">
+									<option value="ALL" th:selected="${searchCondition == 'ALL'}">전체</option>
+									<option value="TITLE" th:selected="${searchCondition == 'TITLE'}">제목</option>
+									<option value="CONTENT" th:selected="${searchCondition == 'CONTENT'}">내용</option>
+									<option value="WRITER" th:selected="${searchCondition == 'WRITER'}">작성자</option>
+								</select>
+								<input type="text" name="searchKeyword" th:value="${searchKeyword}">
+								<button type="button" id="btnSearch">검색</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+				
+				<table id="boardTable" border="1" style="width: 700px; border-collapse: collapse;">
+					<tr>
+						<th style="background: skyblue; width: 100px;">번호</th>
+						<th style="background: skyblue; width: 200px;">제목</th>
+						<th style="background: skyblue; width: 150px;">작성자</th>
+						<th style="background: skyblue; width: 150px;">등록일</th>
+						<th style="background: skyblue; width: 100px;">조회수</th> 
+					</tr>
+						<tr th:each="board : ${getBoardList}">
+							<td th:text=${board.boardNo}></td>
+							<td>
+								<a th:text="${board.boardTitle}"
+								   th:href="@{/board/updateBoardCnt/{boardNo} (boardNo=${board.boardNo})}">
+								</a>
+							</td>
+							<td th:text="${board.boardWriter}"></td>
+							<td th:text="${board.boardRegdate eq null ? '' : #strings.substring(board.boardRegdate, 0, 10)}"></td>
+							<td th:text="${board.boardCnt}"></td>
+						</tr>
+				</table>
+				<br/>
+				<div style="text-align:center;">
+					<ul class="pagination" th:if="${getBoardList.totalElements > 0}"
+										   th:with="pageNumber = ${getBoardList.pageable.pageNumber},
+												    pageSize = ${getBoardList.pageable.pageSize},
+												    totalPages = ${getBoardList.totalPages},
+												    startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+												    tempEndPage = ${startPage + pageSize - 1},
+												    endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+						<li class="pagination_button" th:if="${pageNumber > 0}">
+							<a th:href="@{/board/boardList(
+											page=${pageNumber - 1}, 
+											searchCondition=${searchCondition}, 
+											searchKeyword=${searchKeyword}
+										)}">이전</a>
+						</li>
+					
+					
+						<li class="pagination_button" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+							<a th:href="@{/board/boardList(
+											page=${page - 1},
+											searchCondition=${searchCondition},
+											searchKeyword=${searchKeyword}
+										)}" th:text="${page}"></a>
+						</li>
+					
+						<li class="pagination_button" th:if="${pageNumber < totalPages - 1}">
+							<a th:href="@{/board/boardList(
+											page=${pageNumber + 1},
+											searchCondition=${searchCondition},
+											searchKeyword=${searchKeyword}
+										)}">다음</a>
+						</li>
+					</ul>
+				</div>
+				<br/>
+				<a href="/board/insertBoard">새 글 등록</a>
+			</div>
+		</div>
+	</body>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</html>

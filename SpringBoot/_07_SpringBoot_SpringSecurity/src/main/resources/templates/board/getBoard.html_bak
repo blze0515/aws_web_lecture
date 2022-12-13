@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout}">
+	  
+	<!-- head 영역 시작 -->
+	<!-- 개별적으로 사용할 css, js 링크 걸기 위해 남겨둠 -->
+	<head>
+		<!--<script>
+			$.ajax({
+				url: API주소,
+				type: 'post'
+				data: {boardNo : $("#boardNo").val()}
+				success: function(obj) {
+					$("#boardTitle").val(obj.item.boardTitle);
+				}
+			})
+		</script>-->
+	</head>
+	<!-- head 영역 끝 -->
+	
+	<body>
+		<div layout:fragment="content">
+			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+				<h3>게시글 상세</h3>
+				<form id="updateForm" action="/board/board" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="_method" value="put">
+					<input type="hidden" name="boardNo" id="boardNo" th:value="${getBoard.boardNo}">
+					<input type="hidden" name="originFiles" id="originFiles">
+					<table border="1" style="border-collapse: collapse;">
+						<tr>
+							<td style="background: skyblue; width: 70px">
+								제목
+							</td>
+							<td style="text-align: left">
+								<input type="text" name="boardTitle" id="boardTitle" th:value="${getBoard.boardTitle}">
+							</td>
+						</tr>
+						<tr>
+							<td style="background: skyblue;">
+								작성자
+							</td>
+							<td style="text-align: left">
+								<input type="text" name="boardWriter" id="boardWriter" th:value="${getBoard.boardWriter}" readonly>
+							</td>
+						</tr>
+						<tr>
+							<td style="background: skyblue;">
+								내용
+							</td>
+							<td style="text-align: left">
+								<textarea name="boardContent" id="boardContent" cols="40" rows="10" th:text="${getBoard.boardContent}"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td style="background: skyblue;">
+								작성일
+							</td>
+							<td style="text-align: left" th:text="${#temporals.format(getBoard.boardRegdate, 'yyyy-MM-dd')}">
+							</td>
+						</tr>
+						<tr>
+							<td style="background: skyblue;">
+								조회수
+							</td>
+							<td style="text-align: left" th:text="${getBoard.boardCnt}">
+								
+							</td>
+						</tr>
+						<tr>
+							<td style="background: skyblue; width: 70px;">
+								파일첨부
+							</td>
+							<td style="text-align: left;">
+								<div id="image_preview">
+									<input type="file" id="btnAtt" name="uploadFiles" multiple="multiple">
+									<input type="file" id="changedFiles" name="changedFiles"
+									style="display: none;" multiple="multiple">
+									<p style="color: red; font-size: 0.9rem;">파일을 변경하려면 사진을 파일을 다운로드하려면 파일명을 클릭하세요.</p>
+									<div id="attZone">
+											<div style="display: inline-block; position: relative; 
+											width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;">
+												<input type="hidden" id="boardFileNo" name="boardFileNo" 
+														value="">
+												<input type="hidden" id="boardFileNm" name="boardFileNm" 
+														value="">
+												<input type="file" id="changedFile" name="changedFile"
+												style="display: none;" onchange="fnGetChangedFileInfo(event)">
+												
+													<input type="hidden" id="boardFileCnt" name="boardFileCnt" value="">
+													
+												<c:choose>
+														<img id="img" src="/upload/"
+														style="width: 100%; height: 100%; z-index: none; cursor: pointer;" 
+														class="fileImg" onclick="fnImgChange()">
+														<img id="img" src="/images/defaultFileImg.png"
+														style="width: 100%; height: 100%; z-index: none; cursor: pointer;" 
+														class="fileImg" onclick="fnImgChange()">
+												<input type="button" class="btnDel" value="x" delFile=""
+												style="width: 30px; height: 30px; position: absolute; right: 0px; bottom: 0px; 
+												z-index: 999; background-color: rgba(255, 255, 255, 0.1); color: #f00;"
+												onclick="fnImgDel(event)">
+												<p id="fileNm" style="display: inline-block; font-size: 8px;
+												cursor: pointer;" onclick="fnFileDown()">
+													
+												</p>
+											</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr id="btnWrap">
+							<td colspan="2" align="center">
+								<button type="submit" id="btnUpdate">수정</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+				<hr/>
+				<a href="#">글 등록</a>
+				<a href="#" id="deleteBtn">글 삭제</a>
+				<a href="#">글 목록</a>
+			</div>
+		</div>
+	</body>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</html>
