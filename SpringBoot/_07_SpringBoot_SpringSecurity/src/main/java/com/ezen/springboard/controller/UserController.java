@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ import com.ezen.springboard.service.user.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/join")
 	public ModelAndView joinView() {
@@ -49,7 +53,7 @@ public class UserController {
 			
 			User user = User.builder()
 							.userId(userDTO.getUserId())
-							.userPw(userDTO.getUserPw())
+							.userPw(passwordEncoder.encode(userDTO.getUserPw()))
 							.userNm(userDTO.getUserNm())
 							.userMail(userDTO.getUserMail())
 							.userTel(userDTO.getUserTel())
