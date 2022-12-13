@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,7 @@ public class BoardController {
 	
 	@GetMapping("/boardList")
 	public ModelAndView getBoardList(BoardDTO boardDTO,
-			Pageable pageable) {
+			@PageableDefault(page = 0, size = 10) Pageable pageable) {
 		Board board = Board.builder()
 						   .boardTitle(boardDTO.getBoardTitle())
 						   .boardContent(boardDTO.getBoardContent())
@@ -66,9 +67,9 @@ public class BoardController {
 																	.boardTitle(pageBoard.getBoardTitle())
 																	.boardContent(pageBoard.getBoardContent())
 																	.boardWriter(pageBoard.getBoardWriter())
-																	.boardRegdate(board.getBoardRegdate() == null ?
+																	.boardRegdate(pageBoard.getBoardRegdate() == null ?
 																		   	null :
-																		   	board.getBoardRegdate().toString())
+																		   		pageBoard.getBoardRegdate().toString())
 																	.boardCnt(pageBoard.getBoardCnt())
 																	.build()
 															);
@@ -92,7 +93,7 @@ public class BoardController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("board/getBoardList.html");
-		mv.addObject("getBoardList", getBoardList);
+		mv.addObject("getBoardList", pageBoardDTOList);
 		
 		return mv;
 	}
@@ -365,9 +366,9 @@ public class BoardController {
 																		.boardTitle(pageBoard.getBoardTitle())
 																		.boardContent(pageBoard.getBoardContent())
 																		.boardWriter(pageBoard.getBoardWriter())
-																		.boardRegdate(board.getBoardRegdate() == null ?
+																		.boardRegdate(pageBoard.getBoardRegdate() == null ?
 																			   	null :
-																			   	board.getBoardRegdate().toString())
+																			   		pageBoard.getBoardRegdate().toString())
 																		.boardCnt(pageBoard.getBoardCnt())
 																		.build()
 																);

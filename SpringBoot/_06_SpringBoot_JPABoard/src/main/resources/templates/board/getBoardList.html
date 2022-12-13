@@ -16,8 +16,7 @@
 			<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<h3>게시글 목록</h3>
 				<form id="searchForm" action="/board/boardList" method="get">
-					<input type="hidden" name="pageNum" value="">
-					<input type="hidden" name="amount" value="">
+					<input type="hidden" name="page" value="">
 					<table border="1" style="width: 700px; border-collapse: collapse;">
 						<tr>
 							<td align="right">
@@ -56,21 +55,24 @@
 				</table>
 				<br/>
 				<div style="text-align:center;">
-					<ul class="pagination">
-							<li class="pagination_button">
-								<a href="">이전</a>
-							</li>
-						
-						
-							<li class="pagination_button">
-								<a href=""></a>
-							</li>
-						
-						<c:if test="">
-							<li class="pagination_button">
-								<a href="">다음</a>
-							</li>
-						</c:if>
+					<ul class="pagination" th:with="pageNumber = ${getBoardList.pageable.pageNumber},
+												    pageSize = ${getBoardList.pageable.pageSize},
+												    totalPages = ${getBoardList.totalPages},
+												    startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+												    tempEndPage = ${startPage + pageSize - 1},
+												    endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+						<li class="pagination_button" th:if="${pageNumber > 0}">
+							<a th:href="@{/board/boardList(page=${pageNumber - 1})}">이전</a>
+						</li>
+					
+					
+						<li class="pagination_button" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+							<a th:href="@{/board/boardList(page=${page - 1})}" th:text="${page}"></a>
+						</li>
+					
+						<li class="pagination_button" th:if="${pageNumber < totalPages - 1}">
+							<a th:href="@{/board/boardList(page=${pageNumber + 1})}">다음</a>
+						</li>
 					</ul>
 				</div>
 				<br/>
