@@ -95,6 +95,14 @@ public class BoardController {
 		mv.setViewName("board/getBoardList.html");
 		mv.addObject("getBoardList", pageBoardDTOList);
 		
+		if(boardDTO.getSearchCondition() != null && !boardDTO.getSearchCondition().equals("")) {
+			mv.addObject("searchCondition", boardDTO.getSearchCondition());
+		}
+		
+		if(boardDTO.getSearchKeyword() != null && !boardDTO.getSearchKeyword().equals("")) {
+			mv.addObject("searchKeyword", boardDTO.getSearchKeyword());
+		}
+		
 		return mv;
 	}
 	
