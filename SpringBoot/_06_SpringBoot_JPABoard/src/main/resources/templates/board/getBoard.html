@@ -33,71 +33,6 @@
 					$("#boardContent").attr("readonly", true);
 				}
 				
-				$("#btnUpdate").on('click', function() {
-					dt = new DataTransfer();
-					
-					for(f in uploadFiles) {
-						let file = uploadFiles[f];
-						dt.items.add(file);
-					}
-					
-					$("#btnAtt")[0].files = dt.files;
-					
-					//dt.clearData();
-					//clearData() 사용하면 배열의 모든 내용이 담기지 않고
-					//파일 하나씩만 담기는 현상이 발생해서 dt를 두 개로 분리하여 사용
-					dt2 = new DataTransfer();
-					
-					for(f in changedFiles) {
-						let file = changedFiles[f];
-						dt2.items.add(file);
-					}
-					
-					$("#changedFiles")[0].files = dt2.files;
-					
-					//변경된 파일정보와 삭제된 파일정보를 담고있는 배열 전송
-					//배열 형태로 전송 시 백단(Java)에서 처리불가
-					//JSON String 형태로 변환하여 전송한다.
-					$("#originFiles").val(JSON.stringify(originFiles));
-					
-					//ajax에서 multipart/form-data형식을 전송하기 위해서는
-					//new FormData()를 사용하여 직접 폼데이터 객체를 만들어준다.
-					//form.serialize()는 multipart/form-data 전송불가
-					let formData = new FormData($("#updateForm")[0]);
-					
-					//ajax에 enctype: multipart/form-data, 
-					//processData: false, contentType: false로 설정					
-					$.ajax({
-						enctype: 'multipart/form-data',
-						url: '/board/board',
-						type: 'put',
-						data: formData,
-						processData: false,
-						contentType: false,
-						success: function(obj) {
-							console.log(obj);
-							alert("수정되었습니다.");
-							$("#boardNo").val(obj.item.getBoard.boardNo);
-							$("#boardTitle").val(obj.item.getBoard.boardTitle);
-							$("#boardContent").text(obj.item.getBoard.boardContent);
-							$("#boardWriter").val(obj.item.getBoard.boardWriter);
-							$("#boardRegdateText").text(obj.item.getBoard.boardRegdate == null ?
-														'' :
-														obj.item.boardRegdate.substring(0, 10));
-							$("#boardCntText").text(obj.item.getBoard.boardCnt);
-							$("#boardRegdate").val(obj.item.getBoard.boardRegdate);
-							$("#boardCnt").val(obj.item.getBoard.boardCnt);
-						},
-						error: function(e) {
-							console.log(e);
-						},
-						done: function(result) {
-							console.log(result);
-							$("#attZone").replaceWith(result);
-						}
-					});
-				});
-				
 				$("#deleteBtn").on('click', function(e) {
 					e.preventDefault();
 					
@@ -125,10 +60,6 @@
 					for(f of fileArr) {
 						imageLoader(f);
 					}
-				});
-				
-				$("#updateForm").on("submit", function(e) {
-					
 				});
 				
 				for(let i = 0; i < $("#boardFileCnt").val(); i++) {
@@ -187,7 +118,7 @@
 				let btn = document.createElement("input");
 				btn.setAttribute("type", "button");
 				btn.setAttribute("value", "x");
-				btn.setAttribute("delFile", file.name);
+				btn.setAttribute("data-del-file", file.name);
 				btn.setAttribute("style", "width: 30px; height: 30px; position: absolute;"
 				+ " right: 0px; bottom: 0px; z-index: 999; background-color: rgba(255, 255, 255, 0.1);"
 				+ " color: #f00;");
@@ -198,7 +129,7 @@
 					//클릭된 버튼
 					const ele = e.srcElement;
 					//delFile(파일이름) 속성 꺼내오기: 삭제될 파일명
-					const delFile = ele.getAttribute("delFile");
+					const delFile = ele.getAttribute("data-del-file");
 					
 					for(let i = 0; i < uploadFiles.length; i++) {
 						//배열에 담아놓은 파일들중에 해당 파일 삭제
@@ -289,7 +220,7 @@
 				//클릭된 태그 가져오기
 				let ele = e.srcElement;
 				//delFile속성 값 가져오기(boardFileNo)
-				let delFile = ele.getAttribute("delFile");	
+				let delFile = ele.getAttribute("data-del-file");	
 				
 				for(let i = 0; i < originFiles.length; i++) {
 					if(delFile == originFiles[i].boardFileNo) {
@@ -305,6 +236,71 @@
 			function fnFileDown(boardNo, boardFileNo) {
 				window.location = "/board/fileDown.do?boardNo=" 
 						+ boardNo + "&boardFileNo=" + boardFileNo;
+			}
+			
+			function fnUpdateBoard() {
+				dt = new DataTransfer();
+					
+				for(f in uploadFiles) {
+					let file = uploadFiles[f];
+					dt.items.add(file);
+				}
+				
+				$("#btnAtt")[0].files = dt.files;
+				
+				//dt.clearData();
+				//clearData() 사용하면 배열의 모든 내용이 담기지 않고
+				//파일 하나씩만 담기는 현상이 발생해서 dt를 두 개로 분리하여 사용
+				dt2 = new DataTransfer();
+				
+				for(f in changedFiles) {
+					let file = changedFiles[f];
+					dt2.items.add(file);
+				}
+				
+				$("#changedFiles")[0].files = dt2.files;
+				
+				//변경된 파일정보와 삭제된 파일정보를 담고있는 배열 전송
+				//배열 형태로 전송 시 백단(Java)에서 처리불가
+				//JSON String 형태로 변환하여 전송한다.
+				$("#originFiles").val(JSON.stringify(originFiles));
+				
+				//ajax에서 multipart/form-data형식을 전송하기 위해서는
+				//new FormData()를 사용하여 직접 폼데이터 객체를 만들어준다.
+				//form.serialize()는 multipart/form-data 전송불가
+				let formData = new FormData($("#updateForm")[0]);
+				
+				//ajax에 enctype: multipart/form-data, 
+				//processData: false, contentType: false로 설정					
+				$.ajax({
+					enctype: 'multipart/form-data',
+					url: '/board/board',
+					type: 'put',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(obj) {
+						console.log(obj);
+						alert("수정되었습니다.");
+						$("#boardNo").val(obj.item.getBoard.boardNo);
+						$("#boardTitle").val(obj.item.getBoard.boardTitle);
+						$("#boardContent").text(obj.item.getBoard.boardContent);
+						$("#boardWriter").val(obj.item.getBoard.boardWriter);
+						$("#boardRegdateText").text(obj.item.getBoard.boardRegdate == null ?
+													'' :
+													obj.item.boardRegdate.substring(0, 10));
+						$("#boardCntText").text(obj.item.getBoard.boardCnt);
+						$("#boardRegdate").val(obj.item.getBoard.boardRegdate);
+						$("#boardCnt").val(obj.item.getBoard.boardCnt);
+					},
+					error: function(e) {
+						console.log(e);
+					},
+					done: function(result) {
+						console.log(result);
+						$("#attZone").replaceWith(result);
+					}
+				});
 			}
 			</script>
 		</th:block>
@@ -429,7 +425,7 @@
 						</tr>
 						<tr id="btnWrap">
 							<td colspan="2" align="center">
-								<button type="button" id="btnUpdate">수정</button>
+								<button type="button" id="btnUpdate" onclick="fnUpdateBoard(); return false;">수정</button>
 							</td>
 						</tr>
 					</table>

@@ -1,9 +1,9 @@
 package com.ezen.springboard.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,19 +28,19 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 	//		WHERE BOARD_TITLE = :boardTitle AND BOARD_CONTNET = :boardContent
 	//Containing == like '%keyword%'
 	//SELECT * FROM T_BOARD_ WHERE BOARD_TITLE LIKE '%searchKeyword%'
-	List<Board> findByBoardTitleContaining(String searchKeyword);
+	Page<Board> findByBoardTitleContaining(String searchKeyword, Pageable pageable);
 	
 	//SELECT * FROM T_BOARD_ WHERE BOARD_CONTENT LIKE '%searchKeyword%'
-	List<Board> findByBoardContentContaining(String searchKeyword);
+	Page<Board> findByBoardContentContaining(String searchKeyword, Pageable pageable);
 	
 	//SELECT * FROM T_BOARD_ WHERE BOARD_WRITER LIKE '%searchKeyword%'
-	List<Board> findByBoardWriterContaining(String searchKeyword);
+	Page<Board> findByBoardWriterContaining(String searchKeyword, Pageable pageable);
 	
 	//SELECT * FROM T_BOARD_ 
 	//	WHERE BOARD_TITLE LIKE '%searchKeyword1%'
 	//	OR BOARD_CONTENT LIKE '%searchKeyword2%'
 	//	OR BOARD_WRITER LIKE '%searchKeyword3%'
-	List<Board> findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining(String searchKeyword1, String searchKeyword2, String searchKeyword3);
+	Page<Board> findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining(String searchKeyword1, String searchKeyword2, String searchKeyword3, Pageable pageable);
 
 	@Modifying //데이터의 변경이 일어나는 @Query을 사용할 때는 @Modifying을 붙여준다.
 	@Query(value="UPDATE T_BOARD SET BOARD_CNT = BOARD_CNT + 1 WHERE BOARD_NO = :boardNo", nativeQuery=true)

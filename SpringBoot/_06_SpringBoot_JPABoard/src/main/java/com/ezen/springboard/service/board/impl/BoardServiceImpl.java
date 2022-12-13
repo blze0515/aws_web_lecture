@@ -2,9 +2,9 @@ package com.ezen.springboard.service.board.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ezen.springboard.entity.Board;
@@ -35,24 +35,22 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> getBoardList(Board board) {
 		// TODO Auto-generated method stub
 		//return boardMapper.getBoardList();
-		if(board.getSearchKeyword() != null && !board.getSearchKeyword().equals("")) {
-			if(board.getSearchCondition().equals("ALL")) {
-				return boardRepository.findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining
-						(board.getSearchKeyword(), 
-						 board.getSearchKeyword(), 
-						 board.getSearchKeyword());
-			} else if(board.getSearchCondition().equals("TITLE")) {
-				return boardRepository.findByBoardTitleContaining(board.getSearchKeyword());
-			} else if(board.getSearchCondition().equals("CONTENT")) {
-				return boardRepository.findByBoardContentContaining(board.getSearchKeyword());
-			} else if(board.getSearchCondition().equals("WRITER")){
-				return boardRepository.findByBoardWriterContaining(board.getSearchKeyword());
-			} else {
-				return boardRepository.findAll();
-			}
-		} else {
-			return boardRepository.findAll();
-		}
+		/*
+		 * if(board.getSearchKeyword() != null && !board.getSearchKeyword().equals(""))
+		 * { if(board.getSearchCondition().equals("ALL")) { return boardRepository.
+		 * findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining
+		 * (board.getSearchKeyword(), board.getSearchKeyword(),
+		 * board.getSearchKeyword()); } else
+		 * if(board.getSearchCondition().equals("TITLE")) { return
+		 * boardRepository.findByBoardTitleContaining(board.getSearchKeyword()); } else
+		 * if(board.getSearchCondition().equals("CONTENT")) { return
+		 * boardRepository.findByBoardContentContaining(board.getSearchKeyword()); }
+		 * else if(board.getSearchCondition().equals("WRITER")){ return
+		 * boardRepository.findByBoardWriterContaining(board.getSearchKeyword()); } else
+		 * { return boardRepository.findAll(); } } else {
+		 */
+		return boardRepository.findAll();
+		//}
 		
 	}
 
@@ -123,6 +121,40 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardFileRepository.findByBoard(board);
 	}
+	
+	@Override
+	public Page<Board> getPageBoardList(Board board, Pageable pageable) {
+		// TODO Auto-generated method stub
+		//return boardMapper.getBoardList();	
+		if(board.getSearchKeyword() != null && !board.getSearchKeyword().equals("")) {
+			if(board.getSearchCondition().equals("ALL")) {
+				return boardRepository.findByBoardTitleContainingOrBoardContentContainingOrBoardWriterContaining
+						(board.getSearchKeyword(), 
+						 board.getSearchKeyword(), 
+						 board.getSearchKeyword(),
+						 pageable);
+			} else if(board.getSearchCondition().equals("TITLE")) {
+				return boardRepository.findByBoardTitleContaining(board.getSearchKeyword(), pageable);
+			} else if(board.getSearchCondition().equals("CONTENT")) {
+				return boardRepository.findByBoardContentContaining(board.getSearchKeyword(), pageable);
+			} else if(board.getSearchCondition().equals("WRITER")){
+				return boardRepository.findByBoardWriterContaining(board.getSearchKeyword(), pageable);
+			} else {
+				return boardRepository.findAll(pageable);
+			}
+		} else {
+			return boardRepository.findAll(pageable);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
