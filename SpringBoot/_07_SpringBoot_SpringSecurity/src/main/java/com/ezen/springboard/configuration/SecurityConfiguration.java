@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.ezen.springboard.handler.LoginFailureHandler;
+import com.ezen.springboard.oauth.Oauth2UserService;
 
 @Configuration
 //security의 filterchain을 구현하기 위한 어노테이션
