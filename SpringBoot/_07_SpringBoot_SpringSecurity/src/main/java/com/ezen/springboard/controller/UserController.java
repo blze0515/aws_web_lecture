@@ -155,13 +155,13 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/logout")
-	public void logout(HttpSession session, 
-			HttpServletResponse response) throws IOException {		
-		session.invalidate();
-		
-		response.sendRedirect("/");
-	}
+//	@RequestMapping("/logout")
+//	public void logout(HttpSession session, 
+//			HttpServletResponse response) throws IOException {		
+//		session.invalidate();
+//		
+//		response.sendRedirect("/");
+//	}
 	
 	
 	

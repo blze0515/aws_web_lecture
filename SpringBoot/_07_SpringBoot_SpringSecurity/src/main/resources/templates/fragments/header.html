@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko"
 	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<body>
 		<header th:fragment="header">
 			<h1>
@@ -19,7 +20,7 @@
 			</nav>
 			<nav>
 				<ul class="user-nav">
-					<div th:if="${session.loginUser eq null}" th:remove="tag">
+					<div sec:authorize="!isAuthenticated()" th:remove="tag">
 						<li>
 							<a th:href="@{/user/login}">로그인</a>
 						</li>
@@ -28,9 +29,9 @@
 						</li>
 					</div>
 					
-					<div th:if="${session.loginUser ne null}" th:remove="tag">
+					<div sec:authorize="isAuthenticated()" th:remove="tag">
 						<li>
-							<a th:href="@{/mypage/mypage}" th:text="${session.loginUser.userId}"></a>
+							<a th:href="@{/mypage/mypage}" sec:authentication="principal.username"></a>
 						</li>
 						<li>
 							<a th:href="@{/user/logout}">로그아웃</a>
