@@ -18,6 +18,9 @@ public class SecurityConfiguration {
 	@Autowired
 	private LoginFailureHandler loginFailureHandler;
 	
+	@Autowired
+	private Oauth2UserService oauth2UserService;
+	
 	//비밀번호 암호화를 위한 PasswordEncoder
 	//security에 의해 로그인 처리될 때 비밀번호 비교 시 무조건 사용
 	//복호화는 불가능, match(사용자입력값(그냥 String), DB에 저장된 암호화된 비밀번호) => true나 false로 리턴
@@ -66,7 +69,17 @@ public class SecurityConfiguration {
 			.loginProcessingUrl("/user/loginProc")
 			//로그인 성공 후 띄워줄 화면 url
 			.defaultSuccessUrl("/home/main")
-			.failureHandler(loginFailureHandler);
+			.failureHandler(loginFailureHandler)
+			//OAuth기반 로그인 처리
+			.and()
+			.oauth2Login()
+			.loginPage("/user/login")
+			//토큰 발행 후 처리
+			//토큰이 발행되면 사용자 정보를 받아서 처리 가능해지는 데
+			//사용자 정보를 웹 사이트에 맞도록 변경해주는 작업 필요
+			.userInfoEndpoint() //사용자 정보를 다 가지고 왔을 때
+			//사용자 정보를 웹 사이트에 맞도록 변경해주는 service 클래스 등록
+			.userService(oauth2UserService);
 		http.logout()
 			.logoutUrl("/user/logout")
 			.invalidateHttpSession(true)
