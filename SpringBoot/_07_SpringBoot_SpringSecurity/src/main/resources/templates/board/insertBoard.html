@@ -160,7 +160,7 @@
 							</td>
 							<td style="text-align: left;">
 								<input type="text" name="boardWriter" 
-									   th:value="${session.loginUser.userId}" readonly>
+									   th:value="${#authentication.principal.username}" readonly>
 							</td>
 						</tr>
 						<tr>

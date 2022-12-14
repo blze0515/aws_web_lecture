@@ -17,13 +17,7 @@
 			let changedFiles = [];
 			
 			$(function() {
-				const loginUser = /*[[${session.loginUser}]]*/;
-				let loginUserId = "";
-				
-				if(loginUser != null) {
-					loginUserId = loginUser.userId;
-				}
-				
+				const loginUserId = /*[[${#authentication.principal.username}]]*/;
 				const boardWriter = /*[[${getBoard.boardWriter}]]*/;
 				
 				if(loginUserId != boardWriter) {

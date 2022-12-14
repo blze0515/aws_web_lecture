@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +33,9 @@ import com.ezen.springboard.common.FileUtils;
 import com.ezen.springboard.dto.BoardDTO;
 import com.ezen.springboard.dto.BoardFileDTO;
 import com.ezen.springboard.dto.ResponseDTO;
-import com.ezen.springboard.dto.UserDTO;
 import com.ezen.springboard.entity.Board;
 import com.ezen.springboard.entity.BoardFile;
+import com.ezen.springboard.entity.CustomUserDetails;
 import com.ezen.springboard.service.board.BoardService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -302,16 +302,10 @@ public class BoardController {
 	}
 	
 	@GetMapping("/insertBoard")
-	public ModelAndView insertBoardView(HttpSession session) throws IOException {
-		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
-		
-		ModelAndView mv = new ModelAndView();
-		
-		if(loginUser == null) {
-			mv.setViewName("user/login.html");
-		} else {		
-			mv.setViewName("board/insertBoard.html");
-		}
+	public ModelAndView insertBoardView(@AuthenticationPrincipal CustomUserDetails customUser) throws IOException {	
+		System.out.println(customUser.getUsername());
+		ModelAndView mv = new ModelAndView();	
+		mv.setViewName("board/insertBoard.html");
 		return mv;
 	}
 	

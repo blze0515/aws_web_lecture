@@ -31,7 +31,7 @@ public class SecurityConfiguration {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		//권한에 따른 요청주소 매핑
 									//"/home"으로 시작하는 요청 리소스는 모든 사람에게 허용
-		http.authorizeHttpRequests().antMatchers("/").permitAll()
+		http.authorizeRequests().antMatchers("/").permitAll()
 									.antMatchers("/home/**").permitAll()
 									//css, js, images, upload 같은 정적 리소스들도 권한처리 필수
 									.antMatchers("/css/**").permitAll()
@@ -44,8 +44,8 @@ public class SecurityConfiguration {
 									.antMatchers("/user/loginProc").permitAll()
 									//권한을 가지고 있는 유저들만 접근할 수 있는 요청리소스 설정
 									//Authentication 객체를 만든 후에 가져올 수 권한들
-									//.antMatchers("/board/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-									//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+									.antMatchers("/board/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+									.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 									
 									//위에 설정하는 요청리소스 제외한 나머지 요청리소스는
 									//인증된 사용자만 접근 가능

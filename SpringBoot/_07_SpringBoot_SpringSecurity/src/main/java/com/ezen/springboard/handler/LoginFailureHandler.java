@@ -47,6 +47,8 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler{
 			return "계정비활성화";
 		} else if(exception instanceof LockedException) {
 			return "계정잠김";
+		} else if(exception.getMessage().contains("UserDetailsService returned null")) {
+			return "계정없음";
 		} else {
 			return "확인되지 않은 에러 발생";
 		}
