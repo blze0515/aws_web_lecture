@@ -165,14 +165,15 @@
 				
 				//changedFiles배열에 담겨있는 파일들을 input 옮겨담기
 				//위에서 사용한 DataTransfer객체 비워주기
-				dt.clearData();
+				//dt.clearData();
+				dt2 = new DataTransfer();
 				
 				for(f in changedFiles) {
 					let file = changedFiles[f];
-					dt.items.add(file);
+					dt2.items.add(file);
 				}
 				
-				$("#changedFiles")[0].files = dt.files;
+				$("#changedFiles")[0].files = dt2.files;
 				
 				//변경된 파일정보와 삭제된 파일정보를 담고있는 배열 전송
 				//배열 형태로 전송 시 백단(Java)에서 처리불가

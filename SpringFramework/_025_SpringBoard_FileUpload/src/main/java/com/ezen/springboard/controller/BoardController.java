@@ -149,7 +149,7 @@ public class BoardController {
 		boardService.insertBoard(boardVO, fileList);
 		
 		//등록 후 게시글 목록으로 이동
-		return "redirect:/board/insertBoard.do";
+		return "redirect:/board/getBoardList.do";
 	}
 	
 	//게시글 상세 조회
@@ -180,6 +180,7 @@ public class BoardController {
 			MultipartFile[] changedFiles, HttpServletRequest request,
 			@RequestParam("originFiles") String originFiles) throws IOException {
 		System.out.println("originFiles========================" + originFiles);
+		System.out.println("uploadFiles=====================" + uploadFiles.length );
 		
 		//JSON String 데이터를 List로 변경
 		List<BoardFileVO> originFileList = new ObjectMapper().readValue(originFiles, 
@@ -250,7 +251,7 @@ public class BoardController {
 				}
 			}
 		}
-		
+		System.out.println("uFileList================" + uFileList);
 		boardService.updateBoard(boardVO, uFileList);
 		
 		return "redirect:/board/getBoard.do?boardNo=" + boardVO.getBoardNo();
