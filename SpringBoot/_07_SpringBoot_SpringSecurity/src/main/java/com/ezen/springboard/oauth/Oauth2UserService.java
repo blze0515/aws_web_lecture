@@ -1,5 +1,8 @@
 package com.ezen.springboard.oauth;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -29,6 +32,14 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) 
 			throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(userRequest);
+		Map<String, Object> temp = oAuth2User.getAttributes();
+		
+		Iterator<String> iter = temp.keySet().iterator();
+		
+		while(iter.hasNext()) {
+			System.out.println(iter.next());
+			System.out.println(userRequest.getAccessToken().getTokenValue());
+		}
 		
 		String userName= "";
 		String providerId = "";
