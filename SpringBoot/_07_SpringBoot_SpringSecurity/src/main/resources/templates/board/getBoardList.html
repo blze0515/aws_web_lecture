@@ -61,12 +61,43 @@
 					
 					//수정버튼 클릭 시 수정모드로 변경
 					$("#updRowBtn").on('click', function() {
+						updateMode = !updateMode;
 						
+						$("td[name='boardTitleTd']").html("");
+						
+						$("td[name='boardTitleTd']").each(function(index) {
+							if(updateMode) {
+								let htmlStr = `
+									<input type="text" name="uBoardTitle"
+									id="uBoardTitle${index}"
+									value="${$(this).attr('data-board-title')}">
+								`;
+								
+								$(this).append(htmlStr);
+							} else {
+								let htmlStr = `
+									<a id="uBoardTitle${index}"
+									   href="/board/updateBoardCnt/${$(this).attr('data-board-no')}">
+										${$(this).attr("data-board-title")}   
+									</a>
+								`;
+								
+								$(this).append(htmlStr);
+							}
+						});
 					});
 					
 					//삭제버튼 클릭 시 체크된 게시물들 삭제 상태로 변경
 					$("#delRowBtn").on('click', function() {
-						
+						$("input:checkbox[name='chk']").each(function() {
+							if($(this).is(":checked")) {
+								$("#statusTd" + $(this).val()).text("D");
+								$("#status" + $(this).val()).val("D");
+							} else {
+								$("#statusTd" + $(this).val()).text("");
+								$("#status" + $(this).val()).val("");
+							}
+						});
 					});
 					
 					//저장버튼 클릭 시 변경사항 저장
@@ -118,10 +149,12 @@
 					</tr>
 						<tr th:each="board : ${getBoardList}">
 							<td>
-								<input type="checkbox" name="chk" th:id="'chk' + ${board.boardNo}">
+								<input type="checkbox" name="chk" th:id="'chk' + ${board.boardNo}"
+								th:value="${board.boardNo}">
 							</td>
 							<td th:text=${board.boardNo}></td>
-							<td>
+							<td name="boardTitleTd" th:data-board-title="${board.boardTitle}"
+								th:data-board-no="${board.boardNo}">
 								<a th:text="${board.boardTitle}"
 								   th:href="@{/board/updateBoardCnt/{boardNo} (boardNo=${board.boardNo})}">
 								</a>
