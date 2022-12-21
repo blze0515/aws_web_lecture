@@ -9,12 +9,76 @@
 	<head>
 		<th:block layout:fragment="script">
 			<script th:inline="javascript">
+				//변경사항이 있는 게시물들을 객체형태로 담아서
+				//백엔드로 전송할 변수
+				let changeRows = [];
+				//추가된 Row의 개수
+				let addRowCount = 0;
+				//수정모드 플래그
+				let updateMode = false;
+				//추가된 행의 작성자로 들어갈 로그인한 유저 아이디
+				const userId = /*[[${#authentication.principal.username}]]*/;
+				
 				$(function() {
 					$("#btnSearch").on("click", function() {
 						$("input[name='page']").val(0);
 						$("#searchForm").submit();
 					});
+					
+					//추가버튼 클릭 시 행 추가
+					$("#addRowBtn").on('click', function() {
+						//추가된 행에 날짜를 표시
+						const today = new Date();
+						const year = today.getFullYear();
+						const month = (today.getMonth() + 1) >= 10 ? (today.getMonth() + 1) : `0${today.getMonth() + 1}`;
+						const date = today.getDate() >= 10 ? today.getDate() : `0${today.getDate()}`;
+						const todayFullDate = `${year}-${month}-${date}`;
+						
+						let htmlStr = `
+							<tr>
+								<td>
+									<button type="button" id="rmAddRowBtn" onclick="fnRmAddRow(this);">-</button>
+								</td>
+								<td></td>
+								<td>
+									<input type="text" id="addBoardTitle${addRowCount}" name="addBoardTitle">
+								</td>
+								<td>${userId}</td>
+								<td>${todayFullDate}</td>
+								<td>0</td>
+								<td style="text-align: center;" name="statusTd" id="statusTd${addRowCount}">
+									<input type="hidden" name="addStatus" id="addStatus${addRowCount}"	
+									value="I">
+									I				
+								</td>
+							</tr>
+						`;
+						
+						//추가된 행 테이블에 표출
+						$("#boardTable").append(htmlStr);
+						addRowCount++;
+					});
+					
+					//수정버튼 클릭 시 수정모드로 변경
+					$("#updRowBtn").on('click', function() {
+						
+					});
+					
+					//삭제버튼 클릭 시 체크된 게시물들 삭제 상태로 변경
+					$("#delRowBtn").on('click', function() {
+						
+					});
+					
+					//저장버튼 클릭 시 변경사항 저장
+					$("#savRowBtn").on('click', function() {
+						
+					});
 				});
+				
+				function fnRmAddRow(btn) {
+					$(btn).parent().parent().remove();
+					addRowCount--;
+				}
 			</script>
 		</th:block>
 	</head>
@@ -44,13 +108,18 @@
 				
 				<table id="boardTable" border="1" style="width: 700px; border-collapse: collapse;">
 					<tr>
+						<th style="background: skyblue; width: 10px;"></th>
 						<th style="background: skyblue; width: 100px;">번호</th>
 						<th style="background: skyblue; width: 200px;">제목</th>
 						<th style="background: skyblue; width: 150px;">작성자</th>
 						<th style="background: skyblue; width: 150px;">등록일</th>
 						<th style="background: skyblue; width: 100px;">조회수</th> 
+						<th style="background: skyblue; width: 100px;">상태</th>
 					</tr>
 						<tr th:each="board : ${getBoardList}">
+							<td>
+								<input type="checkbox" name="chk" th:id="'chk' + ${board.boardNo}">
+							</td>
 							<td th:text=${board.boardNo}></td>
 							<td>
 								<a th:text="${board.boardTitle}"
@@ -60,8 +129,21 @@
 							<td th:text="${board.boardWriter}"></td>
 							<td th:text="${board.boardRegdate eq null ? '' : #strings.substring(board.boardRegdate, 0, 10)}"></td>
 							<td th:text="${board.boardCnt}"></td>
+							<td style="text-align: center;" name="statusTd" th:id="'statusTd' + ${board.boardNo}">
+								<input type="hidden" name="status" th:id="'status' + ${board.boardNo}"	
+								th:data-board-no="${board.boardNo}" th:data-board-title="${board.boardTitle}" 
+								value="">					
+							</td>
 						</tr>
 				</table>
+				<br/>
+				<div sec:authorize="hasRole('ROLE_ADMIN')"
+					 style="width: 700px; text-align: right;">
+					<button type="button" id="addRowBtn">추가</button>
+					<button type="button" id="updRowBtn">수정</button>
+					<button type="button" id="delRowBtn">삭제</button>
+					<button type="button" id="savRowBtn">저장</button>
+				</div>
 				<br/>
 				<div style="text-align:center;">
 					<ul class="pagination" th:if="${getBoardList.totalElements > 0}"
