@@ -70,7 +70,8 @@
 								let htmlStr = `
 									<input type="text" name="uBoardTitle"
 									id="uBoardTitle${index}"
-									value="${$(this).attr('data-board-title')}">
+									value="${$(this).attr('data-new-title') == '' ? $(this).attr('data-board-title') : $(this).attr('data-new-title')}"
+									onkeyup="fnChangeTitle(this);">
 								`;
 								
 								$(this).append(htmlStr);
@@ -78,7 +79,7 @@
 								let htmlStr = `
 									<a id="uBoardTitle${index}"
 									   href="/board/updateBoardCnt/${$(this).attr('data-board-no')}">
-										${$(this).attr("data-board-title")}   
+										${$(this).attr('data-new-title') == '' ? $(this).attr('data-board-title') : $(this).attr('data-new-title')}
 									</a>
 								`;
 								
@@ -91,24 +92,72 @@
 					$("#delRowBtn").on('click', function() {
 						$("input:checkbox[name='chk']").each(function() {
 							if($(this).is(":checked")) {
+								console.log($("#statusTd" + $(this).val()).children());
 								$("#statusTd" + $(this).val()).text("D");
 								$("#status" + $(this).val()).val("D");
 							} else {
-								$("#statusTd" + $(this).val()).text("");
-								$("#status" + $(this).val()).val("");
+								if($("#status" + $(this).val()).val() == "D" ||
+								  $("#status" + $(this).val()).val() == "") {
+									$("#statusTd" + $(this).val()).text("");
+									$("#status" + $(this).val()).val("");
+								}
 							}
 						});
 					});
 					
 					//저장버튼 클릭 시 변경사항 저장
 					$("#savRowBtn").on('click', function() {
+						$("input[name='status']").each(function() {
+							if($(this).val() == "U") {
+								const updBoard = {
+									boardNo: $(this).attr("data-board-no"),
+									boardTitle: $(this).attr("data-new-title"),
+									boardStatus: "U"
+								};
+								
+								changeRows.push(updBoard);
+							} else if($(this).val() == "D") {
+								const delBoard = {
+									boardNo: $(this).attr("data-board-no"),
+									boardStatus: "D"
+								};
+								
+								changeRows.push(delBoard);
+							}
+						});
 						
+						$("input[name='addStatus']").each(function(index) {
+							if($(this).val() == "I") {
+								const addBoard = {
+									boardTitle: $("#addBoardTitle" + index).val(),
+									boardWriter: userId,
+									boardStatus: "I"
+								};
+								
+								changeRows.push(addBoard);
+							}
+						});
+						
+						console.log(changeRows);
 					});
 				});
 				
 				function fnRmAddRow(btn) {
 					$(btn).parent().parent().remove();
 					addRowCount--;
+				}
+				
+				//수정모드에서 제목변경시 실행될 메소드
+				function fnChangeTitle(input) {
+					if($(input).val() != $(input).parent().attr("data-board-title")) {
+						$(input).parent().attr("data-new-title", $(input).val());
+						$("#statusTd" + $(input).parent().attr("data-board-no")).text("U");
+						$("#status" + $(input).parent().attr("data-board-no")).val("U");
+						$("#status" + $(input).parent().attr("data-board-no")).attr("data-new-title", $(input).val());
+					} else {
+						$("#statusTd" + $(input).parent().attr("data-board-no")).text("");
+						$("#status" + $(input).parent().attr("data-board-no")).val("");
+					}					
 				}
 			</script>
 		</th:block>
@@ -154,7 +203,7 @@
 							</td>
 							<td th:text=${board.boardNo}></td>
 							<td name="boardTitleTd" th:data-board-title="${board.boardTitle}"
-								th:data-board-no="${board.boardNo}">
+								th:data-board-no="${board.boardNo}" data-new-title="">
 								<a th:text="${board.boardTitle}"
 								   th:href="@{/board/updateBoardCnt/{boardNo} (boardNo=${board.boardNo})}">
 								</a>
@@ -163,10 +212,10 @@
 							<td th:text="${board.boardRegdate eq null ? '' : #strings.substring(board.boardRegdate, 0, 10)}"></td>
 							<td th:text="${board.boardCnt}"></td>
 							<td style="text-align: center;" name="statusTd" th:id="'statusTd' + ${board.boardNo}">
-								<input type="hidden" name="status" th:id="'status' + ${board.boardNo}"	
-								th:data-board-no="${board.boardNo}" th:data-board-title="${board.boardTitle}" 
-								value="">					
 							</td>
+							<input type="hidden" name="status" th:id="'status' + ${board.boardNo}"	
+								th:data-board-no="${board.boardNo}" th:data-board-title="${board.boardTitle}" 
+								value="">
 						</tr>
 				</table>
 				<br/>
