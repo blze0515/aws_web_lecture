@@ -1,6 +1,7 @@
 package com.ezen.springboard.service.board.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -146,6 +147,35 @@ public class BoardServiceImpl implements BoardService {
 			return boardRepository.findAll(pageable);
 		}
 		
+	}
+
+	@Override
+	public void saveBoardList(List<Map<String, Object>> changeRowsList) {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < changeRowsList.size(); i++) {
+			String boardStatus = String.valueOf(changeRowsList.get(i).get("boardStatus"));
+			if(boardStatus.equals("U")) {
+				Board uBoard = Board.builder()
+									.boardNo(Integer.parseInt(String.valueOf(changeRowsList.get(i).get("boardNo"))))
+									.boardTitle(String.valueOf(changeRowsList.get(i).get("boardTitle")))
+									.build();
+				
+				boardRepository.updateBoardTitle(uBoard);
+			} else if(boardStatus.equals("D")) {
+				Board dBoard = Board.builder()
+									.boardNo(Integer.parseInt(String.valueOf(changeRowsList.get(i).get("boardNo"))))
+									.build();
+				
+				boardRepository.delete(dBoard);
+			} else if(boardStatus.equals("I")) {
+				Board iBoard = Board.builder()
+									.boardTitle(String.valueOf(changeRowsList.get(i).get("boardTitle")))
+									.boardWriter(String.valueOf(changeRowsList.get(i).get("boardWriter")))
+									.build();
+				
+				boardRepository.save(iBoard);
+			}
+		}
 	}
 	
 	

@@ -46,6 +46,24 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 	@Query(value="UPDATE T_BOARD SET BOARD_CNT = BOARD_CNT + 1 WHERE BOARD_NO = :boardNo", nativeQuery=true)
 	void updateBoardCnt(@Param("boardNo") int boardNo);
 	
+	@Modifying
+	@Query(value="UPDATE T_BOARD SET BOARD_TITLE = :#{#uBoard.boardTitle} WHERE BOARD_NO = :#{#uBoard.boardNo}", nativeQuery=true)
+	void updateBoardTitle(@Param("uBoard") Board uBoard);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

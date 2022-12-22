@@ -138,7 +138,48 @@
 							}
 						});
 						
-						console.log(changeRows);
+						$.ajax({
+							url: '/board/saveBoardList',
+							type: 'post',
+							data: {changeRows: JSON.stringify(changeRows)},
+							success: function(obj) {
+								console.log(obj);
+								let htmlStr = "";
+								for(let i = 0; i < obj.pageItems.content.length; i++) {
+									htmlStr += `
+										<tr>
+											<td>
+												<input type="checkbox" name="chk" id="chk${obj.pageItems.content[i].boardNo}"
+												value="${obj.pageItems.content[i].boardNo}">
+											</td>
+											<td>${obj.pageItems.content[i].boardNo}</td>
+											<td name="boardTitleTd" data-board-title="${obj.pageItems.content[i].boardTitle}"
+												data-board-no="${obj.pageItems.content[i].boardNo}" data-new-title="">
+												<a href="@{/board/updateBoardCnt/${obj.pageItems.content[i].boardNo}}">
+												   ${obj.pageItems.content[i].boardTitle}
+												</a>
+											</td>
+											<td>${obj.pageItems.content[i].boardWriter}</td>
+											<td>
+												${obj.pageItems.content[i].boardRegdate == null ? '' : String.prototype.substr(obj.pageItems.content[i].boardRegdate, 0, 10)}
+											</td>
+											<td>${obj.pageItems.content[i].boardCnt}</td>
+											<td style="text-align: center;" name="statusTd" id="statusTd${obj.pageItems.content[i].boardNo}">
+											</td>
+											<input type="hidden" name="status" id="status${obj.pageItems.content[i].boardNo}"	
+												data-board-no="${obj.pageItems.content[i].boardNo}" data-board-title="${obj.pageItems.content[i].boardTitle}" 
+												value="">
+										</tr>
+									`;
+								}
+								
+								$("#boardTable").children(":first").children().not(':first').remove();
+								$("#boardTable").children(":first").append(htmlStr);
+							},
+							error: function(e) {
+								console.log(e);
+							}
+						});
 					});
 				});
 				
